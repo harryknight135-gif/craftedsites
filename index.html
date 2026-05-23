@@ -3638,20 +3638,23 @@
     });
 
     /* ──────────────────────────────────────────────────────────
-       FLOWING WAVE BACKGROUND
+       FLOWING WAVE BACKGROUND — full-screen diagonal flow field
        ──────────────────────────────────────────────────────────
-       Premium SaaS-style ambient background. Two layered "ribbons"
-       of thin parallel lines flow diagonally top-left → bottom-right.
-       Each ribbon = many lines sharing a base sine path, vertically
-       offset, with Gaussian opacity fade at the band edges so it
-       reads as flowing silk rather than a hard stripe.
+       Many independent wavy lines, each flowing from somewhere on the
+       upper-left edge down toward the lower-right edge. Each line has
+       its own amplitude, frequency, phase, opacity, and tilt — so they
+       look organic and never quite parallel.
 
-       Visual notes:
-       - Lines stay between 3-10% opacity (multiply blend boosts contrast)
-       - Wave amplitude tapers at horizontal edges (focal density)
-       - Subtle mouse parallax (max ~18px shift) for life without distraction
-       - DPI-aware: crisp on Retina without burning fillrate
-       - Time-based animation (dt) so speed is identical at any FPS
+       Density clustering: line Y-positions are perturbed by a
+       multi-frequency sine so they bunch into natural clusters and
+       sparse gaps instead of evenly spaced rows.
+
+       Opacity: per-line 9-22% (significantly higher than v1 so lines
+       are clearly visible on the cream/white surfaces).
+
+       Strategy: #bg uses mix-blend-mode: multiply, so on light sections
+       the blue tint shows; on dark sections (work, footer) the waves
+       automatically vanish. No per-section setup needed.
        ────────────────────────────────────────────────────────── */
     (function initWaveBackground() {
       const canvas = document.getElementById('bg-canvas');
@@ -3660,30 +3663,54 @@
       const ctx = canvas.getContext('2d', { alpha: true });
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-      /* Ribbon presets — tuned for the "Linear/Framer" aesthetic.
-         hueA / hueB define the rgba colour prefix; opacity is appended
-         per-line at draw time. */
-      const ribbons = [
-        {
-          baseY: 0.30, tilt: 0.18, amplitude: 90,
-          frequency: 0.0014, thickness: 200, lineCount: 56,
-          speed: 0.18, phase: 0,
-          hue: 'rgba(99,140,235,', opacityPeak: 0.10,
-          densityCenter: 0.36
-        },
-        {
-          baseY: 0.66, tilt: 0.28, amplitude: 115,
-          frequency: 0.0011, thickness: 230, lineCount: 66,
-          speed: 0.13, phase: Math.PI * 0.7,
-          hue: 'rgba(118,150,225,', opacityPeak: 0.09,
-          densityCenter: 0.64
-        }
-      ];
-
       let W = 0, H = 0;
       let lastT = 0, time = 0;
-      let mxR = 0.5, myR = 0.5;   /* raw mouse target (0-1) */
-      let mx  = 0.5, my  = 0.5;   /* smoothed value         */
+      let mxR = 0.5, myR = 0.5;
+      let mx  = 0.5, my  = 0.5;
+      let lines = [];
+
+      /* Deterministic-feeling but varied pseudo-random — fixed seed
+         so reloads don't reshuffle the composition unrecognisably */
+      let seed = 1;
+      const rnd = () => {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+      };
+
+      /* Generate the line bank. Density scales with viewport width.
+         Y-positions are clustered using a multi-frequency sine so
+         the composition has visible dense bands and sparse gaps.   */
+      function generateLines() {
+        seed = 1;
+        lines = [];
+        const lineCount = Math.min(Math.max(Math.floor(W / 9), 90), 200);
+
+        for (let i = 0; i < lineCount; i++) {
+          const t = i / lineCount;
+          /* Density clustering — combine sine waves at different
+             frequencies. Bunches lines into 3-4 natural clusters. */
+          const cluster = Math.sin(t * Math.PI * 3.3 + 0.4) * 0.07
+                        + Math.sin(t * Math.PI * 7.1 + 1.1) * 0.04
+                        + Math.sin(t * Math.PI * 13.7)      * 0.02;
+          const yT = t + cluster;
+          /* Lines start slightly off-screen top-left, end off-screen
+             bottom-right, creating the diagonal-flow look.           */
+          const startY = yT * 1.55 - 0.30;
+          const drop   = 0.30 + rnd() * 0.35;       /* vertical fall over the screen */
+
+          lines.push({
+            startY:    startY,
+            endY:      startY + drop,
+            amplitude: 22 + rnd() * 85,
+            frequency: 0.0008 + rnd() * 0.0016,
+            phase:     rnd() * Math.PI * 2,
+            speed:     0.07 + rnd() * 0.15,
+            opacity:   0.09 + rnd() * 0.13,         /* 9-22% per line */
+            thickness: 0.55 + rnd() * 0.45,
+            hueShift:  rnd() * 18 - 9               /* cool blue ↔ slightly cooler blue */
+          });
+        }
+      }
 
       function resize() {
         W = window.innerWidth;
@@ -3693,66 +3720,55 @@
         canvas.style.width  = W + 'px';
         canvas.style.height = H + 'px';
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        generateLines();
       }
 
-      /* Draw a single ribbon — N parallel lines, Gaussian edge fade */
-      function drawRibbon(r) {
-        const baseYPx = r.baseY * H;
-        const tiltPx  = r.tilt * H;
-        const phase   = r.phase + time * r.speed;
-        const stepX   = 6;                       /* path resolution */
-        const px      = (mx - 0.5) * 18;         /* parallax X */
-        const py      = (my - 0.5) * 14;         /* parallax Y */
+      function drawLine(line) {
+        const phase    = line.phase + time * line.speed;
+        const px       = (mx - 0.5) * 22;
+        const py       = (my - 0.5) * 16;
+        const startYPx = line.startY * H;
+        const endYPx   = line.endY * H;
+        const stepX    = 5;
 
-        for (let i = 0; i < r.lineCount; i++) {
-          const lineT   = i / (r.lineCount - 1);                 /* 0..1 across band */
-          const yOffset = (lineT - 0.5) * r.thickness;
-          /* Gaussian fade: opacity peaks at band centre, soft edges */
-          const edgeFade = Math.exp(-Math.pow((lineT - 0.5) * 2.4, 2));
-          const opacity  = (r.opacityPeak * edgeFade * 0.85 + 0.022 * edgeFade);
-          if (opacity < 0.005) continue;
-          /* Small per-line phase nudge so adjacent lines aren't perfectly parallel */
-          const linePhase = phase + lineT * 0.35;
-
-          ctx.beginPath();
-          let first = true;
-          for (let x = -80; x <= W + 80; x += stepX) {
-            const xt = x / W;
-            const diagY = (xt - 0.5) * tiltPx;
-            /* Two-octave sine for organic, never-quite-repeating feel */
-            const w1 = Math.sin(x * r.frequency + linePhase);
-            const w2 = Math.sin(x * r.frequency * 0.4 + linePhase * 1.4) * 0.5;
-            /* Horizontal density envelope — amplitude peaks at densityCenter */
-            const ampEnv = Math.exp(-Math.pow((xt - r.densityCenter) * 2.0, 2));
-            const wave   = (w1 + w2) * r.amplitude * ampEnv;
-            const y      = baseYPx + diagY + wave + yOffset + py * 0.5;
-            const drawX  = x + px * 0.4;
-            if (first) { ctx.moveTo(drawX, y); first = false; }
-            else        { ctx.lineTo(drawX, y); }
-          }
-          ctx.strokeStyle = r.hue + opacity.toFixed(4) + ')';
-          ctx.lineWidth   = 0.7;
-          ctx.stroke();
+        ctx.beginPath();
+        let first = true;
+        for (let x = -120; x <= W + 120; x += stepX) {
+          const xt    = x / W;
+          /* Linear diagonal trajectory from startY → endY */
+          const baseY = startYPx + (endYPx - startYPx) * xt;
+          /* Two-octave sine = organic, non-repeating undulation */
+          const w1    = Math.sin(x * line.frequency + phase);
+          const w2    = Math.sin(x * line.frequency * 0.45 + phase * 1.35) * 0.42;
+          const wave  = (w1 + w2) * line.amplitude;
+          const y     = baseY + wave + py * 0.45;
+          const drawX = x + px * 0.42;
+          if (first) { ctx.moveTo(drawX, y); first = false; }
+          else        { ctx.lineTo(drawX, y); }
         }
+
+        /* Soft cool-blue palette with per-line hue jitter */
+        const r = 90  + line.hueShift          | 0;
+        const g = 132 + line.hueShift * 0.55   | 0;
+        const b = 232;
+        ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + line.opacity.toFixed(4) + ')';
+        ctx.lineWidth   = line.thickness;
+        ctx.stroke();
       }
 
-      /* Main loop — time-based (dt) so speed is FPS-independent */
       function frame(now) {
         if (!lastT) lastT = now;
-        const dt = Math.min((now - lastT) / 1000, 0.05); /* clamp to 50ms safety */
+        const dt = Math.min((now - lastT) / 1000, 0.05);
         lastT = now;
         time += dt;
-
-        /* Smooth easing toward mouse target */
         mx += (mxR - mx) * 0.045;
         my += (myR - my) * 0.045;
 
         ctx.clearRect(0, 0, W, H);
-        for (const r of ribbons) drawRibbon(r);
+        for (const line of lines) drawLine(line);
         requestAnimationFrame(frame);
       }
 
-      /* Passive listeners — never block scroll */
       window.addEventListener('resize', resize, { passive: true });
       window.addEventListener('mousemove', e => {
         mxR = e.clientX / window.innerWidth;
