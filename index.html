@@ -1039,8 +1039,56 @@
     }
     .cf-wrap { max-width: 760px; margin: 0 auto; }
     .cf-header { text-align: center; margin-bottom: clamp(36px,5vw,52px); }
-    .cf-h2 { font-size: clamp(30px,3.5vw,44px); margin-bottom: 12px; }
+    .cf-h2 { font-size: clamp(30px,3.5vw,44px); margin-bottom: 0; }
     .cf-sub { font-size: 16px; color: var(--muted); max-width: 440px; margin: 0 auto; line-height: 1.65; }
+
+    /* ── Contact form — founder avatar bubble ──────────── */
+    .cf-h2-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .cf-avatar-bubble {
+      position: relative;
+      flex-shrink: 0;
+      width: 68px;
+      height: 68px;
+    }
+    .cf-avatar-img {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 8%;
+      border: 2.5px solid var(--blue);
+      box-shadow: 0 0 0 5px rgba(22,81,255,0.10);
+      display: block;
+      transition: box-shadow 240ms ease;
+    }
+    .cf-avatar-img:hover { box-shadow: 0 0 0 7px rgba(22,81,255,0.16); }
+    .cf-avatar-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      background: #22c55e;
+      border-radius: 50%;
+      border: 2.5px solid var(--surface);
+      box-shadow: 0 0 0 0 rgba(34,197,94,0.4);
+      animation: avatar-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes avatar-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.35); }
+      50%      { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+    @media (max-width: 600px) {
+      .cf-h2-row { gap: 13px; }
+      .cf-avatar-bubble { width: 54px; height: 54px; }
+      .cf-avatar-img    { width: 54px; height: 54px; }
+    }
 
     .cf-card {
       background: var(--white);
@@ -2455,7 +2503,13 @@
 
       <div class="cf-header rev">
         <div class="eyebrow" style="display:inline-block;margin-bottom:16px;">Get In Touch</div>
-        <h2 class="display cf-h2">Tell us about your project</h2>
+        <div class="cf-h2-row">
+          <div class="cf-avatar-bubble">
+            <img src="harry.jpg" alt="Harry, Founder of craftedsites." class="cf-avatar-img">
+            <span class="cf-avatar-dot" aria-hidden="true"></span>
+          </div>
+          <h2 class="display cf-h2">Tell us about your project</h2>
+        </div>
         <p class="cf-sub">Fill in the form below and we'll get back to you within 24 hours with a tailored proposal.</p>
       </div>
 
