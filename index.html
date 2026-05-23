@@ -2059,9 +2059,10 @@
     #aurelle-demo .ar-btn-ghost:active { transform: scale(0.97); }
     #aurelle-demo .ar-hero-right {
       background-image: url('aurelle-hero.png');
-      background-size: cover;
-      background-position: 88% center;
+      background-size: auto 130%;
+      background-position: 100% center;
       background-color: #0A0A0A;
+      background-repeat: no-repeat;
       position: relative;
     }
     /* Seamless black fade on the left edge — matches the photo's
@@ -2071,8 +2072,8 @@
       position: absolute; inset: 0;
       background: linear-gradient(90deg,
         #0A0A0A 0%,
-        rgba(10,10,10,0.4) 16%,
-        rgba(10,10,10,0) 32%);
+        rgba(10,10,10,0.55) 14%,
+        rgba(10,10,10,0) 30%);
       pointer-events: none;
     }
 
@@ -2204,7 +2205,7 @@
     #aurelle-demo .ar-wellness-img {
       background-image: url('aurelle-wellness.png');
       background-size: cover;
-      background-position: center;
+      background-position: center 25%;
       background-color: #2A2520;
     }
     #aurelle-demo .ar-wellness-right {
@@ -2281,8 +2282,8 @@
     }
     #aurelle-demo .ar-footer-top {
       display: grid;
-      grid-template-columns: 1.4fr 1.6fr 1fr 1fr 1fr 1.4fr;
-      gap: 40px;
+      grid-template-columns: 1.6fr 1.8fr 1fr 1fr 1fr;
+      gap: 48px;
       padding-bottom: 56px;
       border-bottom: 1px solid rgba(15,15,15,0.08);
     }
@@ -4487,12 +4488,6 @@
             <a href="#">Returns</a>
             <a href="#">Contact Us</a>
           </nav>
-        </div>
-        <div class="ar-footer-gallery">
-          <div class="ar-fg" style="background-image:url('aurelle-moisturizer.png')"></div>
-          <div class="ar-fg" style="background-image:url('aurelle-hero.png');background-position:center 20%"></div>
-          <div class="ar-fg" style="background-image:url('aurelle-serum.png')"></div>
-          <div class="ar-fg" style="background-image:url('aurelle-wellness.png')"></div>
         </div>
       </div>
       <div class="ar-footer-bottom">
