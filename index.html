@@ -213,6 +213,242 @@
       background: var(--surface);
     }
     .nav-right { display: flex; align-items: center; gap: 10px; }
+
+    /* ── Basket icon (nav) ─────────────────────────────── */
+    .nav-basket {
+      position: relative;
+      width: 38px; height: 38px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      color: var(--black);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease, transform 160ms var(--ease-out);
+    }
+    .nav-basket:hover {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+    .nav-basket:active { transform: scale(0.95); }
+    .nav-basket-count {
+      position: absolute;
+      top: -3px; right: -3px;
+      min-width: 18px; height: 18px;
+      padding: 0 4px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid var(--white);
+      transform: scale(0);
+      transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-basket-count.has-items { transform: scale(1); }
+
+    /* ── Basket drawer ─────────────────────────────────── */
+    .cs-basket-backdrop {
+      position: fixed; inset: 0; z-index: 9300;
+      background: rgba(12,12,12,0);
+      pointer-events: none;
+      transition: background 320ms ease;
+    }
+    .cs-basket-backdrop.open {
+      background: rgba(12,12,12,0.55);
+      pointer-events: auto;
+    }
+    .cs-basket {
+      position: fixed; top: 0; right: 0;
+      width: min(460px, 100%); height: 100%;
+      background: var(--white); z-index: 9310;
+      transform: translateX(100%);
+      transition: transform 380ms cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex; flex-direction: column;
+      box-shadow: -16px 0 48px rgba(12,12,12,0.18);
+    }
+    .cs-basket.open { transform: translateX(0); }
+    .cs-basket-header {
+      padding: 22px 28px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .cs-basket-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--black);
+      letter-spacing: -0.02em;
+    }
+    .cs-basket-close {
+      width: 32px; height: 32px;
+      background: transparent; border: none; cursor: pointer;
+      color: var(--text); padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: color 160ms ease, transform 160ms ease;
+    }
+    .cs-basket-close:hover { color: var(--blue); transform: scale(1.08); }
+    .cs-basket-body {
+      flex: 1; overflow-y: auto;
+      padding: 22px 28px;
+    }
+    .cs-basket-empty {
+      font-family: var(--font-body);
+      font-size: 14px; color: var(--muted);
+      text-align: center;
+      padding: 56px 16px 30px;
+      line-height: 1.7;
+    }
+    .cs-basket-empty-icon {
+      width: 56px; height: 56px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: var(--surface);
+      color: var(--light);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cs-basket-empty a {
+      color: var(--blue);
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Selected plan summary card */
+    .cs-plan-summary {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
+    .cs-plan-summary-tier {
+      font-family: var(--font-body);
+      font-size: 11px; font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .cs-plan-summary-row {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-top: 8px;
+    }
+    .cs-plan-summary-name {
+      font-family: var(--font-display);
+      font-size: 20px; font-weight: 800;
+      color: var(--black); letter-spacing: -0.025em;
+    }
+    .cs-plan-summary-price {
+      font-family: var(--font-display);
+      font-size: 22px; font-weight: 800;
+      color: var(--black);
+    }
+    .cs-plan-summary-desc {
+      font-family: var(--font-body);
+      font-size: 13px; color: var(--muted);
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+    .cs-plan-change {
+      background: transparent; border: none;
+      color: var(--blue);
+      font-family: var(--font-body);
+      font-size: 12px; font-weight: 500;
+      cursor: pointer; padding: 0;
+      margin-top: 14px;
+      text-decoration: underline;
+    }
+    .cs-plan-change:hover { color: var(--black); }
+
+    /* Form */
+    .cs-form-section {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.015em;
+      margin-bottom: 10px;
+    }
+    .cs-basket-form { display: flex; flex-direction: column; gap: 14px; }
+    .cs-form-group { display: flex; flex-direction: column; gap: 5px; }
+    .cs-form-label {
+      font-family: var(--font-body);
+      font-size: 12px; font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.005em;
+    }
+    .cs-form-req { color: var(--blue); margin-left: 2px; }
+    .cs-form-input, .cs-form-textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 13px; color: var(--text);
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 11px 13px;
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .cs-form-input:focus, .cs-form-textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(22,81,255,0.08);
+    }
+    .cs-form-textarea { min-height: 88px; resize: vertical; line-height: 1.55; }
+    .cs-form-error {
+      font-family: var(--font-body);
+      font-size: 11px; color: #B85040;
+      display: none;
+    }
+    .cs-form-group.error .cs-form-input,
+    .cs-form-group.error .cs-form-textarea { border-color: #B85040; }
+    .cs-form-group.error .cs-form-error { display: block; }
+
+    /* Footer (totals + checkout) */
+    .cs-basket-foot {
+      padding: 22px 28px 26px;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      flex-shrink: 0;
+    }
+    .cs-basket-totals { margin-bottom: 14px; }
+    .cs-totals-row {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-body);
+      font-size: 13px; color: var(--text);
+      padding: 4px 0;
+    }
+    .cs-totals-row.total {
+      border-top: 1px solid var(--border);
+      padding-top: 12px; margin-top: 6px;
+      font-size: 17px; font-weight: 700;
+      color: var(--black);
+    }
+    .cs-checkout-btn {
+      width: 100%;
+      background: var(--black); color: var(--white);
+      font-family: var(--font-body);
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.01em;
+      padding: 15px;
+      border: none; cursor: pointer;
+      border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 180ms ease, transform 160ms ease;
+    }
+    .cs-checkout-btn:hover { background: #1A1A1A; }
+    .cs-checkout-btn:active { transform: scale(0.985); }
+    .cs-checkout-btn:disabled {
+      background: var(--light);
+      cursor: not-allowed; opacity: 0.6;
+    }
+    .cs-stripe-badge {
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 11px; color: var(--muted);
+      margin-top: 12px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
     .hamburger {
       display: none;
       width: 40px; height: 40px;
@@ -2696,6 +2932,13 @@
       </ul>
 
       <div class="nav-right">
+        <button class="nav-basket" id="cs-basket-toggle" aria-label="View basket">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+            <path d="M5 7h14l-1.5 11.5a2 2 0 01-2 1.75h-7a2 2 0 01-2-1.75L5 7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M8 7V5a4 4 0 118 0v2" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+          <span class="nav-basket-count" id="cs-basket-count">0</span>
+        </button>
         <a href="#contact-form" class="btn btn-dark" style="padding:11px 22px;font-size:13px;">
           Start a Project <span class="arr">→</span>
         </a>
@@ -3233,7 +3476,7 @@
               </span>2-week delivery
             </li>
           </ul>
-          <a href="#contact-form" class="btn btn-outline plan-cta">
+          <a href="#contact-form" class="btn btn-outline plan-cta" data-plan="starter">
             Get Started <span class="arr">→</span>
           </a>
         </div>
@@ -3279,7 +3522,7 @@
               </span>3-week delivery
             </li>
           </ul>
-          <a href="#contact-form" class="btn btn-blue plan-cta">
+          <a href="#contact-form" class="btn btn-blue plan-cta" data-plan="growth">
             Get Started <span class="arr">→</span>
           </a>
         </div>
@@ -3324,7 +3567,7 @@
               </span>Priority delivery
             </li>
           </ul>
-          <a href="#contact-form" class="btn btn-dark plan-cta">
+          <a href="#contact-form" class="btn btn-dark plan-cta" data-plan="enterprise">
             Get Started <span class="arr">→</span>
           </a>
         </div>
@@ -4161,6 +4404,257 @@
 
     }
   </script>
+
+  <!-- ============================================================
+       BASKET DRAWER (main site checkout)
+  ============================================================ -->
+  <div class="cs-basket-backdrop" id="cs-basket-backdrop" aria-hidden="true"></div>
+  <aside class="cs-basket" id="cs-basket" role="dialog" aria-modal="true" aria-label="Your basket" aria-hidden="true">
+    <div class="cs-basket-header">
+      <div class="cs-basket-title" id="cs-basket-title">Your Basket</div>
+      <button class="cs-basket-close" id="cs-basket-close" aria-label="Close basket">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cs-basket-body" id="cs-basket-body"></div>
+    <div class="cs-basket-foot" id="cs-basket-foot" style="display:none"></div>
+  </aside>
+
+  <script>
+  /* ──────────────────────────────────────────────────────────
+     BASKET — Stripe Checkout via Payment Links
+     ──────────────────────────────────────────────────────────
+     Flow:
+       1. User clicks "Get Started" on a pricing tile (data-plan)
+       2. Plan is saved (state + localStorage) and basket drawer opens
+       3. User fills out the project form
+       4. Click "Continue to Secure Checkout":
+          - validate form
+          - POST project details to Formspree (capture the lead)
+          - redirect to the matching Stripe Payment Link
+     ────────────────────────────────────────────────────────── */
+  (function initBasket() {
+    const PLANS = {
+      starter: {
+        tier: 'Starter',
+        price: 997,
+        desc: 'Up to 5 pages · Custom design · Mobile responsive · Basic SEO · 2-week delivery',
+        paymentLink: 'https://buy.stripe.com/00w3cv9ob4575w99iaa3u00'
+      },
+      growth: {
+        tier: 'Growth',
+        price: 2497,
+        desc: 'Up to 12 pages · Premium design + animations · Full branding · Advanced SEO · Copywriting · 3-week delivery',
+        paymentLink: 'https://buy.stripe.com/eVq00jasf0SV6Ad8e6a3u01'
+      },
+      enterprise: {
+        tier: 'Enterprise',
+        price: 4997,
+        desc: 'Unlimited pages · E-commerce · Custom functionality · Premium animations · Priority support · 4-6 week delivery',
+        paymentLink: 'https://buy.stripe.com/aFabJ1eIvfNPgaNcuma3u02'
+      }
+    };
+    const FORMSPREE = 'https://formspree.io/f/xgoqkndw';
+
+    const basket     = document.getElementById('cs-basket');
+    const backdrop   = document.getElementById('cs-basket-backdrop');
+    const body       = document.getElementById('cs-basket-body');
+    const foot       = document.getElementById('cs-basket-foot');
+    const toggleBtn  = document.getElementById('cs-basket-toggle');
+    const closeBtn   = document.getElementById('cs-basket-close');
+    const countBadge = document.getElementById('cs-basket-count');
+    if (!basket || !toggleBtn) return;
+
+    let selectedPlanId = null;
+    try {
+      const saved = localStorage.getItem('cs_basket_plan');
+      if (saved && PLANS[saved]) selectedPlanId = saved;
+    } catch (e) {}
+
+    const fmt = n => '£' + n.toLocaleString('en-GB');
+
+    function updateBadge() {
+      if (selectedPlanId) {
+        countBadge.textContent = '1';
+        countBadge.classList.add('has-items');
+      } else {
+        countBadge.classList.remove('has-items');
+      }
+    }
+    function persist() {
+      try {
+        if (selectedPlanId) localStorage.setItem('cs_basket_plan', selectedPlanId);
+        else                localStorage.removeItem('cs_basket_plan');
+      } catch (e) {}
+    }
+    function setPlan(id) { selectedPlanId = id; persist(); updateBadge(); }
+
+    function openBasket() {
+      basket.classList.add('open');
+      backdrop.classList.add('open');
+      basket.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      render();
+    }
+    function closeBasket() {
+      basket.classList.remove('open');
+      backdrop.classList.remove('open');
+      basket.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function jumpToPricing() {
+      closeBasket();
+      const el = document.querySelector('#pricing');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function render() {
+      if (!selectedPlanId) {
+        body.innerHTML =
+          '<div class="cs-basket-empty">' +
+            '<div class="cs-basket-empty-icon">' +
+              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 7h14l-1.5 11.5a2 2 0 01-2 1.75h-7a2 2 0 01-2-1.75L5 7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 7V5a4 4 0 118 0v2" stroke="currentColor" stroke-width="1.5"/></svg>' +
+            '</div>' +
+            'Your basket is empty.<br>' +
+            'Choose a plan from our <a id="cs-jump-pricing">pricing</a> below to get started.' +
+          '</div>';
+        foot.style.display = 'none';
+        const jump = document.getElementById('cs-jump-pricing');
+        if (jump) jump.addEventListener('click', jumpToPricing);
+        return;
+      }
+
+      const plan = PLANS[selectedPlanId];
+      body.innerHTML =
+        '<div class="cs-plan-summary">' +
+          '<div class="cs-plan-summary-tier">Selected Plan</div>' +
+          '<div class="cs-plan-summary-row">' +
+            '<div class="cs-plan-summary-name">' + plan.tier + '</div>' +
+            '<div class="cs-plan-summary-price">' + fmt(plan.price) + '</div>' +
+          '</div>' +
+          '<div class="cs-plan-summary-desc">' + plan.desc + '</div>' +
+          '<button class="cs-plan-change" id="cs-plan-change" type="button">Change plan</button>' +
+        '</div>' +
+        '<div class="cs-form-section">Tell us about your project</div>' +
+        '<form class="cs-basket-form" id="cs-basket-form" novalidate>' +
+          '<div class="cs-form-group" id="cs-grp-name">' +
+            '<label class="cs-form-label" for="cs-name">Full name<span class="cs-form-req">*</span></label>' +
+            '<input class="cs-form-input" type="text" id="cs-name" name="name" required autocomplete="name">' +
+            '<div class="cs-form-error">Please enter your name.</div>' +
+          '</div>' +
+          '<div class="cs-form-group">' +
+            '<label class="cs-form-label" for="cs-business">Business name</label>' +
+            '<input class="cs-form-input" type="text" id="cs-business" name="business" autocomplete="organization">' +
+          '</div>' +
+          '<div class="cs-form-group" id="cs-grp-email">' +
+            '<label class="cs-form-label" for="cs-email">Email<span class="cs-form-req">*</span></label>' +
+            '<input class="cs-form-input" type="email" id="cs-email" name="email" required autocomplete="email">' +
+            '<div class="cs-form-error">Please enter a valid email address.</div>' +
+          '</div>' +
+          '<div class="cs-form-group">' +
+            '<label class="cs-form-label" for="cs-phone">Phone (optional)</label>' +
+            '<input class="cs-form-input" type="tel" id="cs-phone" name="phone" autocomplete="tel">' +
+          '</div>' +
+          '<div class="cs-form-group" id="cs-grp-goal">' +
+            '<label class="cs-form-label" for="cs-goal">Project goal<span class="cs-form-req">*</span></label>' +
+            '<textarea class="cs-form-textarea" id="cs-goal" name="goal" required placeholder="Briefly describe your project, timeline, and anything we should know…"></textarea>' +
+            '<div class="cs-form-error">Please share a few details about your project.</div>' +
+          '</div>' +
+        '</form>';
+
+      foot.style.display = 'block';
+      foot.innerHTML =
+        '<div class="cs-basket-totals">' +
+          '<div class="cs-totals-row"><span>' + plan.tier + ' Package</span><span>' + fmt(plan.price) + '</span></div>' +
+          '<div class="cs-totals-row total"><span>Total</span><span>' + fmt(plan.price) + '</span></div>' +
+        '</div>' +
+        '<button class="cs-checkout-btn" id="cs-pay-btn" type="button">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 10h20" stroke="currentColor" stroke-width="1.8"/></svg>' +
+          'Continue to Secure Checkout' +
+        '</button>' +
+        '<div class="cs-stripe-badge">' +
+          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>' +
+          'Powered by Stripe · 256-bit encryption' +
+        '</div>';
+
+      document.getElementById('cs-plan-change').addEventListener('click', jumpToPricing);
+      document.getElementById('cs-pay-btn').addEventListener('click', handleCheckout);
+    }
+
+    async function handleCheckout() {
+      if (!selectedPlanId) return;
+      const plan = PLANS[selectedPlanId];
+      const form = document.getElementById('cs-basket-form');
+      const payBtn = document.getElementById('cs-pay-btn');
+
+      /* Clear previous errors */
+      form.querySelectorAll('.cs-form-group').forEach(g => g.classList.remove('error'));
+
+      /* Validate */
+      const name  = form.querySelector('#cs-name').value.trim();
+      const email = form.querySelector('#cs-email').value.trim();
+      const goal  = form.querySelector('#cs-goal').value.trim();
+      let firstError = null;
+      if (!name) { document.getElementById('cs-grp-name').classList.add('error'); firstError = firstError || 'cs-grp-name'; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('cs-grp-email').classList.add('error');
+        firstError = firstError || 'cs-grp-email';
+      }
+      if (!goal) { document.getElementById('cs-grp-goal').classList.add('error'); firstError = firstError || 'cs-grp-goal'; }
+      if (firstError) {
+        document.getElementById(firstError).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      /* Submit lead to Formspree, then redirect to Stripe Payment Link */
+      payBtn.disabled = true;
+      payBtn.innerHTML = 'Saving your details…';
+
+      const fd = new FormData(form);
+      fd.append('plan_tier',  plan.tier);
+      fd.append('plan_price', '£' + plan.price);
+      fd.append('source',     'basket-checkout');
+
+      try {
+        await fetch(FORMSPREE, {
+          method: 'POST',
+          body: fd,
+          headers: { Accept: 'application/json' }
+        });
+      } catch (e) {
+        console.warn('[craftedsites] lead capture failed, proceeding to checkout:', e);
+      }
+
+      payBtn.innerHTML = 'Redirecting to checkout…';
+      window.location.href = plan.paymentLink;
+    }
+
+    /* ── Wire up "Get Started" buttons on the pricing tiles ── */
+    document.querySelectorAll('[data-plan]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const planId = btn.dataset.plan;
+        if (!PLANS[planId]) return;
+        e.preventDefault();
+        setPlan(planId);
+        openBasket();
+      });
+    });
+
+    /* ── Basket icon + close ──────────────────────────────── */
+    toggleBtn.addEventListener('click', openBasket);
+    closeBtn.addEventListener('click', closeBasket);
+    backdrop.addEventListener('click', closeBasket);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && basket.classList.contains('open')) closeBasket();
+    });
+
+    updateBadge();
+  })();
+  </script>
+
 
   <!-- ============================================================
        VANTA ENERGY — DEMO OVERLAY
