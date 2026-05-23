@@ -1,0 +1,3351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crafted Sites — Premium Web Design Agency</title>
+  <meta name="description" content="Strategic, modern and high-converting websites designed to elevate your brand and grow your business. Based in the UK.">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital@1&family=Bebas+Neue&family=Permanent+Marker&family=Anton&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Custom Properties ─────────────────────────────── */
+    :root {
+      --blue:        #1651FF;
+      --blue-dim:    #EEF2FF;
+      --black:       #0C0C0C;
+      --near-black:  #111111;
+      --text:        #1A1A1A;
+      --muted:       #6B7280;
+      --light:       #9CA3AF;
+      --surface:     #F7F7F7;
+      --border:      #E6E6E6;
+      --white:       #FFFFFF;
+
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-serif:   'Playfair Display', serif;
+
+      --r-sm:  8px;
+      --r:     14px;
+      --r-lg:  20px;
+      --r-xl:  28px;
+
+      --sh:    0 4px 20px rgba(0,0,0,.07), 0 1px 6px rgba(0,0,0,.04);
+      --sh-lg: 0 20px 48px rgba(0,0,0,.11), 0 8px 16px rgba(0,0,0,.05);
+      --sh-xl: 0 40px 80px rgba(0,0,0,.15);
+
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+      --mw:   1200px;
+      --px:   clamp(20px, 5vw, 80px);
+    }
+
+    /* ── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* ── Typography helpers ────────────────────────────── */
+    .display {
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+    .em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--blue);
+      letter-spacing: -0.01em;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+
+    /* ── Layout ────────────────────────────────────────── */
+    .wrap  { max-width: var(--mw); margin: 0 auto; padding: 0 var(--px); }
+    .sec   { padding: clamp(72px,9vw,128px) 0; }
+
+    /* ── Buttons ───────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 100px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      transition: transform 160ms var(--ease-out), box-shadow 200ms var(--ease-out), background 180ms ease, border-color 180ms ease;
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-dark {
+      background: var(--black);
+      color: var(--white);
+    }
+    .btn-dark:hover {
+      background: #222;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.2);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover {
+      border-color: #aaa;
+      transform: translateY(-1px);
+    }
+
+    .btn-blue {
+      background: var(--blue);
+      color: var(--white);
+    }
+    .btn-blue:hover {
+      background: #0F40E8;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(22,81,255,.3);
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--black);
+    }
+    .btn-white:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255,255,255,.2);
+    }
+
+    .arr { transition: transform 200ms var(--ease-out); }
+    .btn:hover .arr { transform: translateX(3px); }
+
+    /* ── Nav ───────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      padding: 0 var(--px);
+      transition: background 300ms ease, box-shadow 300ms ease;
+    }
+    #nav.scrolled {
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 rgba(0,0,0,.07);
+    }
+    .nav-inner {
+      max-width: var(--mw);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.05em;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: var(--blue);
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      padding: 7px 13px;
+      border-radius: var(--r-sm);
+      transition: color 140ms ease, background 140ms ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      background: var(--surface);
+    }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .hamburger {
+      display: none;
+      width: 40px; height: 40px;
+      border: none; background: none; cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px;
+      border-radius: var(--r-sm);
+    }
+    .hamburger span {
+      display: block;
+      width: 20px; height: 1.5px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 200ms ease, opacity 200ms ease;
+    }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    #home {
+      padding-top: 70px;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px,6vw,88px);
+      align-items: center;
+      padding: clamp(64px,9vw,112px) 0;
+    }
+
+    /* Left */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 28px;
+      animation: fadeUp 600ms var(--ease-out) both;
+    }
+    .pulse {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.6; transform:scale(.8); }
+    }
+    .hero-h1 {
+      font-size: clamp(44px,5.8vw,76px);
+      margin-bottom: 22px;
+      animation: fadeUp 600ms var(--ease-out) 60ms both;
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 400px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 600ms var(--ease-out) 120ms both;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 52px;
+      flex-wrap: wrap;
+      animation: fadeUp 600ms var(--ease-out) 180ms both;
+    }
+    .social-proof {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: fadeUp 600ms var(--ease-out) 240ms both;
+    }
+    .avatars { display: flex; }
+    .avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 2.5px solid var(--white);
+      background: linear-gradient(135deg, #E2E8F0, #CBD5E1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      margin-left: -9px;
+    }
+    .avatars .avatar:first-child { margin-left: 0; }
+    .proof-text { display: flex; flex-direction: column; gap: 2px; }
+    .proof-label {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .stars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .star { color: #F59E0B; }
+
+    /* Right – mockup */
+    .hero-visual {
+      animation: fadeUp 700ms var(--ease-out) 160ms both;
+    }
+    .browser {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--sh-xl);
+      overflow: hidden;
+    }
+    .browser-bar {
+      height: 38px;
+      background: #F3F3F3;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 6px;
+    }
+    .bdot { width: 10px; height: 10px; border-radius: 50%; }
+    .bdot:nth-child(1) { background: #FF5F57; }
+    .bdot:nth-child(2) { background: #FEBC2E; }
+    .bdot:nth-child(3) { background: #28C840; }
+    .burl {
+      flex: 1;
+      height: 21px;
+      background: var(--white);
+      border-radius: 5px;
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 10.5px;
+      color: var(--light);
+    }
+
+    /* Mini site inside browser */
+    .mini { padding: 22px 22px 18px; }
+    .mini-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .mini-logo-text {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: -0.05em;
+    }
+    .mini-nav-links {
+      display: flex;
+      gap: 12px;
+      font-size: 8.5px;
+      color: var(--muted);
+    }
+    .mini-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+    .mini-headline {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .mini-p {
+      font-size: 8.5px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .mini-btn {
+      display: inline-block;
+      background: var(--black);
+      color: var(--white);
+      font-size: 8px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 100px;
+    }
+    .mini-img {
+      aspect-ratio: 1;
+      background: linear-gradient(140deg, #EDE8E0, #D9CFC2);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Metrics bar */
+    .metrics {
+      display: flex;
+      gap: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--r-lg) var(--r-lg);
+    }
+    .metric {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 18px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .metric:last-child { border-right: none; }
+    .m-icon {
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .m-icon.up   { background: #EFF6FF; }
+    .m-icon.bolt { background: #FFFBEB; }
+    .m-icon.grow { background: #F0FDF4; }
+    .m-title {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .m-desc { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+
+    /* ── Brands Strip ──────────────────────────────────── */
+    .brands-strip {
+      background: var(--near-black);
+      padding: 26px 0;
+      overflow: hidden;
+    }
+    .brands-inner {
+      max-width: var(--mw);
+      margin: 0 auto;
+      padding: 0 var(--px);
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .brands-label {
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      white-space: nowrap;
+      min-width: 110px;
+      line-height: 1.6;
+    }
+    .ticker-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .ticker-wrap::before,
+    .ticker-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 64px;
+      z-index: 2;
+    }
+    .ticker-wrap::before { background: linear-gradient(to right, var(--near-black), transparent); }
+    .ticker-wrap::after  { left: auto; right: 0; background: linear-gradient(to left, var(--near-black), transparent); }
+    .ticker {
+      display: flex;
+      gap: 60px;
+      width: max-content;
+      animation: tick 22s linear infinite;
+    }
+    .ticker:hover { animation-play-state: paused; }
+    @keyframes tick {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .brand {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,.2);
+      white-space: nowrap;
+      transition: color 200ms ease;
+    }
+    .brand:hover { color: rgba(255,255,255,.65); }
+
+    /* ── Services ──────────────────────────────────────── */
+    #services { background: var(--white); }
+    .services-grid-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: clamp(48px,6vw,96px);
+      align-items: start;
+    }
+    .services-sticky {
+      position: sticky;
+      top: 90px;
+    }
+    .sec-eyebrow { margin-bottom: 18px; }
+    .sec-headline { font-size: clamp(34px,4vw,52px); margin-bottom: 20px; }
+    .sec-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 340px;
+    }
+
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+    }
+    .svc-card {
+      background: var(--white);
+      padding: 26px;
+      transition: background 180ms ease;
+    }
+    .svc-card:hover { background: var(--surface); }
+    .svc-icon {
+      width: 38px; height: 38px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .svc-name {
+      font-family: var(--font-display);
+      font-size: 14.5px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .svc-desc { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+    /* ── Work ──────────────────────────────────────────── */
+    #work { background: var(--near-black); overflow: hidden; }
+    .work-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: clamp(40px,5vw,64px);
+      gap: 32px;
+    }
+    .work-head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 20px; }
+    .work-h2 { font-size: clamp(36px,4.5vw,58px); color: var(--white); max-width: 380px; }
+    .work-sub { font-size: 15px; color: rgba(255,255,255,.45); line-height: 1.65; max-width: 280px; text-align: right; }
+    .work-ey { color: rgba(255,255,255,.35); }
+
+    .portfolio {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .p-card {
+      border-radius: var(--r);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+    .p-card-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 480ms var(--ease-out);
+    }
+    .p-card:hover .p-card-bg { transform: scale(1.06); }
+    .p-card-info {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.78) 0%, transparent 52%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px;
+    }
+    .p-cat {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 5px;
+    }
+    .p-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.035em;
+    }
+
+    .work-foot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 36px;
+    }
+    .icon-btn {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.14);
+      background: transparent;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 180ms ease, border-color 180ms ease, transform 160ms var(--ease-out);
+    }
+    .icon-btn:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.28);
+    }
+    .icon-btn:active { transform: scale(0.97); }
+
+    /* ── Process ───────────────────────────────────────── */
+    #process { background: var(--surface); }
+    .process-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px,6vw,80px);
+      align-items: center;
+      margin-bottom: clamp(56px,7vw,96px);
+    }
+    .process-h2 { font-size: clamp(34px,4vw,52px); }
+    .process-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 400px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: var(--border);
+      gap: 1px;
+    }
+    .step {
+      background: var(--white);
+      padding: 36px 30px;
+    }
+    .step-num-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .step-num {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-icon { width: 28px; height: 28px; color: var(--muted); }
+    .step-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Pricing ───────────────────────────────────────── */
+    #pricing { background: var(--white); }
+    .pricing-head {
+      text-align: center;
+      margin-bottom: clamp(48px,6vw,80px);
+    }
+    .pricing-h2 { font-size: clamp(34px,4vw,52px); margin-bottom: 14px; }
+    .pricing-sub { font-size: 17px; color: var(--muted); max-width: 460px; margin: 0 auto; }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+    .plan {
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: clamp(28px,3vw,40px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out), border-color 200ms ease;
+    }
+    .plan:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--sh-lg);
+      border-color: #ccc;
+    }
+    .plan-featured {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+    .plan-featured:hover { border-color: #333; }
+    .plan-badge {
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--blue);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      padding: 5px 15px;
+      border-radius: 0 0 10px 10px;
+    }
+    .plan-tier {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .plan-featured .plan-tier { color: rgba(255,255,255,.45); }
+    .plan-price {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      margin-bottom: 6px;
+    }
+    .p-cur {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .p-amt {
+      font-family: var(--font-display);
+      font-size: clamp(44px,5vw,60px);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 1;
+    }
+    .plan-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-featured .plan-desc {
+      color: rgba(255,255,255,.45);
+      border-bottom-color: rgba(255,255,255,.1);
+    }
+    .plan-features {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 28px;
+    }
+    .plan-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-featured .plan-feature { border-bottom-color: rgba(255,255,255,.08); color: rgba(255,255,255,.85); }
+    .plan-feature:last-child { border-bottom: none; }
+    .chk {
+      flex-shrink: 0;
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      background: var(--blue-dim);
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .plan-featured .chk { background: rgba(22,81,255,.18); color: #93B4FF; }
+    .plan-cta { width: 100%; justify-content: center; }
+
+    /* ── Contact / CTA ─────────────────────────────────── */
+    #contact { padding: clamp(80px,10vw,140px) 0; }
+    .cta-box {
+      background: linear-gradient(130deg, #1245F0 0%, #0B35D6 40%, #0A2EB8 100%);
+      border-radius: var(--r-xl);
+      padding: clamp(56px,7vw,96px) clamp(40px,6vw,80px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -60%; right: -8%;
+      width: 55%; height: 220%;
+      background: radial-gradient(ellipse, rgba(255,255,255,.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta-h2 { font-size: clamp(28px,3.5vw,46px); color: var(--white); max-width: 480px; }
+    .cta-sub { color: rgba(255,255,255,.55); font-size: 16px; margin-top: 12px; max-width: 380px; line-height: 1.65; }
+    .cta-right { display: flex; flex-direction: column; align-items: flex-end; gap: 18px; flex-shrink: 0; }
+    .cta-proof { display: flex; align-items: center; gap: 12px; }
+    .cta-proof-text { font-size: 13px; color: rgba(255,255,255,.5); }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer {
+      background: var(--near-black);
+      padding: clamp(56px,7vw,96px) 0 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 240px 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 28px;
+    }
+    .f-logo {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .f-tagline { font-size: 13px; color: rgba(255,255,255,.35); line-height: 1.7; margin-bottom: 22px; }
+    .socials { display: flex; gap: 10px; }
+    .social-icon {
+      width: 34px; height: 34px;
+      border-radius: 7px;
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.4);
+      transition: border-color 140ms ease, color 140ms ease;
+    }
+    .social-icon:hover { border-color: rgba(255,255,255,.28); color: var(--white); }
+    .f-col-title {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 18px;
+    }
+    .f-links { display: flex; flex-direction: column; gap: 12px; }
+    .f-links a { font-size: 14px; color: rgba(255,255,255,.5); transition: color 140ms ease; }
+    .f-links a:hover { color: var(--white); }
+    .f-contact-link { display: block; font-size: 14px; color: rgba(255,255,255,.5); margin-bottom: 10px; transition: color 140ms ease; }
+    .f-contact-link:hover { color: var(--white); }
+    .f-tagline-small { font-size: 12.5px; color: rgba(255,255,255,.3); margin-bottom: 16px; line-height: 1.6; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .f-copy { font-size: 12.5px; color: rgba(255,255,255,.25); }
+    .f-legal { display: flex; gap: 20px; }
+    .f-legal a { font-size: 12.5px; color: rgba(255,255,255,.25); transition: color 140ms ease; }
+    .f-legal a:hover { color: rgba(255,255,255,.55); }
+
+    /* ── Scroll Reveal ─────────────────────────────────── */
+    .rev {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 580ms var(--ease-out), transform 580ms var(--ease-out);
+    }
+    .rev.in { opacity: 1; transform: translateY(0); }
+    .rev-d1 { transition-delay: 80ms; }
+    .rev-d2 { transition-delay: 160ms; }
+    .rev-d3 { transition-delay: 240ms; }
+
+    /* ── Page load animation ───────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { max-width: 560px; width: 100%; margin: 0 auto; }
+      .services-grid-layout { grid-template-columns: 1fr; }
+      .services-sticky { position: static; }
+      .portfolio { grid-template-columns: 1fr 1fr; }
+      .process-head { grid-template-columns: 1fr; }
+      .plans { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .cta-box { flex-direction: column; text-align: center; }
+      .cta-right { align-items: center; }
+      .cta-sub { margin: 12px auto 0; }
+      .work-head { flex-direction: column; align-items: flex-start; }
+      .work-head-right { align-items: flex-start; }
+      .work-sub { text-align: left; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn-dark { display: none; }
+      .hamburger { display: flex; }
+      .steps { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .brands-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+    }
+
+    @media (max-width: 540px) {
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .portfolio { grid-template-columns: 1fr; }
+      .metrics { flex-direction: column; }
+      .metric { border-right: none; border-bottom: 1px solid var(--border); }
+      .metric:last-child { border-bottom: none; }
+      .svc-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Reduced motion ────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .rev { transition: none; opacity: 1; transform: none; }
+      .hero-badge, .hero-h1, .hero-sub, .hero-actions, .social-proof, .hero-visual {
+        animation: none;
+      }
+      .ticker { animation: none; }
+      .pulse  { animation: none; }
+      #bg-canvas, .bg-orb { display: none; }
+    }
+
+    /* ── Animated Background System ───────────────────── */
+    /*
+      Strategy: #bg sits at z-index 100 with mix-blend-mode: multiply.
+      Multiply against white = blue tint. Multiply against dark = barely changes.
+      pointer-events: none means clicks pass straight through.
+      No section backgrounds need to change.
+    */
+    #bg {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      overflow: hidden;
+      mix-blend-mode: multiply;
+    }
+
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    /* Large soft blue orb — top left */
+    #orb1 {
+      width: 800px; height: 800px;
+      background: radial-gradient(circle at 38% 38%,
+        rgba(147,197,253,0.55) 0%,
+        rgba(96,165,250,0.22)  38%,
+        transparent 70%);
+      filter: blur(60px);
+      top: -260px; left: -240px;
+    }
+
+    /* Medium indigo orb — bottom right */
+    #orb2 {
+      width: 620px; height: 620px;
+      background: radial-gradient(circle at 55% 55%,
+        rgba(199,210,254,0.52) 0%,
+        rgba(165,180,252,0.18) 44%,
+        transparent 70%);
+      filter: blur(68px);
+      top: 52%; right: -150px;
+    }
+
+    /* Small periwinkle orb — centre, drifts mid-page */
+    #orb3 {
+      width: 480px; height: 480px;
+      background: radial-gradient(circle,
+        rgba(219,234,254,0.44) 0%,
+        transparent 68%);
+      filter: blur(80px);
+      top: 22%; left: 38%;
+    }
+
+    #bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+    }
+
+    /* ── Contact Form ──────────────────────────────────── */
+    #contact-form {
+      background: var(--surface);
+      padding: clamp(72px,9vw,112px) 0 clamp(80px,10vw,128px);
+    }
+    .cf-wrap { max-width: 760px; margin: 0 auto; }
+    .cf-header { text-align: center; margin-bottom: clamp(36px,5vw,52px); }
+    .cf-h2 { font-size: clamp(30px,3.5vw,44px); margin-bottom: 12px; }
+    .cf-sub { font-size: 16px; color: var(--muted); max-width: 440px; margin: 0 auto; line-height: 1.65; }
+
+    .cf-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: clamp(32px,5vw,52px);
+      box-shadow: var(--sh-lg);
+    }
+
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    .cf-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+    .cf-group:last-of-type { margin-bottom: 0; }
+
+    .cf-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .cf-req { color: var(--blue); margin-left: 2px; }
+
+    .cf-input,
+    .cf-select,
+    .cf-textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+    .cf-input, .cf-select { height: 48px; padding: 0 16px; }
+    .cf-textarea {
+      padding: 14px 16px;
+      height: 116px;
+      resize: vertical;
+      min-height: 88px;
+      line-height: 1.6;
+    }
+    .cf-input::placeholder, .cf-textarea::placeholder { color: var(--light); }
+    .cf-input:focus, .cf-select:focus, .cf-textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(22,81,255,.1);
+    }
+    .cf-input.err, .cf-select.err, .cf-textarea.err {
+      border-color: #EF4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,.08);
+    }
+    .cf-error { font-size: 12px; color: #EF4444; display: none; margin-top: 2px; }
+    .cf-group.has-err .cf-error { display: block; }
+    .cf-group.has-err .cf-input,
+    .cf-group.has-err .cf-select,
+    .cf-group.has-err .cf-textarea { border-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,.08); }
+
+    .cf-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    /* Website type toggle chips */
+    .cf-toggle { display: flex; gap: 10px; }
+    .cf-toggle-opt { flex: 1; position: relative; }
+    .cf-toggle-opt input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .cf-toggle-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+      user-select: none;
+    }
+    .cf-toggle-label:hover { border-color: #aaa; color: var(--text); }
+    .cf-toggle-opt input:checked + .cf-toggle-label {
+      border-color: var(--blue);
+      background: var(--blue-dim);
+      color: var(--blue);
+    }
+    .cf-toggle-opt input:focus-visible + .cf-toggle-label {
+      box-shadow: 0 0 0 3px rgba(22,81,255,.15);
+    }
+
+    .cf-divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+    .cf-submit {
+      width: 100%;
+      justify-content: center;
+      height: 52px;
+      font-size: 15px;
+      margin-top: 8px;
+      border-radius: var(--r-sm);
+    }
+    .cf-submit:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Success panel */
+    .cf-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 56px 24px;
+      gap: 16px;
+    }
+    .cf-success.show { display: flex; }
+    .cf-success-icon {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--blue-dim);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blue);
+      animation: fadeUp 500ms var(--ease-out) both;
+    }
+    .cf-success-h {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      animation: fadeUp 500ms var(--ease-out) 60ms both;
+    }
+    .cf-success-p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 360px;
+      line-height: 1.65;
+      animation: fadeUp 500ms var(--ease-out) 120ms both;
+    }
+
+    @media (max-width: 600px) {
+      .cf-row { grid-template-columns: 1fr; }
+      .cf-group { margin-bottom: 16px; }
+    }
+
+    /* ================================================================
+       VANTA ENERGY — PORTFOLIO CARD
+    ================================================================ */
+    .vanta-card {
+      grid-column: 1 / -1;
+      aspect-ratio: 21/9;
+      border-radius: var(--r);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #060606;
+    }
+    .vanta-card:hover { transform: translateY(-3px); }
+    .vanta-card:active { transform: scale(0.99); }
+    .vanta-card video.vc-vid {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 620ms var(--ease-out);
+    }
+    .vanta-card:hover .vc-vid { transform: scale(1.04); }
+    .vc-overlay {
+      position: absolute; inset: 0;
+      background: transparent;
+      transition: background 360ms ease;
+    }
+    .vanta-card:hover .vc-overlay {
+      background: linear-gradient(135deg,
+        rgba(181,245,0,0.06) 0%,
+        transparent 60%);
+    }
+    .vc-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 55% 85% at 74% 62%,
+        rgba(181,245,0,0.20) 0%,
+        transparent 70%);
+      pointer-events: none;
+      opacity: 0.55;
+      transition: opacity 360ms ease;
+    }
+    .vanta-card:hover .vc-glow { opacity: 1; }
+    .vc-badge {
+      position: absolute; top: 20px; left: 20px;
+      background: rgba(181,245,0,0.11);
+      border: 1px solid rgba(181,245,0,0.38);
+      color: #B5F500;
+      font-family: var(--font-body);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 13px; border-radius: 100px;
+    }
+    .vc-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 26px 28px;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;
+    }
+    .vc-info .p-cat { color: rgba(181,245,0,0.62); margin-bottom: 6px; }
+    .vc-info .p-name {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2.6vw, 32px);
+      font-weight: 800; color: var(--white); letter-spacing: -0.03em;
+    }
+    .vc-enter {
+      display: flex; align-items: center; gap: 8px; white-space: nowrap;
+      background: #B5F500; color: #080808;
+      font-family: var(--font-body);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 13px 22px; border-radius: 100px; border: none; cursor: pointer;
+      transition: transform 160ms var(--ease-out), background 160ms ease, box-shadow 200ms ease;
+      flex-shrink: 0;
+    }
+    .vc-enter:hover { background: #CCFF00; box-shadow: 0 0 28px rgba(181,245,0,0.4); }
+    .vc-enter:active { transform: scale(0.97); }
+    @media (max-width: 1024px) { .vanta-card { aspect-ratio: 16/9; } }
+    @media (max-width: 540px)  { .vanta-card { aspect-ratio: 4/3; } .vc-enter { display: none; } }
+
+    /* ================================================================
+       VANTA ENERGY — DEMO OVERLAY
+    ================================================================ */
+    #vanta-demo {
+      position: fixed; inset: 0; z-index: 9990;
+      background: #080808;
+      overflow-y: auto; overflow-x: hidden;
+      opacity: 0; visibility: hidden;
+      transition: opacity 500ms var(--ease-out), visibility 0ms 500ms;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      font-family: 'DM Sans', sans-serif;
+      color: #F0F0F0;
+    }
+    #vanta-demo.vd-open {
+      opacity: 1; visibility: visible;
+      transition: opacity 500ms var(--ease-out);
+    }
+    #vd-close {
+      position: fixed; top: 18px; right: 18px; z-index: 9999;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(20,20,20,0.7);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.88); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 180ms ease, transform 160ms var(--ease-out), opacity 300ms ease;
+      opacity: 0; pointer-events: none;
+    }
+    #vd-close.vd-visible { opacity: 1; pointer-events: auto; }
+    #vd-close:hover { background: rgba(40,40,40,0.85); }
+    #vd-close:active { transform: scale(0.93); }
+
+    /* --- Nav --- */
+    #vanta-demo .vd-nav {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px clamp(20px,5vw,60px);
+    }
+    #vanta-demo .vd-logo {
+      font-family: 'Bebas Neue', 'Syne', sans-serif;
+      font-size: 26px; letter-spacing: 0.14em; color: white; line-height: 1;
+    }
+    #vanta-demo .vd-nav-links {
+      display: flex; align-items: center; gap: 30px;
+    }
+    #vanta-demo .vd-nav-links a {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.09em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+      text-decoration: none; transition: color 160ms ease;
+    }
+    #vanta-demo .vd-nav-links a:hover { color: #B5F500; }
+    #vanta-demo .vd-get-btn {
+      background: #B5F500; color: #080808;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer;
+      transition: background 160ms ease;
+    }
+    #vanta-demo .vd-get-btn:hover { background: #CCFF00; }
+
+    /* --- Hero --- */
+    #vanta-demo .vd-hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; overflow: hidden; background: #070707;
+    }
+    #vanta-demo .vd-hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; opacity: 1;
+    }
+    #vanta-demo .vd-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(130deg,
+        rgba(6,6,6,0.94) 0%,
+        rgba(6,6,6,0.66) 48%,
+        rgba(6,6,6,0.38) 100%);
+    }
+    #vanta-demo .vd-hero-content {
+      position: relative; z-index: 2;
+      padding: clamp(90px,11vh,130px) clamp(24px,6vw,80px);
+      max-width: 660px;
+    }
+    #vanta-demo .vd-eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase; color: #B5F500;
+      margin-bottom: 18px;
+    }
+    #vanta-demo .vd-h1 {
+      font-family: 'Anton', 'Bebas Neue', 'Syne', sans-serif;
+      font-size: clamp(76px,10.5vw,136px);
+      line-height: 0.92; letter-spacing: 0.01em; color: white; margin-bottom: 0;
+      font-weight: 400;
+    }
+    #vanta-demo .vd-h1-green {
+      font-family: 'Permanent Marker', 'Bebas Neue', cursive;
+      color: #B5F500;
+      display: block;
+      font-style: normal;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-top: 6px;
+      transform: rotate(-2deg) translateX(2px);
+      transform-origin: left center;
+      text-shadow: 0 0 24px rgba(181,245,0,0.15);
+    }
+    #vanta-demo .vd-hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.68;
+      margin: 24px 0 38px; max-width: 340px;
+    }
+    #vanta-demo .vd-hero-btns { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    #vanta-demo .vd-btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #B5F500; color: #080808;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 16px 28px; border-radius: 6px; border: none; cursor: pointer;
+      transition: background 160ms ease, box-shadow 200ms ease, transform 160ms var(--ease-out);
+    }
+    #vanta-demo .vd-btn-primary:hover { background: #CCFF00; box-shadow: 0 0 34px rgba(181,245,0,0.38); }
+    #vanta-demo .vd-btn-primary:active { transform: scale(0.97); }
+    #vanta-demo .vd-btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: rgba(255,255,255,0.82);
+      font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 16px 26px; border-radius: 6px;
+      border: 1.5px solid rgba(255,255,255,0.2); cursor: pointer;
+      transition: border-color 180ms ease, color 180ms ease, transform 160ms var(--ease-out);
+    }
+    #vanta-demo .vd-btn-outline:hover { border-color: rgba(255,255,255,0.48); color: white; }
+    #vanta-demo .vd-btn-outline:active { transform: scale(0.97); }
+    #vanta-demo .vd-hero-visual {
+      position: absolute;
+      right: clamp(20px,8vw,110px);
+      top: 50%; transform: translateY(-50%);
+      z-index: 1; display: flex; align-items: center; justify-content: center;
+    }
+    #vanta-demo .vd-can-wrap { position: relative; width: clamp(150px,17vw,230px); }
+    #vanta-demo .vd-can-glow {
+      position: absolute; inset: -45%;
+      background: radial-gradient(circle at 50% 68%,
+        rgba(181,245,0,0.38) 0%, rgba(181,245,0,0.14) 35%, transparent 65%);
+      filter: blur(22px); pointer-events: none;
+      animation: vdCanPulse 3.2s ease-in-out infinite;
+    }
+    @keyframes vdCanPulse { 0%,100%{opacity:.65} 50%{opacity:1} }
+    #vanta-demo .vd-can-svg,
+    #vanta-demo .vd-can-img {
+      width: 100%; height: auto;
+      display: block;
+      filter: drop-shadow(0 28px 55px rgba(181,245,0,0.22)) drop-shadow(0 0 18px rgba(0,0,0,0.85));
+      animation: vdCanFloat 4.2s ease-in-out infinite;
+    }
+    #vanta-demo .vd-can-img { max-width: 100%; object-fit: contain; }
+    @keyframes vdCanFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-13px)} }
+    #vanta-demo .vd-scroll-ind {
+      position: absolute; bottom: 34px; left: clamp(24px,6vw,80px);
+      display: flex; flex-direction: column; align-items: flex-start; gap: 10px; z-index: 2;
+    }
+    #vanta-demo .vd-scroll-ind span {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+    }
+    #vanta-demo .vd-scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.32), transparent);
+      animation: vdScroll 2s ease-in-out infinite;
+    }
+    @keyframes vdScroll {
+      0%   { transform: scaleY(0); transform-origin: top; opacity:0; }
+      25%  { opacity: 1; }
+      60%  { transform: scaleY(1); transform-origin: top; }
+      61%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity:0; }
+    }
+    #vanta-demo .vd-side-dots {
+      position: absolute; right: clamp(14px,2.5vw,30px); top: 50%;
+      transform: translateY(-50%); z-index: 2;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    #vanta-demo .vd-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.25); cursor: pointer;
+      transition: all 200ms ease;
+    }
+    #vanta-demo .vd-dot.active { background: rgba(255,255,255,0.55); border-color: rgba(255,255,255,0.55); }
+
+    /* --- Benefits --- */
+    #vanta-demo .vd-benefits {
+      background: #0D0D0D;
+      padding: clamp(30px,3.5vw,48px) clamp(24px,6vw,80px);
+    }
+    #vanta-demo .vd-ben-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 2px; border-radius: 12px; overflow: hidden;
+      background: rgba(255,255,255,0.05);
+    }
+    #vanta-demo .vd-ben-item {
+      background: #0D0D0D; padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 9px;
+    }
+    #vanta-demo .vd-ben-icon { font-size: 20px; margin-bottom: 2px; }
+    #vanta-demo .vd-ben-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.13em;
+      text-transform: uppercase; color: white;
+    }
+    #vanta-demo .vd-ben-desc { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.58; }
+
+    /* --- Built Different (splash photo background) --- */
+    #vanta-demo .vd-built {
+      position: relative;
+      padding: clamp(96px,12vw,180px) clamp(24px,6vw,80px);
+      background: #000;
+      overflow: hidden;
+      min-height: clamp(420px,55vw,680px);
+      display: flex; align-items: center;
+    }
+    #vanta-demo .vd-built-img {
+      background-image: url('vanta-can.png');
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: #000;
+    }
+    #vanta-demo .vd-built-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(90deg,
+          rgba(0,0,0,0.95) 0%,
+          rgba(0,0,0,0.78) 28%,
+          rgba(0,0,0,0.30) 50%,
+          rgba(0,0,0,0) 72%);
+      pointer-events: none;
+    }
+    #vanta-demo .vd-built-content {
+      position: relative; z-index: 2;
+      max-width: 520px;
+    }
+    #vanta-demo .vd-built-h2 {
+      font-family: 'Bebas Neue','Syne',sans-serif;
+      font-size: clamp(44px,5.4vw,72px);
+      line-height: 0.94; letter-spacing: 0.025em; color: white;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+    }
+    #vanta-demo .vd-built-h2 span { color: #B5F500; display: block; text-shadow: 0 0 24px rgba(181,245,0,0.25), 0 2px 12px rgba(0,0,0,0.6); }
+    #vanta-demo .vd-built-body {
+      font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.72;
+      margin: 22px 0 32px; max-width: 380px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+    }
+
+    /* --- Performance --- */
+    #vanta-demo .vd-perf {
+      padding: clamp(64px,8vw,108px) clamp(24px,6vw,80px);
+      background: #060606; text-align: center;
+    }
+    #vanta-demo .vd-perf-heading {
+      font-family: 'Bebas Neue','Syne',sans-serif;
+      font-size: clamp(11px,1.1vw,13px); letter-spacing: 0.22em;
+      color: #B5F500; text-transform: uppercase; margin-bottom: 52px;
+    }
+    #vanta-demo .vd-perf-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; overflow: hidden;
+    }
+    #vanta-demo .vd-perf-col {
+      padding: 46px 28px; display: flex; flex-direction: column; align-items: center; gap: 16px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    #vanta-demo .vd-perf-col:last-child { border-right: none; }
+    #vanta-demo .vd-perf-icon {
+      width: 54px; height: 54px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1.5px solid rgba(181,245,0,0.28); border-radius: 50%;
+      color: #B5F500; font-size: 22px;
+    }
+    #vanta-demo .vd-perf-label {
+      font-family: 'Bebas Neue','Syne',sans-serif;
+      font-size: 22px; letter-spacing: 0.1em; color: white;
+    }
+    #vanta-demo .vd-perf-desc {
+      font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.62;
+      text-align: center; max-width: 200px;
+    }
+
+    /* --- Flavor (full-tile background image) --- */
+    #vanta-demo .vd-flavor {
+      position: relative;
+      padding: clamp(96px,12vw,180px) clamp(24px,6vw,80px);
+      background: #000;
+      overflow: hidden;
+      min-height: clamp(420px,55vw,680px);
+      display: flex; align-items: center;
+    }
+    #vanta-demo .vd-flavor-img {
+      background-image: url('vanta-flavor.png');
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: #000;
+    }
+    #vanta-demo .vd-flavor-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(90deg,
+        rgba(0,0,0,0.95) 0%,
+        rgba(0,0,0,0.78) 28%,
+        rgba(0,0,0,0.30) 50%,
+        rgba(0,0,0,0) 72%);
+      pointer-events: none;
+    }
+    #vanta-demo .vd-flavor-content {
+      position: relative; z-index: 2;
+      max-width: 520px;
+    }
+    #vanta-demo .vd-flavor-h2 {
+      font-family: 'Bebas Neue','Syne',sans-serif;
+      font-size: clamp(44px,5.4vw,72px);
+      line-height: 0.94; letter-spacing: 0.025em; color: white; margin-bottom: 20px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+    }
+    #vanta-demo .vd-flavor-body {
+      font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.72;
+      margin-bottom: 30px; max-width: 380px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+    }
+
+    /* --- MOBILE: stack text on top, image at bottom for Built Different + Bold Flavor tiles --- */
+    @media (max-width: 768px) {
+      #vanta-demo .vd-built,
+      #vanta-demo .vd-flavor {
+        display: block;
+        min-height: auto;
+        padding: 56px 24px 0;
+      }
+      /* Image sits at the bottom of the tile, full width, contained */
+      #vanta-demo .vd-built-img,
+      #vanta-demo .vd-flavor-img {
+        background-size: 100% auto;
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-color: #000;
+        padding-bottom: 78vw;     /* reserves vertical space for the image */
+      }
+      /* Vertical fade — solid black behind text, transparent over image */
+      #vanta-demo .vd-built-overlay,
+      #vanta-demo .vd-flavor-overlay {
+        background: linear-gradient(180deg,
+          #000 0%,
+          #000 36%,
+          rgba(0,0,0,0.55) 50%,
+          rgba(0,0,0,0) 65%);
+      }
+      #vanta-demo .vd-built-content,
+      #vanta-demo .vd-flavor-content {
+        max-width: 100%;
+      }
+      #vanta-demo .vd-built-h2,
+      #vanta-demo .vd-flavor-h2 {
+        font-size: clamp(36px, 9vw, 52px);
+      }
+    }
+
+    /* --- Social Proof --- */
+    #vanta-demo .vd-social {
+      padding: clamp(52px,7vw,86px) clamp(24px,6vw,80px);
+      background: #0A0A0A;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    #vanta-demo .vd-social-row {
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      gap: 40px; align-items: center;
+    }
+    #vanta-demo .vd-avatars { display: flex; align-items: center; margin-bottom: 10px; }
+    #vanta-demo .vd-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid #0A0A0A;
+      background: #1E1E1E; margin-left: -10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; overflow: hidden;
+    }
+    #vanta-demo .vd-avatar:first-child { margin-left: 0; }
+    #vanta-demo .vd-trust-count {
+      font-family: 'Bebas Neue','Syne',sans-serif;
+      font-size: 44px; color: white; line-height: 1; margin-bottom: 4px;
+    }
+    #vanta-demo .vd-trust-label { font-size: 13px; color: rgba(255,255,255,0.38); }
+    #vanta-demo .vd-social-mid { text-align: center; padding: 0 24px; }
+    #vanta-demo .vd-rating-num {
+      font-family: 'Bebas Neue','Syne',sans-serif;
+      font-size: 52px; color: white; line-height: 1;
+    }
+    #vanta-demo .vd-stars { color: #B5F500; font-size: 20px; letter-spacing: 2px; margin: 8px 0; }
+    #vanta-demo .vd-rating-label { font-size: 12px; color: rgba(255,255,255,0.38); letter-spacing: 0.05em; }
+    #vanta-demo .vd-social-right {
+      border-left: 1px solid rgba(255,255,255,0.08); padding-left: 40px;
+    }
+    #vanta-demo .vd-quote {
+      font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.72;
+      font-style: italic; margin-bottom: 14px;
+    }
+    #vanta-demo .vd-quote-author { font-size: 12px; color: rgba(255,255,255,0.32); letter-spacing: 0.06em; }
+
+    /* --- Final CTA --- */
+    #vanta-demo .vd-cta {
+      padding: clamp(52px,7vw,80px) clamp(24px,6vw,80px);
+      background: #0D0D0D;
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px;
+    }
+    #vanta-demo .vd-cta-h2 {
+      font-family: 'Bebas Neue','Syne',sans-serif;
+      font-size: clamp(36px,4.4vw,58px); line-height: 1; letter-spacing: 0.02em; color: white;
+    }
+    #vanta-demo .vd-cta-h2 span { color: #B5F500; }
+    #vanta-demo .vd-cta-body { font-size: 15px; color: rgba(255,255,255,0.44); margin-top: 12px; max-width: 480px; }
+    #vanta-demo .vd-cta-right { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
+    #vanta-demo .vd-cta-badges { display: flex; align-items: center; gap: 18px; }
+    #vanta-demo .vd-cbadge {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: rgba(255,255,255,0.48);
+    }
+    #vanta-demo .vd-cbadge svg { flex-shrink: 0; }
+
+    /* --- Footer --- */
+    #vanta-demo .vd-footer {
+      background: #060606;
+      padding: clamp(44px,5.5vw,68px) clamp(24px,6vw,80px) clamp(26px,3vw,42px);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    #vanta-demo .vd-footer-top {
+      display: grid; grid-template-columns: 1fr repeat(3,auto);
+      gap: 60px; margin-bottom: 46px;
+    }
+    #vanta-demo .vd-footer-tagline {
+      font-size: 11px; color: rgba(255,255,255,0.28);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-top: 6px;
+    }
+    #vanta-demo .vd-footer-col-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.13em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 14px;
+    }
+    #vanta-demo .vd-footer-links { display: flex; flex-direction: column; gap: 10px; }
+    #vanta-demo .vd-footer-links a {
+      font-size: 13px; color: rgba(255,255,255,0.48);
+      text-decoration: none; transition: color 160ms ease;
+    }
+    #vanta-demo .vd-footer-links a:hover { color: rgba(255,255,255,0.82); }
+    #vanta-demo .vd-footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    #vanta-demo .vd-footer-copy { font-size: 12px; color: rgba(255,255,255,0.22); }
+    #vanta-demo .vd-socials { display: flex; gap: 12px; }
+    #vanta-demo .vd-soc-icon {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.44); cursor: pointer;
+      transition: border-color 160ms ease, color 160ms ease;
+      text-decoration: none;
+    }
+    #vanta-demo .vd-soc-icon:hover { border-color: rgba(181,245,0,0.38); color: #B5F500; }
+
+    /* Demo responsive */
+    @media (max-width: 900px) {
+      #vanta-demo .vd-ben-grid    { grid-template-columns: 1fr 1fr; }
+      #vanta-demo .vd-built       { grid-template-columns: 1fr; }
+      #vanta-demo .vd-flavor      { grid-template-columns: 1fr; }
+      #vanta-demo .vd-social-row  { grid-template-columns: 1fr; }
+      #vanta-demo .vd-social-right{ border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; }
+      #vanta-demo .vd-cta         { grid-template-columns: 1fr; }
+      #vanta-demo .vd-cta-right   { align-items: flex-start; }
+      #vanta-demo .vd-footer-top  { grid-template-columns: 1fr 1fr; gap: 32px; }
+      #vanta-demo .vd-hero-visual { display: none; }
+      #vanta-demo .vd-nav-links   { display: none; }
+      #vanta-demo .vd-perf-grid   { grid-template-columns: 1fr; }
+      #vanta-demo .vd-perf-col    { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      #vanta-demo .vd-perf-col:last-child { border-bottom: none; }
+      #vanta-demo .vd-side-dots   { display: none; }
+    }
+    @media (max-width: 540px) {
+      #vanta-demo .vd-ben-grid    { grid-template-columns: 1fr; }
+      #vanta-demo .vd-footer-top  { grid-template-columns: 1fr; }
+      #vanta-demo .vd-cta-badges  { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed animated background layer -->
+  <div id="bg" aria-hidden="true">
+    <div class="bg-orb" id="orb1"></div>
+    <div class="bg-orb" id="orb2"></div>
+    <div class="bg-orb" id="orb3"></div>
+    <canvas id="bg-canvas"></canvas>
+  </div>
+
+  <!-- ================================================
+       NAVIGATION
+  ================================================ -->
+  <nav id="nav">
+    <div class="nav-inner">
+
+      <a href="#home" class="logo">
+        CRAFTED
+        <span class="logo-mark">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M2 7.5 L5 2.5 L8 7.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        SITES
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="#contact-form" class="btn btn-dark" style="padding:11px 22px;font-size:13px;">
+          Start a Project <span class="arr">→</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ================================================
+       HERO
+  ================================================ -->
+  <section id="home">
+    <div class="wrap">
+      <div class="hero-grid">
+
+        <!-- Left -->
+        <div>
+          <div class="hero-badge">
+            <span class="pulse"></span>
+            Premium Web Design
+          </div>
+
+          <h1 class="display hero-h1">
+            Websites that<br>turn visitors into<br>
+            <em class="em">opportunities.</em>
+          </h1>
+
+          <p class="hero-sub">
+            Strategic, modern and high-converting websites designed to elevate your brand and grow your business.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="btn btn-dark">
+              View Our Work <span class="arr">→</span>
+            </a>
+            <a href="#contact-form" class="btn btn-outline">
+              Let's Talk <span class="arr">→</span>
+            </a>
+          </div>
+
+          <div class="social-proof">
+            <div class="avatars">
+              <div class="avatar" aria-hidden="true">A</div>
+              <div class="avatar" aria-hidden="true">M</div>
+              <div class="avatar" aria-hidden="true">S</div>
+              <div class="avatar" aria-hidden="true">J</div>
+            </div>
+            <div class="proof-text">
+              <span class="proof-label">Trusted by businesses worldwide</span>
+              <div class="stars">
+                <span class="star" aria-label="5 stars">★★★★★</span>
+                <span>5.0 (120+ Reviews)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right — browser mockup -->
+        <div class="hero-visual">
+          <div class="browser" role="img" aria-label="Website preview mockup">
+            <div class="browser-bar">
+              <span class="bdot"></span>
+              <span class="bdot"></span>
+              <span class="bdot"></span>
+              <div class="burl" aria-hidden="true">craftedsites.co.uk</div>
+            </div>
+            <!-- Mini preview site -->
+            <div class="mini">
+              <div class="mini-nav">
+                <span class="mini-logo-text">VERDE.</span>
+                <div class="mini-nav-links">
+                  <span>HOME</span><span>SHOP</span><span>ABOUT</span><span>JOURNAL</span>
+                </div>
+              </div>
+              <div class="mini-body">
+                <div>
+                  <div class="mini-headline">Timeless<br>Design.<br>Sustainable<br>Living.</div>
+                  <p class="mini-p">Thoughtfully crafted products<br>for a better tomorrow.</p>
+                  <span class="mini-btn">SHOP COLLECTION</span>
+                </div>
+                <div class="mini-img">
+                  <!-- Decorative abstract shape simulating a vase/product photo -->
+                  <svg viewBox="0 0 160 160" fill="none" style="width:100%;height:100%;opacity:.55;">
+                    <ellipse cx="80" cy="100" rx="38" ry="48" fill="#A89070"/>
+                    <ellipse cx="80" cy="58" rx="20" ry="24" fill="#BCA882"/>
+                    <path d="M62 80 Q50 40 70 20 Q80 45 75 80Z" fill="#8B7355"/>
+                    <path d="M98 80 Q112 38 92 18 Q82 44 85 80Z" fill="#8B7355"/>
+                    <ellipse cx="80" cy="148" rx="34" ry="8" fill="#705C3A" opacity=".3"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metrics bar below browser -->
+          <div class="metrics">
+            <div class="metric">
+              <div class="m-icon up" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M7 11V3M3 6l4-4 4 4" stroke="#1651FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="m-title">More Leads</div>
+                <div class="m-desc">High-converting design that drives results.</div>
+              </div>
+            </div>
+            <div class="metric">
+              <div class="m-icon bolt" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M8 1L1.5 8h5l-1 5L13 7H8L9 1z" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="m-title">More Trust</div>
+                <div class="m-desc">Professional websites that build credibility.</div>
+              </div>
+            </div>
+            <div class="metric">
+              <div class="m-icon grow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path d="M1 10L5 6l3 3 5-6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="m-title">More Growth</div>
+                <div class="m-desc">Websites built to scale your business.</div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /hero-visual -->
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       BRANDS STRIP
+  ================================================ -->
+  <div class="brands-strip" aria-label="Trusted by brands">
+    <div class="brands-inner">
+      <div class="brands-label">Proudly trusted<br>by incredible<br>brands</div>
+      <div class="ticker-wrap">
+        <div class="ticker" aria-hidden="true">
+          <span class="brand">VITA</span>
+          <span class="brand">NIMBUS</span>
+          <span class="brand">LUXORA</span>
+          <span class="brand">SOUL.</span>
+          <span class="brand">OASIS</span>
+          <span class="brand">THREAD</span>
+          <span class="brand">FORMA</span>
+          <span class="brand">ARCANE</span>
+          <span class="brand">CREST</span>
+          <!-- duplicate for seamless loop -->
+          <span class="brand">VITA</span>
+          <span class="brand">NIMBUS</span>
+          <span class="brand">LUXORA</span>
+          <span class="brand">SOUL.</span>
+          <span class="brand">OASIS</span>
+          <span class="brand">THREAD</span>
+          <span class="brand">FORMA</span>
+          <span class="brand">ARCANE</span>
+          <span class="brand">CREST</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================================================
+       SERVICES
+  ================================================ -->
+  <section id="services" class="sec">
+    <div class="wrap">
+      <div class="services-grid-layout">
+
+        <!-- Sticky left -->
+        <div class="services-sticky rev">
+          <div class="eyebrow sec-eyebrow">Our Services</div>
+          <h2 class="display sec-headline">
+            Everything your brand<br>needs to
+            <em class="em">grow online.</em>
+          </h2>
+          <p class="sec-sub">
+            From concept to launch, we build digital experiences that convert visitors into customers and scale with your ambitions.
+          </p>
+          <a href="#contact" class="btn btn-dark">
+            Explore Services <span class="arr">→</span>
+          </a>
+        </div>
+
+        <!-- 2×4 service grid -->
+        <div class="svc-grid rev rev-d1">
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <rect x="3" y="7" width="32" height="24" rx="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M3 13h32" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="7.5" cy="10" r="1" fill="currentColor"/>
+              <circle cx="11" cy="10" r="1" fill="currentColor"/>
+            </svg>
+            <div class="svc-name">Custom Website Design</div>
+            <p class="svc-desc">Unique, modern websites tailored entirely to your brand and goals.</p>
+          </div>
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <path d="M7 7h24v24H7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M7 15h24M15 7v24" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <div class="svc-name">E-Commerce Solutions</div>
+            <p class="svc-desc">Online stores built to sell, retain customers and scale.</p>
+          </div>
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <circle cx="19" cy="15" r="7" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M7 33c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="svc-name">Branding & Identity</div>
+            <p class="svc-desc">Strong brand systems that build trust and recognition across every touchpoint.</p>
+          </div>
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <path d="M19 6v6M19 26v6M6 19h6M26 19h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="19" cy="19" r="6" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <div class="svc-name">SEO & Performance</div>
+            <p class="svc-desc">Technical optimisation, speed and search rankings that get you found.</p>
+          </div>
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <rect x="11" y="3" width="16" height="28" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M16 29h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="svc-name">Mobile Optimisation</div>
+            <p class="svc-desc">Fully responsive across every device for a seamless experience.</p>
+          </div>
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <path d="M10 30V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M19 30V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M28 30V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M7 33h24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="svc-name">Conversion Focused</div>
+            <p class="svc-desc">Designed to turn every visitor into a lead, booking or sale.</p>
+          </div>
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <path d="M7 31V15l12-8 12 8v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="15" y="21" width="8" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <div class="svc-name">Website Maintenance</div>
+            <p class="svc-desc">Ongoing updates, security and support to keep your site performing.</p>
+          </div>
+
+          <div class="svc-card">
+            <svg class="svc-icon" viewBox="0 0 38 38" fill="none" aria-hidden="true">
+              <path d="M7 10h16M7 18h24M7 26h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="svc-name">Content & Copy</div>
+            <p class="svc-desc">Engaging, persuasive copy that connects with your audience and converts.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       FEATURED WORK
+  ================================================ -->
+  <section id="work" class="sec">
+    <div class="wrap">
+      <div class="work-head">
+        <div>
+          <div class="eyebrow work-ey rev">Featured Work</div>
+          <h2 class="display work-h2 rev rev-d1">
+            Websites built<br>to stand out.
+          </h2>
+        </div>
+        <div class="work-head-right">
+          <p class="work-sub rev">Each project is crafted with strategy, creativity and purpose.</p>
+          <a href="#contact" class="btn btn-outline" style="border-color:rgba(255,255,255,.18);color:white;" tabindex="0">
+            View All Projects <span class="arr">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="portfolio">
+
+        <!-- NEXA STUDIO -->
+        <article class="p-card rev">
+          <svg class="p-card-bg" viewBox="0 0 280 380" fill="none" aria-hidden="true">
+            <rect width="280" height="380" fill="#131320"/>
+            <circle cx="140" cy="190" r="110" fill="url(#grad-nexa)" opacity=".7"/>
+            <defs>
+              <radialGradient id="grad-nexa" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#5B5EF5"/>
+                <stop offset="100%" stop-color="#131320"/>
+              </radialGradient>
+            </defs>
+          </svg>
+          <div class="p-card-info">
+            <div class="p-cat">Digital Agency</div>
+            <div class="p-name">NEXA STUDIO</div>
+          </div>
+        </article>
+
+        <!-- AURA SKINCARE -->
+        <article class="p-card rev rev-d1">
+          <svg class="p-card-bg" viewBox="0 0 280 380" fill="none" aria-hidden="true">
+            <rect width="280" height="380" fill="#F2EDE6"/>
+            <ellipse cx="175" cy="220" rx="88" ry="108" fill="#D0C2AE" opacity=".5"/>
+            <ellipse cx="95" cy="155" rx="62" ry="74" fill="#C2B098" opacity=".65"/>
+            <ellipse cx="170" cy="100" rx="35" ry="42" fill="#BBA88A" opacity=".4"/>
+          </svg>
+          <div class="p-card-info">
+            <div class="p-cat">Beauty & Skincare</div>
+            <div class="p-name">AURA SKINCARE</div>
+          </div>
+        </article>
+
+        <!-- PINNACLE FITNESS -->
+        <article class="p-card rev rev-d2">
+          <svg class="p-card-bg" viewBox="0 0 280 380" fill="none" aria-hidden="true">
+            <rect width="280" height="380" fill="#0D0F12"/>
+            <rect x="0" y="220" width="280" height="160" fill="#141618"/>
+            <circle cx="140" cy="140" r="70" fill="#1F2228" opacity=".8"/>
+            <path d="M80 200 Q140 130 200 200" stroke="#2A2D34" stroke-width="1"/>
+            <rect x="100" y="220" width="80" height="3" fill="#E8E8E8" opacity=".08"/>
+          </svg>
+          <div class="p-card-info">
+            <div class="p-cat">Fitness & Coaching</div>
+            <div class="p-name">PINNACLE FITNESS</div>
+          </div>
+        </article>
+
+        <!-- LUMEN REALTY -->
+        <article class="p-card rev rev-d3">
+          <svg class="p-card-bg" viewBox="0 0 280 380" fill="none" aria-hidden="true">
+            <rect width="280" height="380" fill="#0A1520"/>
+            <rect x="0" y="200" width="280" height="180" fill="#0E1C2A"/>
+            <rect x="55" y="155" width="170" height="110" rx="4" fill="#162233" opacity=".8"/>
+            <rect x="75" y="170" width="58" height="38" rx="2" fill="#1E2F42" opacity=".9"/>
+            <rect x="148" y="170" width="58" height="38" rx="2" fill="#1E2F42" opacity=".9"/>
+            <rect x="75" y="215" width="130" height="22" rx="2" fill="#1E2F42" opacity=".5"/>
+          </svg>
+          <div class="p-card-info">
+            <div class="p-cat">Luxury & Property</div>
+            <div class="p-name">LUMEN REALTY</div>
+          </div>
+        </article>
+
+        <!-- VANTA ENERGY — Featured -->
+        <article
+          class="p-card vanta-card rev"
+          role="button"
+          tabindex="0"
+          aria-label="View VANTA Energy project demo"
+          data-open-vanta
+        >
+          <!-- Video background — copy Hyper_realistic_cinematic_luxu.mp4 to this folder -->
+          <video class="vc-vid" autoplay muted loop playsinline aria-hidden="true" preload="none">
+            <source src="Hyper_realistic_cinematic_luxu.mp4" type="video/mp4">
+          </video>
+          <!-- Fallback gradient if video not loaded -->
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 70% 50%,rgba(181,245,0,0.12) 0%,#080808 65%);pointer-events:none;"></div>
+          <div class="vc-overlay"></div>
+          <div class="vc-glow"></div>
+          <span class="vc-badge">Product Marketing</span>
+          <div class="vc-info">
+            <div>
+              <div class="p-cat">Energy Drink Brand</div>
+              <div class="p-name">VANTA ENERGY</div>
+            </div>
+            <button class="vc-enter" data-open-vanta aria-label="Open VANTA Energy demo" tabindex="-1">
+              View Live Demo <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="work-foot">
+        <button class="icon-btn" aria-label="Previous projects">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Next projects">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       PROCESS
+  ================================================ -->
+  <section id="process" class="sec">
+    <div class="wrap">
+      <div class="process-head">
+        <div class="rev">
+          <div class="eyebrow sec-eyebrow">Our Process</div>
+          <h2 class="display process-h2">
+            Simple process.<br>Powerful results.
+          </h2>
+        </div>
+        <p class="process-sub rev rev-d1">
+          We make it easy from start to finish. Our proven approach takes your idea from discovery through to a fully launched, high-performing website — with clear communication every step of the way.
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step rev">
+          <div class="step-num-row">
+            <div class="step-num" aria-hidden="true">01</div>
+            <svg class="step-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <circle cx="14" cy="14" r="10" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10 14a4 4 0 108 0 4 4 0 00-8 0z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M14 4v2M14 22v2M4 14h2M22 14h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="step-name">Discover</h3>
+          <p class="step-desc">We learn about your business, goals and audience. No guesswork — just clear strategic direction built around what makes you different.</p>
+        </div>
+
+        <div class="step rev rev-d1">
+          <div class="step-num-row">
+            <div class="step-num" aria-hidden="true">02</div>
+            <svg class="step-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <rect x="4" y="4" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M9 14l3.5 3.5L19 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="step-name">Design</h3>
+          <p class="step-desc">We create a custom design tailored to your brand. Every layout, colour and interaction is considered for maximum impact and conversion.</p>
+        </div>
+
+        <div class="step rev rev-d2">
+          <div class="step-num-row">
+            <div class="step-num" aria-hidden="true">03</div>
+            <svg class="step-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <path d="M14 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M7 12a7 7 0 1014 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M11 7l3-4 3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="step-name">Launch</h3>
+          <p class="step-desc">We build, test and launch your site for results. Full handover, post-launch support, and everything you need to hit the ground running.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       PRICING
+  ================================================ -->
+  <section id="pricing" class="sec">
+    <div class="wrap">
+      <div class="pricing-head rev">
+        <div class="eyebrow" style="display:inline-block;margin-bottom:16px;">Pricing</div>
+        <h2 class="display pricing-h2">Transparent, simple pricing</h2>
+        <p class="pricing-sub">No hidden fees, no surprises. Choose the plan that fits your goals.</p>
+      </div>
+
+      <div class="plans">
+
+        <!-- Starter -->
+        <div class="plan rev">
+          <div class="plan-tier">Starter</div>
+          <div class="plan-price">
+            <span class="p-cur">£</span>
+            <span class="p-amt">997</span>
+          </div>
+          <p class="plan-desc">Perfect for small businesses and personal brands that need a polished online presence fast.</p>
+          <ul class="plan-features">
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Up to 5 pages
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Custom design
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Mobile responsive
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Basic SEO setup
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>2-week delivery
+            </li>
+          </ul>
+          <a href="#contact-form" class="btn btn-outline plan-cta">
+            Get Started <span class="arr">→</span>
+          </a>
+        </div>
+
+        <!-- Growth — featured -->
+        <div class="plan plan-featured rev rev-d1">
+          <div class="plan-badge">Most Popular</div>
+          <div class="plan-tier">Growth</div>
+          <div class="plan-price">
+            <span class="p-cur">£</span>
+            <span class="p-amt">2,497</span>
+          </div>
+          <p class="plan-desc">For growing businesses that need a powerful, conversion-driven website with full brand presence.</p>
+          <ul class="plan-features">
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Up to 12 pages
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Premium design + animations
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Full branding system
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Advanced SEO + performance
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Copywriting included
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>3-week delivery
+            </li>
+          </ul>
+          <a href="#contact-form" class="btn btn-blue plan-cta">
+            Get Started <span class="arr">→</span>
+          </a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="plan rev rev-d2">
+          <div class="plan-tier">Enterprise</div>
+          <div class="plan-price">
+            <span class="p-cur">£</span>
+            <span class="p-amt">4,997</span>
+          </div>
+          <p class="plan-desc">For established businesses and e-commerce brands that demand the very best results.</p>
+          <ul class="plan-features">
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Unlimited pages
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>E-commerce integration
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Custom functionality
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Full SEO strategy
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>3 months post-launch support
+            </li>
+            <li class="plan-feature">
+              <span class="chk" aria-hidden="true">
+                <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>Priority delivery
+            </li>
+          </ul>
+          <a href="#contact-form" class="btn btn-dark plan-cta">
+            Get Started <span class="arr">→</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       CONTACT / CTA BANNER
+  ================================================ -->
+  <section id="contact">
+    <div class="wrap" style="padding-top:clamp(80px,10vw,140px);padding-bottom:clamp(80px,10vw,140px);">
+      <div class="cta-box rev">
+        <div>
+          <h2 class="display cta-h2">
+            Ready to elevate your<br>online presence?
+          </h2>
+          <p class="cta-sub">Let's create a website that not only looks amazing, but drives real results for your business.</p>
+        </div>
+        <div class="cta-right">
+          <a href="#contact-form" class="btn btn-white">
+            Start Your Project <span class="arr">→</span>
+          </a>
+          <div class="cta-proof">
+            <div class="avatars" aria-hidden="true">
+              <div class="avatar" style="background:rgba(255,255,255,.15);color:white;border-color:rgba(255,255,255,.2);">A</div>
+              <div class="avatar" style="background:rgba(255,255,255,.15);color:white;border-color:rgba(255,255,255,.2);">M</div>
+              <div class="avatar" style="background:rgba(255,255,255,.15);color:white;border-color:rgba(255,255,255,.2);">S</div>
+            </div>
+            <span class="cta-proof-text">Join 100+ happy clients</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       CONTACT FORM
+  ================================================ -->
+  <section id="contact-form">
+    <div class="wrap cf-wrap">
+
+      <div class="cf-header rev">
+        <div class="eyebrow" style="display:inline-block;margin-bottom:16px;">Get In Touch</div>
+        <h2 class="display cf-h2">Tell us about your project</h2>
+        <p class="cf-sub">Fill in the form below and we'll get back to you within 24 hours with a tailored proposal.</p>
+      </div>
+
+      <div class="cf-card rev rev-d1">
+
+        <!-- Success panel (hidden until submit) -->
+        <div class="cf-success" id="cf-success" role="status" aria-live="polite">
+          <div class="cf-success-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M5 13l6 6 10-10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="cf-success-h">Request sent!</h3>
+          <p class="cf-success-p">Thank you for reaching out. We'll review your project and be in touch within 24 hours.</p>
+          <a href="#home" class="btn btn-outline" style="margin-top:4px;">Back to top <span class="arr">→</span></a>
+        </div>
+
+        <!-- Form -->
+        <form id="cf-form" novalidate autocomplete="on">
+
+          <div class="cf-row">
+            <div class="cf-group" id="grp-name">
+              <label class="cf-label" for="cf-name">Full name <span class="cf-req" aria-hidden="true">*</span></label>
+              <input class="cf-input" id="cf-name" name="name" type="text" placeholder="Jane Smith" autocomplete="name" required aria-required="true" aria-describedby="err-name">
+              <span class="cf-error" id="err-name" role="alert">Please enter your full name.</span>
+            </div>
+            <div class="cf-group" id="grp-biz">
+              <label class="cf-label" for="cf-biz">Business name</label>
+              <input class="cf-input" id="cf-biz" name="business" type="text" placeholder="Acme Ltd" autocomplete="organization">
+            </div>
+          </div>
+
+          <div class="cf-row">
+            <div class="cf-group" id="grp-email">
+              <label class="cf-label" for="cf-email">Email address <span class="cf-req" aria-hidden="true">*</span></label>
+              <input class="cf-input" id="cf-email" name="email" type="email" placeholder="jane@acme.co.uk" autocomplete="email" required aria-required="true" aria-describedby="err-email">
+              <span class="cf-error" id="err-email" role="alert">Please enter a valid email address.</span>
+            </div>
+            <div class="cf-group" id="grp-web">
+              <label class="cf-label" for="cf-web">Current website</label>
+              <input class="cf-input" id="cf-web" name="website" type="url" placeholder="https://acme.co.uk" autocomplete="url">
+            </div>
+          </div>
+
+          <div class="cf-divider"></div>
+
+          <div class="cf-group" id="grp-goal">
+            <label class="cf-label" for="cf-goal">What's your main goal? <span class="cf-req" aria-hidden="true">*</span></label>
+            <input class="cf-input" id="cf-goal" name="goal" type="text" placeholder="e.g. Generate more leads, launch my brand online…" required aria-required="true" aria-describedby="err-goal">
+            <span class="cf-error" id="err-goal" role="alert">Please tell us your main goal.</span>
+          </div>
+
+          <div class="cf-row">
+            <div class="cf-group" id="grp-type">
+              <label class="cf-label">Website type <span class="cf-req" aria-hidden="true">*</span></label>
+              <div class="cf-toggle" role="radiogroup" aria-label="Website type">
+                <div class="cf-toggle-opt">
+                  <input type="radio" name="website_type" id="type-new" value="New website" checked>
+                  <label class="cf-toggle-label" for="type-new">New website</label>
+                </div>
+                <div class="cf-toggle-opt">
+                  <input type="radio" name="website_type" id="type-redesign" value="Redesign">
+                  <label class="cf-toggle-label" for="type-redesign">Redesign</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="cf-group" id="grp-cat">
+              <label class="cf-label" for="cf-cat">Project category <span class="cf-req" aria-hidden="true">*</span></label>
+              <select class="cf-select" id="cf-cat" name="category" required aria-required="true" aria-describedby="err-cat">
+                <option value="" disabled selected>Select a category…</option>
+                <option value="beauty-wellness">Beauty and wellness</option>
+                <option value="business-finance">Business and finance</option>
+                <option value="restaurant-food">Restaurant and food</option>
+                <option value="portfolio-creative">Portfolio and creative</option>
+                <option value="fitness-health">Fitness and health</option>
+                <option value="real-estate">Real estate</option>
+              </select>
+              <span class="cf-error" id="err-cat" role="alert">Please select a project category.</span>
+            </div>
+          </div>
+
+          <div class="cf-group" id="grp-budget">
+            <label class="cf-label" for="cf-budget">Budget</label>
+            <input class="cf-input" id="cf-budget" name="budget" type="text" placeholder="e.g. £2,000 – £3,500" inputmode="text">
+          </div>
+
+          <div class="cf-group" id="grp-msg">
+            <label class="cf-label" for="cf-msg">Message <span class="cf-req" aria-hidden="true">*</span></label>
+            <textarea class="cf-textarea" id="cf-msg" name="message" placeholder="Tell us more about your project, timeline, or anything else we should know…" required aria-required="true" aria-describedby="err-msg"></textarea>
+            <span class="cf-error" id="err-msg" role="alert">Please add a message.</span>
+          </div>
+
+          <button type="submit" class="btn btn-blue cf-submit" id="cf-submit">
+            Send My Request <span class="arr">→</span>
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================================================
+       FOOTER
+  ================================================ -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+
+        <div>
+          <div class="f-logo">CRAFTED<br>SITES</div>
+          <p class="f-tagline">Designing modern websites that help brands grow and stand out online.</p>
+          <div class="socials">
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1.5" y="1.5" width="11" height="11" rx="3" stroke="currentColor" stroke-width="1.3"/>
+                <circle cx="7" cy="7" r="2.3" stroke="currentColor" stroke-width="1.3"/>
+                <circle cx="10.2" cy="3.8" r=".5" fill="currentColor"/>
+              </svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Behance">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 3h4a2.5 2.5 0 010 5H2V3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                <path d="M2 8h5a2.5 2.5 0 010 5H2V8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                <path d="M8.5 4.5h4M8.5 9.5h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1.5" y="1.5" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M4.5 5.5v4M4.5 4v.5M7 9.5V7.5A1.5 1.5 0 0110 7.5v2M7 5.5v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="f-col-title">Navigation</div>
+          <ul class="f-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="f-col-title">Services</div>
+          <ul class="f-links">
+            <li><a href="#services">Website Design</a></li>
+            <li><a href="#services">E-Commerce</a></li>
+            <li><a href="#services">Branding</a></li>
+            <li><a href="#services">SEO & Performance</a></li>
+            <li><a href="#services">Maintenance</a></li>
+            <li><a href="#services">Copywriting</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="f-col-title">Let's Work Together</div>
+          <p class="f-tagline-small">Have a project in mind?<br>Let's create something amazing.</p>
+          <a href="mailto:hello@craftedsites.co.uk" class="f-contact-link">hello@craftedsites.co.uk</a>
+          <a href="tel:+441234567890" class="f-contact-link">+44 1234 567 890</a>
+          <a href="#contact-form" class="btn btn-outline" style="margin-top:8px;border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.6);font-size:13px;padding:10px 20px;">
+            Start a Project <span class="arr">→</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span class="f-copy">© 2024 Crafted Sites. All rights reserved.</span>
+        <div class="f-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    /* ── Nav scroll effect ─────────────────────────────── */
+    const nav = document.getElementById('nav');
+    const updateNav = () => nav.classList.toggle('scrolled', window.scrollY > 36);
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+
+    /* ── Active nav link on scroll ─────────────────────── */
+    const sections   = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+
+    const sectionObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { threshold: 0.35, rootMargin: '-70px 0px 0px 0px' });
+    sections.forEach(s => sectionObs.observe(s));
+
+    /* ── Scroll reveal ─────────────────────────────────── */
+    const revObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rev').forEach(el => revObs.observe(el));
+
+    /* ── Smooth anchor scroll ──────────────────────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id === '#') return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        window.scrollTo({ top: target.getBoundingClientRect().top + scrollY - 70, behavior: 'smooth' });
+      });
+    });
+
+    /* ── Hamburger ─────────────────────────────────────── */
+    const ham  = document.getElementById('hamburger');
+    const links = document.getElementById('nav-links');
+    let menuOpen = false;
+
+    ham.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      ham.setAttribute('aria-expanded', menuOpen);
+      if (menuOpen) {
+        Object.assign(links.style, {
+          display: 'flex', flexDirection: 'column',
+          position: 'absolute', top: '70px', left: '0', right: '0',
+          background: 'rgba(255,255,255,.97)',
+          backdropFilter: 'blur(18px)',
+          padding: '14px 24px 22px',
+          borderBottom: '1px solid #E6E6E6',
+          gap: '2px', zIndex: '199'
+        });
+      } else {
+        links.removeAttribute('style');
+      }
+    });
+
+    /* Close menu on link click */
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => { menuOpen = false; links.removeAttribute('style'); ham.setAttribute('aria-expanded', false); });
+    });
+
+    /* ── Background animation system ──────────────────── */
+    (function () {
+      const canvas = document.getElementById('bg-canvas');
+      if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const ctx  = canvas.getContext('2d');
+      const orb1 = document.getElementById('orb1');
+      const orb2 = document.getElementById('orb2');
+      const orb3 = document.getElementById('orb3');
+
+      let W, H, t = 0;
+      let scrollRaw = 0, scroll = 0;
+      let mxR = 0.5, myR = 0.5, mx = 0.5, my = 0.5;
+
+      /* Particles */
+      const NPART = 62;
+      const parts = [];
+
+      function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      function initParts() {
+        parts.length = 0;
+        for (let i = 0; i < NPART; i++) {
+          parts.push({
+            x:  Math.random() * W,
+            y:  Math.random() * H,
+            r:  Math.random() * 1.3 + 0.25,
+            vx: (Math.random() - 0.5) * 0.11,
+            vy: (Math.random() - 0.5) * 0.09,
+            a:  Math.random() * 0.14 + 0.04,
+            ph: Math.random() * Math.PI * 2,
+            sp: Math.random() * 0.008 + 0.003,
+          });
+        }
+      }
+
+      /* Dot grid — parallax slower than scroll so it recedes into depth */
+      function drawGrid() {
+        const STEP     = 46;
+        const worldY   = scroll * 0.08;
+        const offX     = (mx - 0.5) * 10;
+        const startRow = Math.floor(worldY / STEP) - 1;
+        const endRow   = Math.ceil((worldY + H) / STEP) + 1;
+        const endCol   = Math.ceil(W / STEP) + 1;
+
+        ctx.beginPath();
+        for (let c = 0; c <= endCol; c++) {
+          for (let r = startRow; r <= endRow; r++) {
+            const x = c * STEP + offX;
+            const y = r * STEP - worldY;
+            ctx.moveTo(x + 0.7, y);
+            ctx.arc(x, y, 0.7, 0, Math.PI * 2);
+          }
+        }
+        ctx.fillStyle = 'rgba(99,155,255,0.075)';
+        ctx.fill();
+      }
+
+      /* Flowing contour lines — sine waves that drift with scroll + mouse */
+      function drawLines() {
+        const LINES  = 12;
+        const worldY = scroll * 0.22;
+        const mOffY  = (my - 0.5) * 13;
+
+        for (let i = 0; i < LINES; i++) {
+          const baseY = (i / LINES) * H * 2.6 - worldY;
+          const amp   = 42 + i * 18;
+
+          if (baseY + amp < -60 || baseY - amp > H + 60) continue;
+
+          const freq  = 0.0016 + i * 0.00016;
+          const phase = t * 0.26 + i * 1.15;
+          const alpha = Math.max(0, 0.058 - (i / LINES) * 0.022 + Math.sin(i + t * 0.38) * 0.01);
+
+          ctx.beginPath();
+          ctx.moveTo(-12, baseY + mOffY);
+          for (let x = -12; x <= W + 12; x += 4) {
+            const y = baseY
+              + Math.sin(x * freq + phase)               * amp
+              + Math.sin(x * freq * 0.6 + phase * 0.75) * (amp * 0.33)
+              + mOffY;
+            ctx.lineTo(x, y);
+          }
+          ctx.strokeStyle = `rgba(99,155,255,${alpha})`;
+          ctx.lineWidth   = 0.65;
+          ctx.stroke();
+        }
+      }
+
+      /* Floating particles — drift and pulse gently */
+      function drawParts() {
+        const mOffX = (mx - 0.5) * 8;
+        const mOffY = (my - 0.5) * 5;
+
+        for (const p of parts) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < -4) p.x = W + 4;
+          if (p.x > W + 4) p.x = -4;
+          if (p.y < -4) p.y = H + 4;
+          if (p.y > H + 4) p.y = -4;
+
+          const float = Math.sin(t * p.sp * 50 + p.ph) * 2.8;
+          const pulse = 0.6 + Math.sin(t * p.sp * 80 + p.ph) * 0.4;
+
+          ctx.beginPath();
+          ctx.arc(p.x + mOffX * 0.3, p.y + float + mOffY * 0.3, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99,155,255,${p.a * pulse})`;
+          ctx.fill();
+        }
+      }
+
+      /* Orbs — drift autonomously, react to scroll and mouse */
+      function updateOrbs() {
+        const s   = scroll * 0.048;
+        const mdx = (mx - 0.5) * 30;
+        const mdy = (my - 0.5) * 20;
+        const d1x = Math.sin(t * 0.11) * 26,    d1y = Math.cos(t * 0.09) * 20;
+        const d2x = Math.cos(t * 0.14) * 22,    d2y = Math.sin(t * 0.12) * 17;
+        const d3x = Math.sin(t * 0.10 + 1) * 17, d3y = Math.cos(t * 0.13 + 1) * 14;
+
+        if (orb1) orb1.style.transform = `translate3d(${d1x + mdx * 0.72}px,${d1y - s * 0.52 + mdy * 0.62}px,0)`;
+        if (orb2) orb2.style.transform = `translate3d(${d2x - mdx * 0.44}px,${d2y - s * 0.30 + mdy * 0.38}px,0)`;
+        if (orb3) orb3.style.transform = `translate3d(${d3x + mdx * 0.30}px,${d3y - s * 0.18 + mdy * 0.24}px,0)`;
+      }
+
+      /* Main loop */
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        scroll += (scrollRaw - scroll) * 0.065;
+        mx     += (mxR - mx)           * 0.055;
+        my     += (myR - my)           * 0.055;
+        t      += 0.0075;
+
+        drawGrid();
+        drawLines();
+        drawParts();
+        updateOrbs();
+
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('scroll',    () => { scrollRaw = window.scrollY; }, { passive: true });
+      window.addEventListener('mousemove', e  => { mxR = e.clientX / innerWidth; myR = e.clientY / innerHeight; });
+      window.addEventListener('touchmove', e  => {
+        if (e.touches.length) { mxR = e.touches[0].clientX / innerWidth; myR = e.touches[0].clientY / innerHeight; }
+      }, { passive: true });
+      window.addEventListener('resize', () => { resize(); initParts(); });
+
+      resize();
+      initParts();
+      requestAnimationFrame(draw);
+    })();
+
+    /* ── VANTA Demo Overlay ────────────────────────────── */
+    /* Run after DOM is parsed — the overlay markup lives after this script */
+    function initVantaDemo() {
+      const demo    = document.getElementById('vanta-demo');
+      const closeBtn = document.getElementById('vd-close');
+      if (!demo || !closeBtn) return;
+
+      let lastFocus = null;
+
+      function openDemo() {
+        lastFocus = document.activeElement;
+        demo.classList.add('vd-open');
+        demo.setAttribute('aria-hidden', 'false');
+        closeBtn.classList.add('vd-visible');
+        document.body.style.overflow = 'hidden';
+        demo.scrollTop = 0;
+        /* Start videos */
+        demo.querySelectorAll('video').forEach(v => {
+          v.currentTime = 0;
+          v.play().catch(() => {});
+        });
+        /* Also play card video background */
+        const cardVid = document.querySelector('.vanta-card video');
+        if (cardVid) cardVid.play().catch(() => {});
+        /* Move focus inside overlay */
+        setTimeout(() => closeBtn.focus(), 520);
+      }
+
+      function closeDemo() {
+        demo.classList.remove('vd-open');
+        demo.setAttribute('aria-hidden', 'true');
+        closeBtn.classList.remove('vd-visible');
+        document.body.style.overflow = '';
+        /* Pause demo videos to save resources */
+        setTimeout(() => {
+          demo.querySelectorAll('video').forEach(v => v.pause());
+        }, 520);
+        /* Return focus */
+        if (lastFocus) lastFocus.focus();
+      }
+
+      /* Open triggers — card article and enter button */
+      document.querySelectorAll('[data-open-vanta]').forEach(el => {
+        el.addEventListener('click', function (e) {
+          e.stopPropagation();
+          openDemo();
+        });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openDemo();
+          }
+        });
+      });
+
+      /* Close button */
+      closeBtn.addEventListener('click', closeDemo);
+
+      /* ESC key */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && demo.classList.contains('vd-open')) closeDemo();
+      });
+
+      /* Trap focus inside demo when open */
+      demo.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab' || !demo.classList.contains('vd-open')) return;
+        const focusable = demo.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusable[0];
+        const last  = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+        }
+      });
+
+      /* Autoplay card video on hover (fallback for browsers that need interaction) */
+      const cardVid = document.querySelector('.vanta-card video');
+      if (cardVid) {
+        cardVid.play().catch(() => {
+          const card = document.querySelector('.vanta-card');
+          if (card) {
+            card.addEventListener('mouseenter', () => cardVid.play().catch(() => {}), { once: true });
+            card.addEventListener('focus',      () => cardVid.play().catch(() => {}), { once: true });
+          }
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initVantaDemo);
+    } else {
+      initVantaDemo();
+    }
+
+    /* ── Contact form validation ───────────────────────── */
+    (function () {
+      const form    = document.getElementById('cf-form');
+      const success = document.getElementById('cf-success');
+      const submit  = document.getElementById('cf-submit');
+      if (!form) return;
+
+      const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      /* Field rules: [groupId, inputId, validate fn, error message] */
+      const rules = [
+        ['grp-name',  'cf-name',  v => v.trim().length > 1,      'Please enter your full name.'],
+        ['grp-email', 'cf-email', v => EMAIL_RE.test(v.trim()),   'Please enter a valid email address.'],
+        ['grp-goal',  'cf-goal',  v => v.trim().length > 2,       'Please tell us your main goal.'],
+        ['grp-cat',   'cf-cat',   v => v !== '',                  'Please select a project category.'],
+        ['grp-msg',   'cf-msg',   v => v.trim().length > 4,       'Please add a message.'],
+      ];
+
+      function validate(groupId, inputId, fn) {
+        const grp   = document.getElementById(groupId);
+        const field = document.getElementById(inputId);
+        if (!grp || !field) return true;
+        const ok = fn(field.value);
+        grp.classList.toggle('has-err', !ok);
+        return ok;
+      }
+
+      /* Live re-validation once a field has been touched */
+      rules.forEach(([gid, iid, fn]) => {
+        const field = document.getElementById(iid);
+        if (!field) return;
+        field.addEventListener('blur', () => validate(gid, iid, fn));
+        field.addEventListener('input', () => {
+          if (document.getElementById(gid).classList.contains('has-err')) {
+            validate(gid, iid, fn);
+          }
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        /* Run all validations */
+        let allOk = true;
+        rules.forEach(([gid, iid, fn]) => {
+          if (!validate(gid, iid, fn)) allOk = false;
+        });
+
+        if (!allOk) {
+          /* Scroll to first error */
+          const firstErr = form.querySelector('.has-err');
+          if (firstErr) {
+            firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstErr.querySelector('input,select,textarea')?.focus();
+          }
+          return;
+        }
+
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+
+        fetch('https://formspree.io/f/xgoqkndw', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form),
+        })
+        .then(res => {
+          if (res.ok) {
+            form.style.display = 'none';
+            success.classList.add('show');
+            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            return res.json().then(data => { throw new Error(data.error || 'Submission failed.'); });
+          }
+        })
+        .catch(err => {
+          submit.disabled = false;
+          submit.innerHTML = 'Send My Request <span class="arr">→</span>';
+          alert('Sorry, something went wrong: ' + err.message + '\n\nPlease email hello@craftedsites.co.uk directly.');
+        });
+      });
+    })();
+  </script>
+
+  <!-- ============================================================
+       VANTA ENERGY — DEMO OVERLAY
+       NOTE: Copy "Hyper_realistic_cinematic_luxu.mp4" to the same
+       folder as index.html for the video to play locally.
+  ============================================================ -->
+
+  <!-- SVG sprite — gradients + can symbol shared across all instances -->
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+       style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
+    <defs>
+      <linearGradient id="vc-body" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="#0A0A0A"/>
+        <stop offset="16%"  stop-color="#1C1C1C"/>
+        <stop offset="44%"  stop-color="#141414"/>
+        <stop offset="76%"  stop-color="#1E1E1E"/>
+        <stop offset="100%" stop-color="#080808"/>
+      </linearGradient>
+      <linearGradient id="vc-top" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#2A2A2A"/>
+        <stop offset="100%" stop-color="#141414"/>
+      </linearGradient>
+      <linearGradient id="vc-shine" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="white" stop-opacity="1"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="vc-green" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#B5F500" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#B5F500" stop-opacity="0.06"/>
+      </linearGradient>
+    </defs>
+    <symbol id="v-can" viewBox="0 0 110 278">
+      <!-- Body -->
+      <path d="M15 268 Q15 276 55 276 Q95 276 95 268 L95 22 Q95 14 55 14 Q15 14 15 22 Z" fill="url(#vc-body)"/>
+      <!-- Top ellipse -->
+      <ellipse cx="55" cy="22" rx="40" ry="9"  fill="url(#vc-top)"/>
+      <!-- Top inner rim -->
+      <ellipse cx="55" cy="22" rx="30" ry="6.5" fill="#191919"/>
+      <!-- Tab ring -->
+      <ellipse cx="55" cy="15" rx="18" ry="5"   fill="#1E1E1E"/>
+      <rect x="48" y="10" width="14" height="7" rx="3.5" fill="#252525"/>
+      <!-- Bottom ellipse -->
+      <ellipse cx="55" cy="268" rx="40" ry="9"  fill="#060606"/>
+      <!-- Shine left -->
+      <path d="M15 22 L15 256 Q15 270 24 274 L24 18 Q19 10 15 22 Z" fill="url(#vc-shine)" opacity="0.1"/>
+      <!-- Dark right edge -->
+      <path d="M95 22 L95 256 Q95 270 86 274 L86 18 Q91 10 95 22 Z" fill="rgba(0,0,0,0.32)"/>
+      <!-- Green lower band -->
+      <path d="M15 214 L95 214 L95 255 Q95 262 55 262 Q15 262 15 255 Z" fill="url(#vc-green)"/>
+      <!-- VANTA -->
+      <text x="55" y="136" text-anchor="middle"
+            font-family="'Bebas Neue','Arial Black',sans-serif"
+            font-size="36" fill="white" letter-spacing="7" opacity="0.93">VANTA</text>
+      <!-- ENERGY DRINK -->
+      <text x="55" y="155" text-anchor="middle"
+            font-family="'DM Sans',Arial,sans-serif"
+            font-size="5.2" fill="rgba(255,255,255,0.3)" letter-spacing="4">ENERGY DRINK</text>
+      <!-- CITRUS RUSH -->
+      <text x="55" y="230" text-anchor="middle"
+            font-family="'DM Sans',Arial,sans-serif"
+            font-size="7" fill="#B5F500" letter-spacing="3.5" font-weight="700">CITRUS RUSH</text>
+      <!-- ZERO SUGAR -->
+      <text x="55" y="244" text-anchor="middle"
+            font-family="'DM Sans',Arial,sans-serif"
+            font-size="5" fill="rgba(255,255,255,0.4)" letter-spacing="2">ZERO SUGAR · 250 ml</text>
+    </symbol>
+  </svg>
+
+  <!-- Close button (fixed, viewport-level) -->
+  <button id="vd-close" aria-label="Close VANTA demo">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+      <path d="M1.5 1.5l12 12M13.5 1.5l-12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <div id="vanta-demo" role="dialog" aria-modal="true" aria-label="VANTA Energy — Product Demo" aria-hidden="true">
+
+    <!-- NAV -->
+    <nav class="vd-nav" aria-label="VANTA navigation">
+      <div class="vd-logo" aria-label="VANTA">VANTA</div>
+      <div class="vd-nav-links" role="list">
+        <a href="#" role="listitem">Product</a>
+        <a href="#" role="listitem">Ingredients</a>
+        <a href="#" role="listitem">About</a>
+        <a href="#" role="listitem">Shop</a>
+      </div>
+      <button class="vd-get-btn">GET VANTA</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="vd-hero">
+      <video class="vd-hero-video" autoplay muted loop playsinline aria-hidden="true" preload="none">
+        <source src="Hyper_realistic_cinematic_luxu.mp4" type="video/mp4">
+      </video>
+      <div class="vd-hero-overlay" aria-hidden="true"></div>
+
+      <div class="vd-hero-content">
+        <div class="vd-eyebrow">Next Generation Energy</div>
+        <h1 class="vd-h1">
+          FUEL YOUR<br>
+          <span class="vd-h1-green">EDGE</span>
+        </h1>
+        <p class="vd-hero-sub">Clean energy. Enhanced focus.<br>Unmatched performance.</p>
+        <div class="vd-hero-btns">
+          <button class="vd-btn-primary">SHOP NOW <span aria-hidden="true">→</span></button>
+          <button class="vd-btn-outline">
+            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+              <circle cx="8.5" cy="8.5" r="7.5" stroke="currentColor" stroke-width="1.35"/>
+              <path d="M6.8 5.8L12 8.5l-5.2 2.7V5.8Z" fill="currentColor"/>
+            </svg>
+            WATCH VIDEO
+          </button>
+        </div>
+      </div>
+
+
+      <!-- Side dots -->
+      <div class="vd-side-dots" aria-hidden="true">
+        <div class="vd-dot active"></div>
+        <div class="vd-dot"></div>
+        <div class="vd-dot"></div>
+        <div class="vd-dot"></div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="vd-scroll-ind" aria-hidden="true">
+        <span>Scroll Down</span>
+        <div class="vd-scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- BENEFITS BAR -->
+    <div class="vd-benefits">
+      <div class="vd-ben-grid">
+        <div class="vd-ben-item">
+          <div class="vd-ben-icon" aria-hidden="true">⚡</div>
+          <div class="vd-ben-title">Clean Energy</div>
+          <p class="vd-ben-desc">No crash. No jitters. Just pure performance.</p>
+        </div>
+        <div class="vd-ben-item">
+          <div class="vd-ben-icon" aria-hidden="true">🎯</div>
+          <div class="vd-ben-title">Enhanced Focus</div>
+          <p class="vd-ben-desc">Sharpen your mind and stay in the zone.</p>
+        </div>
+        <div class="vd-ben-item">
+          <div class="vd-ben-icon" aria-hidden="true">🌿</div>
+          <div class="vd-ben-title">Natural Ingredients</div>
+          <p class="vd-ben-desc">Caffeine from natural sources and zero artificial junk.</p>
+        </div>
+        <div class="vd-ben-item">
+          <div class="vd-ben-icon" aria-hidden="true">💧</div>
+          <div class="vd-ben-title">Refreshing Flavor</div>
+          <p class="vd-ben-desc">Crisp, citrus taste that hits different.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUILT DIFFERENT — splash photo as full section background -->
+    <section class="vd-built vd-built-img">
+      <div class="vd-built-overlay" aria-hidden="true"></div>
+      <div class="vd-built-content">
+        <div class="vd-eyebrow">Citrus Rush</div>
+        <h2 class="vd-built-h2">
+          BUILT DIFFERENT.<br>
+          <span>PERFORMS BETTER.</span>
+        </h2>
+        <p class="vd-built-body">VANTA is more than an energy drink. It's a mindset. A fuel for those who demand more from every moment.</p>
+        <button class="vd-btn-outline">EXPLORE INGREDIENTS <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <!-- PERFORMANCE IN EVERY SIP -->
+    <section class="vd-perf">
+      <div class="vd-perf-heading">Performance In Every Sip</div>
+      <div class="vd-perf-grid">
+        <div class="vd-perf-col">
+          <div class="vd-perf-icon" aria-hidden="true">⚡</div>
+          <div class="vd-perf-label">ENERGY</div>
+          <p class="vd-perf-desc">Powerful and clean energy to fuel your entire day.</p>
+        </div>
+        <div class="vd-perf-col">
+          <div class="vd-perf-icon" aria-hidden="true">🧠</div>
+          <div class="vd-perf-label">FOCUS</div>
+          <p class="vd-perf-desc">Stay sharp, locked in and mentally strong.</p>
+        </div>
+        <div class="vd-perf-col">
+          <div class="vd-perf-icon" aria-hidden="true">🏃</div>
+          <div class="vd-perf-label">ENDURANCE</div>
+          <p class="vd-perf-desc">Push further. Perform longer. Go beyond your limits.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- A BOLD FLAVOR — full-tile background image (mirrors Built Different) -->
+    <section class="vd-flavor vd-flavor-img">
+      <div class="vd-flavor-overlay" aria-hidden="true"></div>
+      <div class="vd-flavor-content">
+        <h2 class="vd-flavor-h2">A BOLD FLAVOR THAT HITS DIFFERENT.</h2>
+        <p class="vd-flavor-body">Crisp. Refreshing. Unstoppable. The perfect citrus rush to elevate your energy and your game.</p>
+        <button class="vd-btn-outline">SHOP VANTA <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <section class="vd-social">
+      <div class="vd-social-row">
+        <div>
+          <div class="vd-eyebrow">Trusted By Thousands</div>
+          <div class="vd-avatars" aria-hidden="true">
+            <div class="vd-avatar">😊</div>
+            <div class="vd-avatar">😄</div>
+            <div class="vd-avatar">🙂</div>
+            <div class="vd-avatar">😎</div>
+            <div class="vd-avatar">🤩</div>
+          </div>
+          <div class="vd-trust-count">90K+</div>
+          <div class="vd-trust-label">Happy Customers</div>
+        </div>
+        <div class="vd-social-mid">
+          <div class="vd-rating-num">4.9+</div>
+          <div class="vd-stars" aria-label="5 star rating">★★★★★</div>
+          <div class="vd-rating-label">Average Rating</div>
+        </div>
+        <div class="vd-social-right">
+          <blockquote class="vd-quote">"Best energy drink I've ever had. Clean energy, amazing focus and the taste is unbelievable."</blockquote>
+          <div class="vd-quote-author">— Jake T., Verified Customer</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="vd-cta">
+      <div>
+        <h2 class="vd-cta-h2">READY TO FUEL YOUR <span>EDGE?</span></h2>
+        <p class="vd-cta-body">Join thousands of people who choose clean energy and elevated performance.</p>
+      </div>
+      <div class="vd-cta-right">
+        <button class="vd-btn-primary" style="font-size:14px;padding:18px 34px;border-radius:8px;">
+          GET VANTA NOW <span aria-hidden="true">→</span>
+        </button>
+        <div class="vd-cta-badges">
+          <div class="vd-cbadge">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="6" stroke="#B5F500" stroke-width="1.3"/><path d="M4.5 7l1.8 1.8 3.2-3.2" stroke="#B5F500" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Zero Sugar
+          </div>
+          <div class="vd-cbadge">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="6" stroke="#B5F500" stroke-width="1.3"/><path d="M4.5 7l1.8 1.8 3.2-3.2" stroke="#B5F500" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Natural Ingredients
+          </div>
+          <div class="vd-cbadge">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="6" stroke="#B5F500" stroke-width="1.3"/><path d="M4.5 7l1.8 1.8 3.2-3.2" stroke="#B5F500" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            No Crash
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="vd-footer">
+      <div class="vd-footer-top">
+        <div>
+          <div class="vd-logo">VANTA</div>
+          <div class="vd-footer-tagline">Fuel Your Edge</div>
+        </div>
+        <div>
+          <div class="vd-footer-col-title">Product</div>
+          <nav class="vd-footer-links" aria-label="Product links">
+            <a href="#">All Flavors</a>
+            <a href="#">Shop</a>
+            <a href="#">Subscriptions</a>
+          </nav>
+        </div>
+        <div>
+          <div class="vd-footer-col-title">Company</div>
+          <nav class="vd-footer-links" aria-label="Company links">
+            <a href="#">About Us</a>
+            <a href="#">Our Mission</a>
+            <a href="#">Careers</a>
+          </nav>
+        </div>
+        <div>
+          <div class="vd-footer-col-title">Support</div>
+          <nav class="vd-footer-links" aria-label="Support links">
+            <a href="#">FAQ</a>
+            <a href="#">Shipping</a>
+            <a href="#">Contact</a>
+          </nav>
+        </div>
+      </div>
+      <div class="vd-footer-bottom">
+        <div class="vd-footer-copy">© 2024 VANTA Energy. All rights reserved.</div>
+        <div class="vd-socials">
+          <a href="#" class="vd-soc-icon" aria-label="TikTok">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.27 8.27 0 0 0 4.84 1.55V6.78a4.85 4.85 0 0 1-1.07-.09z"/></svg>
+          </a>
+          <a href="#" class="vd-soc-icon" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="vd-soc-icon" aria-label="YouTube">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.6 5 12 5 12 5s-4.6 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.2.8C6.6 19 12 19 12 19s4.6 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM9.7 14.7V9.3L15 12l-5.3 2.7z"/></svg>
+          </a>
+          <a href="#" class="vd-soc-icon" aria-label="X (Twitter)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /vanta-demo -->
+
+</body>
+</html>
