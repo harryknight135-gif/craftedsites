@@ -1605,35 +1605,31 @@
         min-height: auto;
         padding: 56px 24px 0;
       }
-      /* Image sits at the bottom of the tile, full width, contained */
-      #vanta-demo .vd-built-img,
-      #vanta-demo .vd-flavor-img {
-        background-size: 100% auto;
-        background-position: bottom center;
-        background-repeat: no-repeat;
-        background-color: #000;
-        padding-bottom: 78vw;     /* reserves vertical space for the image */
-      }
-      /* Built Different — enlarge the can image, shifted so can-center sits at viewport-center */
+      /* Image sits directly below content — padding-bottom = exact image height at given bg-size */
+      /* vanta-can.png  2045×769  → at 150% width: height = (375*1.5)/2.66 ≈ 57vw             */
+      /* vanta-flavor.png 1774×887 → at 100% width: height = 375/2.0       = 50vw             */
       #vanta-demo .vd-built-img {
         background-size: 150% auto;
         background-position: 72% 100%;
-        padding-bottom: 105vw;
+        background-repeat: no-repeat;
+        background-color: #000;
+        padding-bottom: 57vw;     /* exact image height — zero dead space */
       }
-      /* Bold Flavor — slightly larger image, no horizontal crop */
       #vanta-demo .vd-flavor-img {
         background-size: 100% auto;
-        background-position: bottom center;
-        padding-bottom: 100vw;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: #000;
+        padding-bottom: 50vw;     /* exact image height — zero dead space */
       }
-      /* Vertical fade — solid black behind text, transparent over image */
+      /* Vertical fade — solid black behind text, fades to transparent just as image begins */
       #vanta-demo .vd-built-overlay,
       #vanta-demo .vd-flavor-overlay {
         background: linear-gradient(180deg,
           #000 0%,
-          #000 36%,
-          rgba(0,0,0,0.55) 50%,
-          rgba(0,0,0,0) 65%);
+          #000 56%,
+          rgba(0,0,0,0.4) 66%,
+          rgba(0,0,0,0) 76%);
       }
       #vanta-demo .vd-built-content,
       #vanta-demo .vd-flavor-content {
