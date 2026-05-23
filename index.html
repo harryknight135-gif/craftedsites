@@ -3121,132 +3121,135 @@
   ============================================================ -->
   <script>
   (function () {
-    /* Skip if GSAP didn't load or user prefers reduced motion */
     if (typeof gsap === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     gsap.registerPlugin(ScrollTrigger);
-
-    /* Tell CSS that GSAP is in charge — disables .rev transitions */
     document.body.classList.add('gsap-ready');
 
-    /* Shared easing — matches the site's --ease-out token */
     const E = 'power3.out';
 
-    /* ── HERO: staggered timeline on page load ──────────────── */
-    /* First, reset hero elements so GSAP can animate them in   */
-    gsap.set(['.hero-badge','.hero-h1','.hero-sub','.hero-actions','.social-proof'], {
-      opacity: 0, y: 28
-    });
+    /* ── HERO: staggered on page load (no scroll trigger) ───────
+       Set initial states immediately so elements don't flash      */
+    gsap.set(['.hero-badge','.hero-h1','.hero-sub','.hero-actions','.social-proof'],
+      { opacity: 0, y: 28 });
     gsap.set('.hero-visual', { opacity: 0, scale: 0.93, x: 20 });
 
     const heroTl = gsap.timeline({ defaults: { ease: E } });
     heroTl
       .to('.hero-badge',   { opacity: 1, y: 0, duration: 0.55 })
       .to('.hero-h1',      { opacity: 1, y: 0, duration: 0.75 }, '-=0.38')
-      .to('.hero-sub',     { opacity: 1, y: 0, duration: 0.6  }, '-=0.45')
+      .to('.hero-sub',     { opacity: 1, y: 0, duration: 0.60 }, '-=0.45')
       .to('.hero-actions', { opacity: 1, y: 0, duration: 0.55 }, '-=0.42')
-      .to('.social-proof', { opacity: 1, y: 0, duration: 0.5  }, '-=0.38')
-      .to('.hero-visual',  { opacity: 1, scale: 1, x: 0, duration: 0.9 }, '-=0.6');
+      .to('.social-proof', { opacity: 1, y: 0, duration: 0.50 }, '-=0.38')
+      .to('.hero-visual',  { opacity: 1, scale: 1, x: 0, duration: 0.90 }, '-=0.60');
 
-    /* ── Helper: make a standard ScrollTrigger config ───────── */
-    function ST(trigger, start) {
-      return { trigger, start: start || 'top 80%', once: true };
-    }
+    /* ── SCROLL SECTIONS: wait for full page load ───────────────
+       Fonts + images must settle before ScrollTrigger calculates
+       positions, otherwise triggers fire at wrong scroll depths
+       on desktop (large viewport / multi-column layouts).         */
+    window.addEventListener('load', function () {
 
-    /* ── SERVICES ─────────────────────────────────────────────
-       Left col slides in from the left, grid cards stagger up  */
-    gsap.set('.services-sticky', { opacity: 0, x: -40 });
-    gsap.to('.services-sticky', {
-      scrollTrigger: ST('#services', 'top 78%'),
-      opacity: 1, x: 0, duration: 0.8, ease: E
-    });
+      /* Recalculate all positions after everything has rendered  */
+      ScrollTrigger.refresh();
 
-    gsap.set('.svc-card', { opacity: 0, y: 36, scale: 0.96 });
-    gsap.to('.svc-card', {
-      scrollTrigger: ST('.svc-grid', 'top 82%'),
-      opacity: 1, y: 0, scale: 1,
-      stagger: { each: 0.07, from: 'start' },
-      duration: 0.6, ease: E
-    });
+      /* 'top bottom' = fires the moment the section scrolls into
+         view from below — reliable on any viewport size           */
+      function ST(trigger) {
+        return { trigger: trigger, start: 'top bottom', once: true };
+      }
 
-    /* ── FEATURED WORK ────────────────────────────────────────
-       Header fades up, portfolio cards stagger with a slight
-       scale so they feel like they're lifting off the page      */
-    gsap.set(['.work-ey', '.work-h2', '.work-sub'], { opacity: 0, y: 30 });
-    gsap.to(['.work-ey', '.work-h2', '.work-sub'], {
-      scrollTrigger: ST('#work', 'top 78%'),
-      opacity: 1, y: 0,
-      stagger: 0.1, duration: 0.7, ease: E
-    });
+      /* ── SERVICES ───────────────────────────────────────────
+         Left column slides in from left; cards stagger upward   */
+      gsap.set('.services-sticky', { opacity: 0, x: -48 });
+      gsap.to('.services-sticky', {
+        scrollTrigger: ST('#services'),
+        opacity: 1, x: 0, duration: 0.85, ease: E
+      });
 
-    gsap.set('.p-card', { opacity: 0, y: 44, scale: 0.95 });
-    gsap.to('.p-card', {
-      scrollTrigger: ST('.portfolio', 'top 82%'),
-      opacity: 1, y: 0, scale: 1,
-      stagger: { each: 0.1, from: 'start' },
-      duration: 0.72, ease: E
-    });
+      gsap.set('.svc-card', { opacity: 0, y: 36, scale: 0.96 });
+      gsap.to('.svc-card', {
+        scrollTrigger: ST('.svc-grid'),
+        opacity: 1, y: 0, scale: 1,
+        stagger: { each: 0.07, from: 'start' },
+        duration: 0.6, ease: E
+      });
 
-    /* ── PROCESS ──────────────────────────────────────────────
-       Heading slides up, then each step slides in from the left
-       one after the other — like a checklist being built        */
-    gsap.set('.process-head > *', { opacity: 0, y: 28 });
-    gsap.to('.process-head > *', {
-      scrollTrigger: ST('#process', 'top 78%'),
-      opacity: 1, y: 0,
-      stagger: 0.1, duration: 0.7, ease: E
-    });
+      /* ── FEATURED WORK ──────────────────────────────────────
+         Header fades up; cards lift and scale in sequence        */
+      gsap.set(['.work-ey','.work-h2','.work-sub'], { opacity: 0, y: 32 });
+      gsap.to(['.work-ey','.work-h2','.work-sub'], {
+        scrollTrigger: ST('#work'),
+        opacity: 1, y: 0,
+        stagger: 0.1, duration: 0.7, ease: E
+      });
 
-    gsap.set('.step', { opacity: 0, x: -40 });
-    gsap.to('.step', {
-      scrollTrigger: ST('.steps', 'top 82%'),
-      opacity: 1, x: 0,
-      stagger: { each: 0.15 },
-      duration: 0.72, ease: E
-    });
+      gsap.set('.p-card', { opacity: 0, y: 44, scale: 0.95 });
+      gsap.to('.p-card', {
+        scrollTrigger: ST('.portfolio'),
+        opacity: 1, y: 0, scale: 1,
+        stagger: { each: 0.1, from: 'start' },
+        duration: 0.72, ease: E
+      });
 
-    /* ── PRICING ──────────────────────────────────────────────
-       Cards scale up from the center outward (featured card
-       first, then Starter and Enterprise on either side)        */
-    gsap.set('.pricing-head > *', { opacity: 0, y: 28 });
-    gsap.to('.pricing-head > *', {
-      scrollTrigger: ST('#pricing', 'top 78%'),
-      opacity: 1, y: 0,
-      stagger: 0.1, duration: 0.7, ease: E
-    });
+      /* ── PROCESS ────────────────────────────────────────────
+         Heading fades up; steps slide in from left one by one   */
+      gsap.set('.process-head > *', { opacity: 0, y: 28 });
+      gsap.to('.process-head > *', {
+        scrollTrigger: ST('#process'),
+        opacity: 1, y: 0,
+        stagger: 0.1, duration: 0.7, ease: E
+      });
 
-    gsap.set('.plan', { opacity: 0, y: 40, scale: 0.96 });
-    gsap.to('.plan', {
-      scrollTrigger: ST('.plans', 'top 82%'),
-      opacity: 1, y: 0, scale: 1,
-      stagger: { each: 0.12, from: 'center' },
-      duration: 0.72, ease: E
-    });
+      gsap.set('.step', { opacity: 0, x: -44 });
+      gsap.to('.step', {
+        scrollTrigger: ST('.steps'),
+        opacity: 1, x: 0,
+        stagger: { each: 0.15 },
+        duration: 0.72, ease: E
+      });
 
-    /* ── CTA BANNER ───────────────────────────────────────────*/
-    gsap.set('.cta-box', { opacity: 0, y: 32, scale: 0.98 });
-    gsap.to('.cta-box', {
-      scrollTrigger: ST('#contact', 'top 82%'),
-      opacity: 1, y: 0, scale: 1,
-      duration: 0.8, ease: E
-    });
+      /* ── PRICING ────────────────────────────────────────────
+         Cards scale up from the centre outward                  */
+      gsap.set('.pricing-head > *', { opacity: 0, y: 28 });
+      gsap.to('.pricing-head > *', {
+        scrollTrigger: ST('#pricing'),
+        opacity: 1, y: 0,
+        stagger: 0.1, duration: 0.7, ease: E
+      });
 
-    /* ── CONTACT FORM ─────────────────────────────────────────*/
-    gsap.set(['.cf-header', '.cf-card'], { opacity: 0, y: 32 });
-    gsap.to(['.cf-header', '.cf-card'], {
-      scrollTrigger: ST('#contact-form', 'top 82%'),
-      opacity: 1, y: 0,
-      stagger: 0.13, duration: 0.7, ease: E
-    });
+      gsap.set('.plan', { opacity: 0, y: 40, scale: 0.96 });
+      gsap.to('.plan', {
+        scrollTrigger: ST('.plans'),
+        opacity: 1, y: 0, scale: 1,
+        stagger: { each: 0.12, from: 'center' },
+        duration: 0.72, ease: E
+      });
 
-    /* ── FOOTER ───────────────────────────────────────────────*/
-    gsap.set('footer .footer-top > *', { opacity: 0, y: 24 });
-    gsap.to('footer .footer-top > *', {
-      scrollTrigger: ST('footer', 'top 90%'),
-      opacity: 1, y: 0,
-      stagger: 0.08, duration: 0.6, ease: E
-    });
+      /* ── CTA + CONTACT FORM ─────────────────────────────────*/
+      gsap.set('.cta-box', { opacity: 0, y: 32, scale: 0.98 });
+      gsap.to('.cta-box', {
+        scrollTrigger: ST('#contact'),
+        opacity: 1, y: 0, scale: 1,
+        duration: 0.8, ease: E
+      });
+
+      gsap.set(['.cf-header','.cf-card'], { opacity: 0, y: 32 });
+      gsap.to(['.cf-header','.cf-card'], {
+        scrollTrigger: ST('#contact-form'),
+        opacity: 1, y: 0,
+        stagger: 0.13, duration: 0.7, ease: E
+      });
+
+      /* ── FOOTER ─────────────────────────────────────────────*/
+      gsap.set('footer .footer-top > *', { opacity: 0, y: 24 });
+      gsap.to('footer .footer-top > *', {
+        scrollTrigger: ST('footer'),
+        opacity: 1, y: 0,
+        stagger: 0.08, duration: 0.6, ease: E
+      });
+
+    }); /* end window.load */
 
   })();
   </script>
