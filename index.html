@@ -13,7 +13,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital@1&family=Bebas+Neue&family=Permanent+Marker&family=Anton&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Playfair+Display:ital@1&family=Bebas+Neue&family=Permanent+Marker&family=Anton&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ── Custom Properties ─────────────────────────────── */
@@ -1828,6 +1828,586 @@
       #vanta-demo .vd-footer-top  { grid-template-columns: 1fr; }
       #vanta-demo .vd-cta-badges  { flex-direction: column; align-items: flex-start; }
     }
+
+    /* ================================================================
+       AURELLE BEAUTY & WELLNESS — PORTFOLIO CARD
+    ================================================================ */
+    .aurelle-card {
+      grid-column: 1 / -1;
+      aspect-ratio: 21/9;
+      border-radius: var(--r);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #1A1612;
+      margin-top: 18px;
+    }
+    .aurelle-card:hover { transform: translateY(-3px); }
+    .aurelle-card:active { transform: scale(0.99); }
+    .ac-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 78% center;
+      transition: transform 620ms var(--ease-out);
+    }
+    .aurelle-card:hover .ac-img { transform: scale(1.04); }
+    .ac-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg,
+        rgba(15,15,15,0.85) 0%,
+        rgba(15,15,15,0.45) 38%,
+        rgba(15,15,15,0) 62%);
+      pointer-events: none;
+    }
+    .ac-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 80% at 18% 50%,
+        rgba(201,168,118,0.16) 0%,
+        transparent 70%);
+      pointer-events: none;
+      opacity: 0.7;
+      transition: opacity 360ms ease;
+    }
+    .aurelle-card:hover .ac-glow { opacity: 1; }
+    .ac-badge {
+      position: absolute; top: 22px; left: 22px;
+      background: rgba(201,168,118,0.12);
+      border: 1px solid rgba(201,168,118,0.42);
+      color: #D9BC8C;
+      font-family: 'Manrope', sans-serif;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 100px;
+    }
+    .ac-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 32px 36px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+    }
+    .ac-info .ac-cat {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 500;
+      color: rgba(217,188,140,0.72);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .ac-info .ac-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 500;
+      color: #F4ECDF; letter-spacing: 0.18em;
+      line-height: 1;
+    }
+    .ac-enter {
+      display: flex; align-items: center; gap: 9px; white-space: nowrap;
+      background: #F4ECDF; color: #1A1612;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 14px 22px; border-radius: 100px; border: none; cursor: pointer;
+      transition: transform 160ms var(--ease-out), background 160ms ease, box-shadow 200ms ease;
+      flex-shrink: 0;
+    }
+    .ac-enter:hover { background: #D9BC8C; box-shadow: 0 0 28px rgba(201,168,118,0.32); }
+    .ac-enter:active { transform: scale(0.97); }
+    @media (max-width: 1024px) { .aurelle-card { aspect-ratio: 16/9; } .ac-info { padding: 24px 26px; } }
+    @media (max-width: 540px)  {
+      .aurelle-card { aspect-ratio: 4/3; }
+      .ac-enter { display: none; }
+      .ac-overlay { background: linear-gradient(180deg, rgba(15,15,15,0) 30%, rgba(15,15,15,0.85) 100%); }
+      .ac-img { object-position: center center; }
+    }
+
+    /* ================================================================
+       AURELLE — DEMO OVERLAY
+    ================================================================ */
+    #aurelle-demo {
+      position: fixed; inset: 0; z-index: 9000;
+      background: #F2EBE0;
+      overflow-y: auto; overflow-x: hidden;
+      opacity: 0; visibility: hidden;
+      transition: opacity 360ms ease, visibility 360ms ease;
+      -webkit-font-smoothing: antialiased;
+    }
+    #aurelle-demo.ar-open { opacity: 1; visibility: visible; }
+    #aurelle-demo, #aurelle-demo * { box-sizing: border-box; }
+
+    /* Close button */
+    #ar-close {
+      position: fixed; top: 22px; right: 22px; z-index: 9100;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(15,15,15,0.78); color: #F4ECDF;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out), background 160ms ease;
+    }
+    #ar-close:hover { background: #0F0F0F; transform: scale(1.06); }
+    #ar-close:active { transform: scale(0.96); }
+
+    /* Nav */
+    #aurelle-demo .ar-nav {
+      background: #0F0F0F;
+      padding: 22px 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 2;
+    }
+    #aurelle-demo .ar-logo {
+      display: flex; flex-direction: column; line-height: 1;
+    }
+    #aurelle-demo .ar-logo-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 500;
+      color: #F4ECDF; letter-spacing: 0.28em;
+    }
+    #aurelle-demo .ar-logo-sub {
+      font-family: 'Manrope', sans-serif;
+      font-size: 9px; font-weight: 400;
+      color: rgba(244,236,223,0.5);
+      letter-spacing: 0.32em; margin-top: 5px;
+    }
+    #aurelle-demo .ar-nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    #aurelle-demo .ar-nav-links a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 500;
+      color: rgba(244,236,223,0.88);
+      letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none;
+      transition: color 160ms ease;
+    }
+    #aurelle-demo .ar-nav-links a:hover { color: #D9BC8C; }
+    #aurelle-demo .ar-nav-icons {
+      display: flex; align-items: center; gap: 20px;
+    }
+    #aurelle-demo .ar-nav-icon {
+      color: rgba(244,236,223,0.78);
+      background: transparent; border: none; cursor: pointer;
+      padding: 4px; transition: color 160ms ease;
+      position: relative;
+    }
+    #aurelle-demo .ar-nav-icon:hover { color: #D9BC8C; }
+    #aurelle-demo .ar-cart-count {
+      position: absolute; top: -2px; right: -4px;
+      background: #D9BC8C; color: #0F0F0F;
+      font-family: 'Manrope', sans-serif;
+      font-size: 9px; font-weight: 700;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Hero */
+    #aurelle-demo .ar-hero {
+      background: #0F0F0F;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 620px;
+      position: relative;
+    }
+    #aurelle-demo .ar-hero-left {
+      padding: clamp(60px, 8vw, 110px) clamp(36px, 5vw, 80px);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    #aurelle-demo .ar-hero-eyebrow {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 500;
+      color: #D9BC8C; letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 26px;
+    }
+    #aurelle-demo .ar-hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 7.8vw, 112px);
+      font-weight: 500;
+      color: #F4ECDF; line-height: 0.95; letter-spacing: -0.01em;
+      margin-bottom: 30px;
+    }
+    #aurelle-demo .ar-hero-h1 .ar-italic {
+      font-style: italic; color: #D9BC8C; display: block;
+    }
+    #aurelle-demo .ar-hero-sub {
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px; font-weight: 300;
+      color: rgba(244,236,223,0.62);
+      line-height: 1.7; max-width: 380px;
+      margin-bottom: 44px;
+    }
+    #aurelle-demo .ar-hero-btns {
+      display: flex; gap: 14px; flex-wrap: wrap;
+    }
+    #aurelle-demo .ar-btn-primary {
+      background: #F4ECDF; color: #0F0F0F;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 18px 36px; border: none; cursor: pointer;
+      transition: background 180ms ease, transform 160ms var(--ease-out);
+    }
+    #aurelle-demo .ar-btn-primary:hover { background: #D9BC8C; }
+    #aurelle-demo .ar-btn-primary:active { transform: scale(0.97); }
+    #aurelle-demo .ar-btn-ghost {
+      background: transparent; color: #F4ECDF;
+      border: 1px solid rgba(244,236,223,0.32);
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 17px 36px; cursor: pointer;
+      transition: border-color 180ms ease, transform 160ms var(--ease-out);
+    }
+    #aurelle-demo .ar-btn-ghost:hover { border-color: #D9BC8C; color: #D9BC8C; }
+    #aurelle-demo .ar-btn-ghost:active { transform: scale(0.97); }
+    #aurelle-demo .ar-hero-right {
+      background-image: url('aurelle-hero.jpg');
+      background-size: cover;
+      background-position: center;
+      background-color: #1A1612;
+    }
+
+    /* Trust strip */
+    #aurelle-demo .ar-trust {
+      background: #F2EBE0;
+      padding: 38px clamp(36px, 5vw, 80px);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      border-bottom: 1px solid rgba(15,15,15,0.06);
+    }
+    #aurelle-demo .ar-trust-item {
+      display: flex; align-items: center; gap: 14px;
+    }
+    #aurelle-demo .ar-trust-icon {
+      width: 28px; height: 28px;
+      color: #2A2520; flex-shrink: 0;
+    }
+    #aurelle-demo .ar-trust-text { line-height: 1.3; }
+    #aurelle-demo .ar-trust-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      color: #2A2520; letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    #aurelle-demo .ar-trust-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; font-weight: 300;
+      color: #7A7066;
+    }
+
+    /* Best sellers */
+    #aurelle-demo .ar-best {
+      background: #E8DFD0;
+      padding: clamp(72px, 9vw, 120px) clamp(36px, 5vw, 80px);
+      display: grid; grid-template-columns: 1fr 2.2fr;
+      gap: clamp(40px, 5vw, 80px);
+    }
+    #aurelle-demo .ar-best-left {
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    #aurelle-demo .ar-eyebrow {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 500;
+      color: #7A7066; letter-spacing: 0.22em; text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    #aurelle-demo .ar-best-h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 500;
+      color: #2A2520; line-height: 1.1; letter-spacing: -0.005em;
+      margin-bottom: 22px;
+    }
+    #aurelle-demo .ar-best-h2 .ar-italic {
+      font-style: italic; color: #A88654;
+    }
+    #aurelle-demo .ar-best-body {
+      font-family: 'Manrope', sans-serif;
+      font-size: 14px; font-weight: 300;
+      color: #7A7066; line-height: 1.7;
+      margin-bottom: 32px; max-width: 320px;
+    }
+    #aurelle-demo .ar-best-btn {
+      background: #0F0F0F; color: #F4ECDF;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 16px 32px; border: none; cursor: pointer;
+      transition: background 180ms ease, transform 160ms var(--ease-out);
+      align-self: flex-start;
+    }
+    #aurelle-demo .ar-best-btn:hover { background: #2A2520; }
+    #aurelle-demo .ar-best-btn:active { transform: scale(0.97); }
+    #aurelle-demo .ar-best-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    #aurelle-demo .ar-product {
+      background: #F2EBE0;
+      position: relative;
+      transition: transform 240ms var(--ease-out);
+    }
+    #aurelle-demo .ar-product:hover { transform: translateY(-4px); }
+    #aurelle-demo .ar-product-img {
+      aspect-ratio: 4/5;
+      background-color: #F2EBE0;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    #aurelle-demo .ar-product-add {
+      position: absolute; top: 12px; right: 12px;
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(15,15,15,0.08);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #2A2520;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+    #aurelle-demo .ar-product-add:hover { background: #2A2520; color: #F4ECDF; transform: scale(1.08); }
+    #aurelle-demo .ar-product-info {
+      padding: 18px 16px 22px; text-align: center;
+    }
+    #aurelle-demo .ar-product-name {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; font-weight: 600;
+      color: #2A2520; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    #aurelle-demo .ar-product-tag {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; font-weight: 300;
+      color: #7A7066; margin-bottom: 10px;
+    }
+    #aurelle-demo .ar-product-price {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px; font-weight: 500;
+      color: #2A2520;
+    }
+
+    /* Wellness two-column */
+    #aurelle-demo .ar-wellness {
+      background: #F2EBE0;
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      min-height: 480px;
+    }
+    #aurelle-demo .ar-wellness-img {
+      background-image: url('aurelle-wellness.jpg');
+      background-size: cover;
+      background-position: center;
+      background-color: #2A2520;
+    }
+    #aurelle-demo .ar-wellness-right {
+      padding: clamp(60px, 7vw, 110px) clamp(36px, 5vw, 80px);
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    #aurelle-demo .ar-wellness-h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 4.4vw, 60px);
+      font-weight: 500;
+      color: #2A2520; line-height: 1.05; letter-spacing: -0.005em;
+      margin-bottom: 24px; max-width: 480px;
+    }
+    #aurelle-demo .ar-wellness-h2 .ar-italic {
+      font-style: italic; color: #A88654;
+    }
+    #aurelle-demo .ar-wellness-body {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px; font-weight: 300;
+      color: #7A7066; line-height: 1.75;
+      margin-bottom: 36px; max-width: 380px;
+    }
+    #aurelle-demo .ar-wellness-btn {
+      background: #0F0F0F; color: #F4ECDF;
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 16px 32px; border: none; cursor: pointer;
+      transition: background 180ms ease, transform 160ms var(--ease-out);
+      align-self: flex-start;
+    }
+    #aurelle-demo .ar-wellness-btn:hover { background: #2A2520; }
+    #aurelle-demo .ar-wellness-btn:active { transform: scale(0.97); }
+
+    /* Stats strip */
+    #aurelle-demo .ar-stats {
+      background: #E8DFD0;
+      padding: 42px clamp(36px, 5vw, 80px);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      border-top: 1px solid rgba(15,15,15,0.06);
+    }
+    #aurelle-demo .ar-stat {
+      display: flex; align-items: center; gap: 16px;
+    }
+    #aurelle-demo .ar-stat-icon {
+      width: 32px; height: 32px; color: #2A2520; flex-shrink: 0;
+    }
+    #aurelle-demo .ar-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 500;
+      color: #2A2520; line-height: 1; margin-bottom: 4px; letter-spacing: 0.02em;
+    }
+    #aurelle-demo .ar-stat-num.ar-stars {
+      display: flex; gap: 1px; color: #A88654; font-size: 14px;
+    }
+    #aurelle-demo .ar-stat-label {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      color: #2A2520; letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    #aurelle-demo .ar-stat-desc {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 300;
+      color: #7A7066;
+    }
+
+    /* Footer */
+    #aurelle-demo .ar-footer {
+      background: #F2EBE0;
+      padding: clamp(64px, 7vw, 96px) clamp(36px, 5vw, 80px) 32px;
+    }
+    #aurelle-demo .ar-footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1.6fr 1fr 1fr 1fr 1.4fr;
+      gap: 40px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid rgba(15,15,15,0.08);
+    }
+    #aurelle-demo .ar-footer-brand .ar-logo-main {
+      color: #2A2520;
+    }
+    #aurelle-demo .ar-footer-brand .ar-logo-sub {
+      color: #7A7066;
+    }
+    #aurelle-demo .ar-footer-tagline {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; font-weight: 300;
+      color: #7A7066; line-height: 1.7;
+      margin-top: 28px; max-width: 240px;
+    }
+    #aurelle-demo .ar-footer-socials {
+      display: flex; gap: 10px; margin-top: 24px;
+    }
+    #aurelle-demo .ar-soc {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(15,15,15,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #2A2520; cursor: pointer; background: transparent;
+      transition: border-color 160ms ease, color 160ms ease;
+    }
+    #aurelle-demo .ar-soc:hover { border-color: #A88654; color: #A88654; }
+    #aurelle-demo .ar-footer-h {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; font-weight: 600;
+      color: #2A2520; letter-spacing: 0.16em; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    #aurelle-demo .ar-email-row {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; color: #7A7066; line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    #aurelle-demo .ar-email {
+      display: flex; align-items: center; gap: 0;
+      border-bottom: 1px solid rgba(15,15,15,0.16);
+      padding-bottom: 10px;
+    }
+    #aurelle-demo .ar-email input {
+      flex: 1; background: transparent; border: none; outline: none;
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px; color: #2A2520;
+    }
+    #aurelle-demo .ar-email input::placeholder { color: #A89E94; }
+    #aurelle-demo .ar-email-btn {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #2A2520; color: #F4ECDF;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none;
+      transition: background 160ms ease;
+    }
+    #aurelle-demo .ar-email-btn:hover { background: #0F0F0F; }
+    #aurelle-demo .ar-footer-links {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    #aurelle-demo .ar-footer-links a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px; font-weight: 400;
+      color: #7A7066; text-decoration: none;
+      transition: color 160ms ease;
+    }
+    #aurelle-demo .ar-footer-links a:hover { color: #2A2520; }
+    #aurelle-demo .ar-footer-gallery {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    }
+    #aurelle-demo .ar-fg {
+      aspect-ratio: 1;
+      background-color: #E8DFD0;
+      background-size: cover;
+      background-position: center;
+    }
+    #aurelle-demo .ar-footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px;
+      flex-wrap: wrap; gap: 18px;
+    }
+    #aurelle-demo .ar-copy {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; color: #7A7066;
+    }
+    #aurelle-demo .ar-legal {
+      display: flex; gap: 28px;
+    }
+    #aurelle-demo .ar-legal a {
+      font-family: 'Manrope', sans-serif;
+      font-size: 11px; color: #7A7066; text-decoration: none;
+    }
+    #aurelle-demo .ar-legal a:hover { color: #2A2520; }
+    #aurelle-demo .ar-pay {
+      display: flex; gap: 8px; align-items: center;
+    }
+    #aurelle-demo .ar-pay-icon {
+      height: 22px; padding: 4px 8px;
+      background: white;
+      border: 1px solid rgba(15,15,15,0.08);
+      border-radius: 4px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 9px; font-weight: 700;
+      color: #2A2520;
+      display: flex; align-items: center;
+      letter-spacing: 0.04em;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      #aurelle-demo .ar-nav { padding: 18px 32px; }
+      #aurelle-demo .ar-nav-links { gap: 22px; }
+      #aurelle-demo .ar-trust,
+      #aurelle-demo .ar-stats { grid-template-columns: 1fr 1fr; gap: 24px; }
+      #aurelle-demo .ar-best { grid-template-columns: 1fr; }
+      #aurelle-demo .ar-best-grid { grid-template-columns: 1fr 1fr; }
+      #aurelle-demo .ar-footer-top {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 36px 28px;
+      }
+      #aurelle-demo .ar-footer-gallery { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      #aurelle-demo .ar-nav-links { display: none; }
+      #aurelle-demo .ar-hero { grid-template-columns: 1fr; }
+      #aurelle-demo .ar-hero-right { min-height: 360px; order: -1; }
+      #aurelle-demo .ar-wellness { grid-template-columns: 1fr; }
+      #aurelle-demo .ar-wellness-img { min-height: 320px; }
+    }
+    @media (max-width: 540px) {
+      #aurelle-demo .ar-trust,
+      #aurelle-demo .ar-stats { grid-template-columns: 1fr; }
+      #aurelle-demo .ar-best-grid { grid-template-columns: 1fr 1fr; }
+      #aurelle-demo .ar-footer-top { grid-template-columns: 1fr; }
+      #aurelle-demo .ar-nav { padding: 16px 22px; }
+      #aurelle-demo .ar-hero-left { padding: 56px 24px; }
+    }
   </style>
 </head>
 <body>
@@ -2253,6 +2833,29 @@
               <div class="p-name">VANTA ENERGY</div>
             </div>
             <button class="vc-enter" data-open-vanta aria-label="Open VANTA Energy demo" tabindex="-1">
+              View Live Demo <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- AURELLE BEAUTY & WELLNESS — Featured -->
+        <article
+          class="p-card aurelle-card rev"
+          role="button"
+          tabindex="0"
+          aria-label="View Aurelle Beauty & Wellness project demo"
+          data-open-aurelle
+        >
+          <img class="ac-img" src="aurelle-hero.jpg" alt="" aria-hidden="true">
+          <div class="ac-overlay"></div>
+          <div class="ac-glow"></div>
+          <span class="ac-badge">Beauty & Wellness</span>
+          <div class="ac-info">
+            <div>
+              <div class="ac-cat">Skincare &amp; Lifestyle</div>
+              <div class="ac-name">AURELLE</div>
+            </div>
+            <button class="ac-enter" data-open-aurelle aria-label="Open Aurelle demo" tabindex="-1">
               View Live Demo <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -3626,6 +4229,328 @@
     </footer>
 
   </div><!-- /vanta-demo -->
+
+
+  <!-- ============================================================
+       AURELLE BEAUTY & WELLNESS — DEMO OVERLAY
+  ============================================================ -->
+  <div id="aurelle-demo" role="dialog" aria-modal="true" aria-label="Aurelle Beauty & Wellness — Demo" aria-hidden="true">
+
+    <button id="ar-close" aria-label="Close demo">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <!-- NAV -->
+    <nav class="ar-nav">
+      <div class="ar-logo">
+        <span class="ar-logo-main">AURELLE</span>
+        <span class="ar-logo-sub">BEAUTY &amp; WELLNESS</span>
+      </div>
+      <ul class="ar-nav-links">
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Best Sellers</a></li>
+        <li><a href="#">Skincare</a></li>
+        <li><a href="#">Wellness</a></li>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Journal</a></li>
+      </ul>
+      <div class="ar-nav-icons">
+        <button class="ar-nav-icon" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="ar-nav-icon" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="ar-nav-icon" aria-label="Cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 7h14l-1.5 11.5a2 2 0 01-2 1.75h-7a2 2 0 01-2-1.75L5 7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 7V5a4 4 0 118 0v2" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="ar-cart-count">0</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="ar-hero">
+      <div class="ar-hero-left">
+        <div class="ar-hero-eyebrow">Beauty That Empowers</div>
+        <h1 class="ar-hero-h1">Radiate<span class="ar-italic">Confidence.</span></h1>
+        <p class="ar-hero-sub">Clean, effective, and luxurious skincare and wellness essentials for your best self — every day.</p>
+        <div class="ar-hero-btns">
+          <button class="ar-btn-primary">Shop Now</button>
+          <button class="ar-btn-ghost">Our Story</button>
+        </div>
+      </div>
+      <div class="ar-hero-right" aria-hidden="true"></div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="ar-trust">
+      <div class="ar-trust-item">
+        <svg class="ar-trust-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2C7 8 4 11 4 15a8 8 0 0016 0c0-4-3-7-8-13z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M9 16c1 1.5 4 2.5 6 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <div class="ar-trust-text">
+          <div class="ar-trust-title">Clean Ingredients</div>
+          <div class="ar-trust-desc">Natural. Non-toxic. Effective.</div>
+        </div>
+      </div>
+      <div class="ar-trust-item">
+        <svg class="ar-trust-icon" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9-9c-1.3-3 0-6 3-6 2 0 3 1 3 1V7s1-2 3-2 3 2 3 2v0s1-1 3-1c3 0 4.3 3 3 6-2 4.5-9 9-9 9z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        <div class="ar-trust-text">
+          <div class="ar-trust-title">Cruelty Free</div>
+          <div class="ar-trust-desc">Beauty with compassion.</div>
+        </div>
+      </div>
+      <div class="ar-trust-item">
+        <svg class="ar-trust-icon" viewBox="0 0 24 24" fill="none"><path d="M12 3c4 6 7 9 7 13a7 7 0 11-14 0c0-4 3-7 7-13z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        <div class="ar-trust-text">
+          <div class="ar-trust-title">Dermatologist Tested</div>
+          <div class="ar-trust-desc">Safe for all skin types.</div>
+        </div>
+      </div>
+      <div class="ar-trust-item">
+        <svg class="ar-trust-icon" viewBox="0 0 24 24" fill="none"><path d="M4 20c8-1 13-6 14-14-8 1-13 6-14 14z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M9 15l2-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <div class="ar-trust-text">
+          <div class="ar-trust-title">Sustainable</div>
+          <div class="ar-trust-desc">Good for you &amp; the planet.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEST SELLERS -->
+    <section class="ar-best">
+      <div class="ar-best-left">
+        <div class="ar-eyebrow">Our Best Sellers</div>
+        <h2 class="ar-best-h2"><span class="ar-italic">Loved</span> by Thousands.<br><span class="ar-italic">Results</span> You Can See.</h2>
+        <p class="ar-best-body">High-performance formulas. Visible results. Clinically inspired. Naturally made.</p>
+        <button class="ar-best-btn">Shop Best Sellers</button>
+      </div>
+      <div class="ar-best-grid">
+        <article class="ar-product">
+          <div class="ar-product-img" style="background-image:url('aurelle-serum.jpg')">
+            <button class="ar-product-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="ar-product-info">
+            <div class="ar-product-name">Radiance Glow Serum</div>
+            <div class="ar-product-tag">Brighten &amp; Even Skin Tone</div>
+            <div class="ar-product-price">$54.00</div>
+          </div>
+        </article>
+        <article class="ar-product">
+          <div class="ar-product-img" style="background-image:url('aurelle-moisturizer.jpg')">
+            <button class="ar-product-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="ar-product-info">
+            <div class="ar-product-name">Hydra-Luxe Moisturizer</div>
+            <div class="ar-product-tag">Deep Hydration &amp; Barrier Support</div>
+            <div class="ar-product-price">$48.00</div>
+          </div>
+        </article>
+        <article class="ar-product">
+          <div class="ar-product-img" style="background-image:url('aurelle-cleanser.jpg')">
+            <button class="ar-product-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="ar-product-info">
+            <div class="ar-product-name">Detox Clay Cleanser</div>
+            <div class="ar-product-tag">Purify &amp; Refresh</div>
+            <div class="ar-product-price">$36.00</div>
+          </div>
+        </article>
+        <article class="ar-product">
+          <div class="ar-product-img" style="background-image:url('aurelle-wellness-supplement.jpg')">
+            <button class="ar-product-add" aria-label="Add to cart">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="ar-product-info">
+            <div class="ar-product-name">Wellness Glow</div>
+            <div class="ar-product-tag">Hair, Skin &amp; Nail Support</div>
+            <div class="ar-product-price">$42.00</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- WELLNESS TWO-COLUMN -->
+    <section class="ar-wellness">
+      <div class="ar-wellness-img" aria-hidden="true"></div>
+      <div class="ar-wellness-right">
+        <div class="ar-eyebrow">Wellness Is Beautiful</div>
+        <h2 class="ar-wellness-h2">Nourish Your Skin.<br><span class="ar-italic">Elevate</span> Your Life.</h2>
+        <p class="ar-wellness-body">We blend the best of science and nature to create skincare and wellness products that support your glow — inside and out.</p>
+        <button class="ar-wellness-btn">Explore Wellness</button>
+      </div>
+    </section>
+
+    <!-- STATS STRIP -->
+    <section class="ar-stats">
+      <div class="ar-stat">
+        <svg class="ar-stat-icon" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="17" cy="9" r="2.6" stroke="currentColor" stroke-width="1.3"/><path d="M16 14c2.8.5 5 2.8 5 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <div>
+          <div class="ar-stat-num">10K+</div>
+          <div class="ar-stat-label">Happy Customers</div>
+          <div class="ar-stat-desc">Real people. Real results.</div>
+        </div>
+      </div>
+      <div class="ar-stat">
+        <div>
+          <div class="ar-stat-num ar-stars">★ ★ ★ ★ ★</div>
+          <div class="ar-stat-label">4.9 Average Rating</div>
+          <div class="ar-stat-desc">Trusted by thousands.</div>
+        </div>
+      </div>
+      <div class="ar-stat">
+        <svg class="ar-stat-icon" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div>
+          <div class="ar-stat-num">30-Day</div>
+          <div class="ar-stat-label">Glow Guarantee</div>
+          <div class="ar-stat-desc">Love it or your money back.</div>
+        </div>
+      </div>
+      <div class="ar-stat">
+        <svg class="ar-stat-icon" viewBox="0 0 24 24" fill="none"><path d="M2 8h12v8H2zM14 11h5l3 3v2h-8z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.3"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.3"/></svg>
+        <div>
+          <div class="ar-stat-num">Free Shipping</div>
+          <div class="ar-stat-desc">On all orders over $75</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="ar-footer">
+      <div class="ar-footer-top">
+        <div class="ar-footer-brand">
+          <div class="ar-logo">
+            <span class="ar-logo-main">AURELLE</span>
+            <span class="ar-logo-sub">BEAUTY &amp; WELLNESS</span>
+          </div>
+          <p class="ar-footer-tagline">Clean. Conscious. Effective. Skincare and wellness essentials made for real life.</p>
+          <div class="ar-footer-socials">
+            <button class="ar-soc" aria-label="Instagram"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none"/></svg></button>
+            <button class="ar-soc" aria-label="TikTok"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2.1h-3.5v13.7a2.9 2.9 0 1 1-2.9-2.9c.3 0 .5.04.8.1V9.04a6.3 6.3 0 0 0-.8-.05A6.3 6.3 0 0 0 3 15.3a6.3 6.3 0 0 0 6.3 6.3 6.3 6.3 0 0 0 6.3-6.3V8.7a8.3 8.3 0 0 0 4.8 1.55V6.78a4.85 4.85 0 0 1-1-.08z"/></svg></button>
+            <button class="ar-soc" aria-label="Pinterest"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M11 7c0 4-2 6-3 11M11.5 7c2 0 4 1 4 3.5s-2 3.5-3.5 3.5c-1 0-2-.5-2-1.5"/></svg></button>
+            <button class="ar-soc" aria-label="YouTube"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 8s-.2-1.4-.8-2c-.8-.8-1.6-.8-2-.9C16.6 5 12 5 12 5s-4.6 0-7 .1c-.4.1-1.2.1-2 .9-.6.6-.8 2-.8 2S2 9.6 2 11.2v1.5c0 1.6.2 3.2.2 3.2s.2 1.4.8 2c.8.8 1.8.8 2.2.8C6.6 19 12 19 12 19s4.6 0 7-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2 .8-2s.2-1.6.2-3.2v-1.5C22 9.6 21.8 8 21.8 8zM9.7 14.7V9.3L15 12l-5.3 2.7z"/></svg></button>
+          </div>
+        </div>
+        <div>
+          <div class="ar-footer-h">Join The Aurelle Community</div>
+          <div class="ar-email-row">Be the first to know about new arrivals, exclusive offers, and self-care tips.</div>
+          <form class="ar-email" onsubmit="return false">
+            <input type="email" placeholder="Your email address" aria-label="Email">
+            <button class="ar-email-btn" aria-label="Subscribe">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </form>
+        </div>
+        <div>
+          <div class="ar-footer-h">Explore</div>
+          <nav class="ar-footer-links">
+            <a href="#">Shop All</a>
+            <a href="#">Best Sellers</a>
+            <a href="#">Skincare</a>
+            <a href="#">Wellness</a>
+            <a href="#">Gift Sets</a>
+          </nav>
+        </div>
+        <div>
+          <div class="ar-footer-h">Company</div>
+          <nav class="ar-footer-links">
+            <a href="#">Our Story</a>
+            <a href="#">Ingredients</a>
+            <a href="#">Sustainability</a>
+            <a href="#">Careers</a>
+            <a href="#">Press</a>
+          </nav>
+        </div>
+        <div>
+          <div class="ar-footer-h">Support</div>
+          <nav class="ar-footer-links">
+            <a href="#">FAQ</a>
+            <a href="#">Shipping</a>
+            <a href="#">Returns</a>
+            <a href="#">Contact Us</a>
+          </nav>
+        </div>
+        <div class="ar-footer-gallery">
+          <div class="ar-fg" style="background-image:url('aurelle-moisturizer.jpg')"></div>
+          <div class="ar-fg" style="background-image:url('aurelle-hero.jpg');background-position:center 20%"></div>
+          <div class="ar-fg" style="background-image:url('aurelle-serum.jpg')"></div>
+          <div class="ar-fg" style="background-image:url('aurelle-wellness.jpg')"></div>
+        </div>
+      </div>
+      <div class="ar-footer-bottom">
+        <div class="ar-copy">© 2024 Aurelle Beauty &amp; Wellness. All rights reserved.</div>
+        <div class="ar-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+        <div class="ar-pay">
+          <span class="ar-pay-icon">VISA</span>
+          <span class="ar-pay-icon">MC</span>
+          <span class="ar-pay-icon">AMEX</span>
+          <span class="ar-pay-icon">PAYPAL</span>
+          <span class="ar-pay-icon">A PAY</span>
+          <span class="ar-pay-icon">G PAY</span>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /aurelle-demo -->
+
+
+  <!-- ============================================================
+       AURELLE DEMO — open/close logic (mirrors VANTA pattern)
+  ============================================================ -->
+  <script>
+  function initAurelleDemo() {
+    const demo     = document.getElementById('aurelle-demo');
+    const closeBtn = document.getElementById('ar-close');
+    if (!demo || !closeBtn) return;
+
+    const openTriggers = document.querySelectorAll('[data-open-aurelle]');
+    let scrollY = 0;
+
+    function open() {
+      scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = -scrollY + 'px';
+      document.body.style.width = '100%';
+      demo.classList.add('ar-open');
+      demo.setAttribute('aria-hidden', 'false');
+      demo.scrollTop = 0;
+      closeBtn.focus();
+    }
+    function close() {
+      demo.classList.remove('ar-open');
+      demo.setAttribute('aria-hidden', 'true');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    }
+
+    openTriggers.forEach(t => {
+      t.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); open(); });
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+      });
+    });
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && demo.classList.contains('ar-open')) close();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAurelleDemo);
+  } else {
+    initAurelleDemo();
+  }
+  </script>
 
 </body>
 </html>
