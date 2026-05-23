@@ -179,17 +179,21 @@
       color: var(--black);
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 7px;
     }
     .logo-mark {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
-      background: var(--blue);
-      border-radius: 5px;
+      width: 28px;
+      height: 28px;
       flex-shrink: 0;
+    }
+    .logo-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
     .nav-links {
       display: flex;
@@ -2716,12 +2720,10 @@
   <nav id="nav">
     <div class="nav-inner">
 
-      <a href="#home" class="logo">
+      <a href="#home" class="logo" aria-label="craftedsites home">
         CRAFTED
         <span class="logo-mark">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <path d="M2 7.5 L5 2.5 L8 7.5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <img src="cs-logo.png" alt="" aria-hidden="true">
         </span>
         SITES
       </a>
