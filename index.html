@@ -2604,6 +2604,27 @@
     }
 
     /* Responsive */
+    /* Widescreen (≥1440px): the photo now fits the whole frame instead
+       of being cropped to fill (cover). Lifted vertical anchor to ~62%
+       so the model sits a bit lower in the composition, and the image
+       is horizontally centred so she reads as middle-of-screen.       */
+    @media (min-width: 1440px) {
+      #aurelle-demo .ar-hero {
+        min-height: 760px;
+        background-size: contain;
+        background-position: 50% 62%;
+      }
+      /* Push the gradient's clear edge further right since the image
+         is now centred — keeps the text/image transition seamless.    */
+      #aurelle-demo .ar-hero::before {
+        background: linear-gradient(90deg,
+          rgba(10,10,10,1)     0%,
+          rgba(10,10,10,1)     32%,
+          rgba(10,10,10,0.55) 52%,
+          rgba(10,10,10,0.12) 70%,
+          rgba(10,10,10,0)    82%);
+      }
+    }
     @media (max-width: 1024px) {
       #aurelle-demo .ar-nav { padding: 18px 32px; }
       #aurelle-demo .ar-nav-links { gap: 22px; }
