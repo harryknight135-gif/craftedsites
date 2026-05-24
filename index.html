@@ -2202,18 +2202,43 @@
     }
 
     /* Hero */
+    /* Hero is a single full-bleed image with text overlaid on the left.
+       The ::before gradient fades from solid black on the left to fully
+       transparent past the text area, so the dark portion of the photo
+       extends visually into the text zone — completely seamless join. */
     #aurelle-demo .ar-hero {
-      background: #0F0F0F;
-      display: grid; grid-template-columns: 0.78fr 1.22fr;
-      min-height: 620px;
       position: relative;
+      min-height: 640px;
+      background-color: #0A0A0A;
+      background-image: url('aurelle-hero.png');
+      background-size: cover;
+      background-position: 100% center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: stretch;
+    }
+    #aurelle-demo .ar-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg,
+        rgba(10,10,10,1)     0%,
+        rgba(10,10,10,1)     30%,
+        rgba(10,10,10,0.65) 50%,
+        rgba(10,10,10,0.18) 68%,
+        rgba(10,10,10,0)    80%);
+      pointer-events: none;
+      z-index: 1;
     }
     #aurelle-demo .ar-hero-left {
+      position: relative;
+      z-index: 2;
+      width: 50%;
       padding: clamp(60px, 8vw, 110px) clamp(36px, 5vw, 80px);
       display: flex; flex-direction: column; justify-content: center;
       align-items: center;
       text-align: center;
     }
+    #aurelle-demo .ar-hero-right { display: none; }
     #aurelle-demo .ar-hero-eyebrow {
       font-family: 'Manrope', sans-serif;
       font-size: 11px; font-weight: 500;
@@ -2262,25 +2287,6 @@
     }
     #aurelle-demo .ar-btn-ghost:hover { border-color: #D9BC8C; color: #D9BC8C; }
     #aurelle-demo .ar-btn-ghost:active { transform: scale(0.97); }
-    #aurelle-demo .ar-hero-right {
-      background-image: url('aurelle-hero.png');
-      background-size: cover;
-      background-position: 75% center;
-      background-color: #0A0A0A;
-      background-repeat: no-repeat;
-      position: relative;
-    }
-    /* Seamless black fade on the left edge — matches the photo's
-       natural dark background so the column blends edge-to-edge */
-    #aurelle-demo .ar-hero-right::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg,
-        #0A0A0A 0%,
-        rgba(10,10,10,0.35) 10%,
-        rgba(10,10,10,0) 22%);
-      pointer-events: none;
-    }
 
     /* Trust strip */
     #aurelle-demo .ar-trust {
@@ -2613,8 +2619,25 @@
     }
     @media (max-width: 768px) {
       #aurelle-demo .ar-nav-links { display: none; }
-      #aurelle-demo .ar-hero { grid-template-columns: 1fr; }
-      #aurelle-demo .ar-hero-right { min-height: 360px; order: -1; }
+      /* Mobile hero: text overlays the top portion, model visible below.
+         Vertical gradient (top dark → fade to clear) keeps text readable
+         while letting the image breathe. */
+      #aurelle-demo .ar-hero {
+        background-position: 70% center;
+        min-height: 580px;
+      }
+      #aurelle-demo .ar-hero::before {
+        background: linear-gradient(180deg,
+          rgba(10,10,10,0.92) 0%,
+          rgba(10,10,10,0.7)  30%,
+          rgba(10,10,10,0.25) 55%,
+          rgba(10,10,10,0)    75%);
+      }
+      #aurelle-demo .ar-hero-left {
+        width: 100%;
+        justify-content: flex-start;
+        padding-top: 56px;
+      }
       #aurelle-demo .ar-wellness { grid-template-columns: 1fr; }
       #aurelle-demo .ar-wellness-img { min-height: 320px; }
     }
