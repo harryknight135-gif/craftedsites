@@ -2946,7 +2946,12 @@
     }
 
     /* ─────────────────────────────────────────────
-       CRAFTSITES — floating glossy orb (hero accent)
+       CRAFTSITES — floating glossy liquid orb (v2)
+       Multiple soft glowing blobs orbit inside at
+       different speeds. An SVG turbulence filter
+       warps the whole interior fluidly, so the
+       composition reads as organic liquid not just
+       spinning gradients.
        ───────────────────────────────────────────── */
     .craftsites-orb {
       --cs-size: clamp(220px, 26vw, 360px);
@@ -2971,9 +2976,8 @@
       overflow: hidden;
       transform-style: preserve-3d;
       transform: rotateY(var(--cs-tilt-x)) rotateX(var(--cs-tilt-y));
-      background:
-        radial-gradient(circle at 32% 28%,
-          #7FCBFF 0%, #2E7BE0 22%, #0A1B4D 60%, #050E2B 100%);
+      background: radial-gradient(circle at 30% 28%,
+        #0E2E84 0%, #061142 50%, #02061A 100%);
       box-shadow:
         0 30px 80px -10px rgba(56, 189, 248, 0.40),
         0 0 90px rgba(56, 189, 248, 0.22),
@@ -2981,24 +2985,46 @@
         inset 0 -30px 80px rgba(5, 14, 43, 0.70),
         inset 0 25px 60px rgba(127, 203, 255, 0.18);
     }
-    .craftsites-orb__liquid {
+    /* Inner layer takes the SVG warp filter for fluid distortion */
+    .craftsites-orb__inner {
       position: absolute;
-      inset: -8%;
+      inset: 0;
       border-radius: 50%;
-      background: conic-gradient(from 0deg,
-        #22D3EE 0deg, #3B82F6 90deg, #0A1B4D 200deg, #38BDF8 290deg, #22D3EE 360deg);
-      filter: blur(24px);
-      opacity: 0.78;
+      filter: url(#cs-orb-warp);
+    }
+    /* Each blob is a soft glowing ball of light; orbits via keyframes,
+       blends with screen so they melt together into a moving liquid. */
+    .craftsites-orb__blob {
+      position: absolute;
+      border-radius: 50%;
       mix-blend-mode: screen;
-      animation: cs-orb-spin 16s linear infinite;
+      will-change: transform;
     }
-    .craftsites-orb__liquid--alt {
-      animation: cs-orb-spin 22s linear infinite reverse;
-      filter: blur(42px);
-      opacity: 0.50;
-      background: conic-gradient(from 180deg,
-        #38BDF8 0deg, #1E50C8 110deg, #0EA5E9 240deg, #38BDF8 360deg);
+    .craftsites-orb__blob--a {
+      width: 75%; height: 75%; top: -5%; left: -5%;
+      background: radial-gradient(circle, #2563EB 0%, rgba(37,99,235,0) 60%);
+      filter: blur(18px); opacity: 0.95;
+      animation: cs-orbit-a 18s linear infinite;
     }
+    .craftsites-orb__blob--b {
+      width: 60%; height: 60%; top: 25%; left: 35%;
+      background: radial-gradient(circle, #38BDF8 0%, rgba(56,189,248,0) 60%);
+      filter: blur(20px); opacity: 0.9;
+      animation: cs-orbit-b 22s linear infinite;
+    }
+    .craftsites-orb__blob--c {
+      width: 50%; height: 50%; top: 45%; left: 5%;
+      background: radial-gradient(circle, #22D3EE 0%, rgba(34,211,238,0) 65%);
+      filter: blur(22px); opacity: 0.85;
+      animation: cs-orbit-c 26s linear infinite;
+    }
+    .craftsites-orb__blob--d {
+      width: 40%; height: 40%; top: 30%; left: 30%;
+      background: radial-gradient(circle, #BBE6FF 0%, rgba(187,230,255,0) 60%);
+      filter: blur(14px); opacity: 0.75;
+      animation: cs-orbit-d 30s linear infinite;
+    }
+    /* Glossy top-left highlight ("wet" specular look) */
     .craftsites-orb__shine {
       position: absolute;
       inset: 0;
@@ -3008,14 +3034,45 @@
       mix-blend-mode: screen;
       pointer-events: none;
     }
+
     @keyframes cs-orb-float {
       0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
       50%      { transform: translate3d(0, -18px, 0) rotate(1.5deg); }
     }
-    @keyframes cs-orb-spin { to { transform: rotate(360deg); } }
+    /* Independent orbital paths — each blob takes a different elliptical
+       loop. Combined with screen-blending this reads as flowing liquid. */
+    @keyframes cs-orbit-a {
+      0%   { transform: translate(0%, 0%); }
+      25%  { transform: translate(15%, 12%); }
+      50%  { transform: translate(8%, 28%); }
+      75%  { transform: translate(-12%, 16%); }
+      100% { transform: translate(0%, 0%); }
+    }
+    @keyframes cs-orbit-b {
+      0%   { transform: translate(0%, 0%); }
+      25%  { transform: translate(-18%, -10%); }
+      50%  { transform: translate(-8%, -26%); }
+      75%  { transform: translate(14%, -8%); }
+      100% { transform: translate(0%, 0%); }
+    }
+    @keyframes cs-orbit-c {
+      0%   { transform: translate(0%, 0%); }
+      25%  { transform: translate(22%, -16%); }
+      50%  { transform: translate(8%, -30%); }
+      75%  { transform: translate(-16%, -8%); }
+      100% { transform: translate(0%, 0%); }
+    }
+    @keyframes cs-orbit-d {
+      0%   { transform: translate(0%, 0%); }
+      25%  { transform: translate(-14%, 16%); }
+      50%  { transform: translate(12%, 22%); }
+      75%  { transform: translate(20%, -10%); }
+      100% { transform: translate(0%, 0%); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .craftsites-orb,
-      .craftsites-orb__liquid { animation: none; }
+      .craftsites-orb__blob { animation: none; }
     }
     @media (max-width: 768px) {
       .craftsites-orb { top: -20px; right: -20px; --cs-size: clamp(160px, 38vw, 220px); }
@@ -3193,11 +3250,28 @@
             </div>
           </div>
 
-          <!-- Floating glossy orb (hero accent) -->
+          <!-- Floating glossy liquid orb (hero accent) -->
+          <svg width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true">
+            <defs>
+              <filter id="cs-orb-warp" x="-30%" y="-30%" width="160%" height="160%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="3" result="t">
+                  <animate attributeName="baseFrequency"
+                           dur="22s"
+                           values="0.014 0.02;0.02 0.012;0.014 0.02"
+                           repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="t" scale="34"/>
+              </filter>
+            </defs>
+          </svg>
           <div class="craftsites-orb" aria-hidden="true">
             <div class="craftsites-orb__core">
-              <div class="craftsites-orb__liquid"></div>
-              <div class="craftsites-orb__liquid craftsites-orb__liquid--alt"></div>
+              <div class="craftsites-orb__inner">
+                <div class="craftsites-orb__blob craftsites-orb__blob--a"></div>
+                <div class="craftsites-orb__blob craftsites-orb__blob--b"></div>
+                <div class="craftsites-orb__blob craftsites-orb__blob--c"></div>
+                <div class="craftsites-orb__blob craftsites-orb__blob--d"></div>
+              </div>
               <div class="craftsites-orb__shine"></div>
             </div>
           </div>
