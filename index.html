@@ -2944,6 +2944,82 @@
       .ar-search-panel { padding: 18px 22px; }
       .ar-search-results { grid-template-columns: repeat(2, 1fr); }
     }
+
+    /* ─────────────────────────────────────────────
+       CRAFTSITES — floating glossy orb (hero accent)
+       ───────────────────────────────────────────── */
+    .craftsites-orb {
+      --cs-size: clamp(220px, 26vw, 360px);
+      --cs-tilt-x: 0deg;
+      --cs-tilt-y: 0deg;
+      width: var(--cs-size);
+      height: var(--cs-size);
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      pointer-events: none;
+      user-select: none;
+      will-change: transform;
+      perspective: 900px;
+      animation: cs-orb-float 9s ease-in-out infinite;
+      z-index: 3;
+    }
+    .craftsites-orb__core {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform: rotateY(var(--cs-tilt-x)) rotateX(var(--cs-tilt-y));
+      background:
+        radial-gradient(circle at 32% 28%,
+          #7FCBFF 0%, #2E7BE0 22%, #0A1B4D 60%, #050E2B 100%);
+      box-shadow:
+        0 30px 80px -10px rgba(56, 189, 248, 0.40),
+        0 0 90px rgba(56, 189, 248, 0.22),
+        0 0 160px rgba(37, 99, 235, 0.20),
+        inset 0 -30px 80px rgba(5, 14, 43, 0.70),
+        inset 0 25px 60px rgba(127, 203, 255, 0.18);
+    }
+    .craftsites-orb__liquid {
+      position: absolute;
+      inset: -8%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg,
+        #22D3EE 0deg, #3B82F6 90deg, #0A1B4D 200deg, #38BDF8 290deg, #22D3EE 360deg);
+      filter: blur(24px);
+      opacity: 0.78;
+      mix-blend-mode: screen;
+      animation: cs-orb-spin 16s linear infinite;
+    }
+    .craftsites-orb__liquid--alt {
+      animation: cs-orb-spin 22s linear infinite reverse;
+      filter: blur(42px);
+      opacity: 0.50;
+      background: conic-gradient(from 180deg,
+        #38BDF8 0deg, #1E50C8 110deg, #0EA5E9 240deg, #38BDF8 360deg);
+    }
+    .craftsites-orb__shine {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 22%,
+        rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.28) 7%, rgba(255,255,255,0) 26%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    @keyframes cs-orb-float {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50%      { transform: translate3d(0, -18px, 0) rotate(1.5deg); }
+    }
+    @keyframes cs-orb-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .craftsites-orb,
+      .craftsites-orb__liquid { animation: none; }
+    }
+    @media (max-width: 768px) {
+      .craftsites-orb { top: -20px; right: -20px; --cs-size: clamp(160px, 38vw, 220px); }
+    }
   </style>
 </head>
 <body>
@@ -3114,6 +3190,15 @@
                 <div class="m-title">More Growth</div>
                 <div class="m-desc">Websites built to scale your business.</div>
               </div>
+            </div>
+          </div>
+
+          <!-- Floating glossy orb (hero accent) -->
+          <div class="craftsites-orb" aria-hidden="true">
+            <div class="craftsites-orb__core">
+              <div class="craftsites-orb__liquid"></div>
+              <div class="craftsites-orb__liquid craftsites-orb__liquid--alt"></div>
+              <div class="craftsites-orb__shine"></div>
             </div>
           </div>
         </div><!-- /hero-visual -->
@@ -4291,6 +4376,46 @@
           alert('Sorry, something went wrong: ' + err.message + '\n\nPlease email hello@craftedsites.co.uk directly.');
         });
       });
+    })();
+
+    /* ── CraftSites floating orb — mouse-tilt parallax ─── */
+    (function craftsitesOrbInteraction() {
+      const orbs = document.querySelectorAll('.craftsites-orb');
+      if (!orbs.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const items = Array.from(orbs).map(o => ({
+        el:   o,
+        core: o.querySelector('.craftsites-orb__core'),
+        cx: 0, cy: 0
+      }));
+      let pointerX = window.innerWidth / 2;
+      let pointerY = window.innerHeight / 2;
+      let vw = window.innerWidth, vh = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        vw = window.innerWidth; vh = window.innerHeight;
+      }, { passive: true });
+      window.addEventListener('pointermove', e => {
+        pointerX = e.clientX; pointerY = e.clientY;
+      }, { passive: true });
+
+      const MAX_TILT = 14, EASE = 0.08;
+      function frame() {
+        items.forEach(it => {
+          const r  = it.el.getBoundingClientRect();
+          const cx = r.left + r.width  / 2;
+          const cy = r.top  + r.height / 2;
+          const tx =  ((pointerX - cx) / vw) * MAX_TILT;
+          const ty = -((pointerY - cy) / vh) * MAX_TILT;
+          it.cx += (tx - it.cx) * EASE;
+          it.cy += (ty - it.cy) * EASE;
+          it.core.style.setProperty('--cs-tilt-x', it.cx.toFixed(2) + 'deg');
+          it.core.style.setProperty('--cs-tilt-y', it.cy.toFixed(2) + 'deg');
+        });
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     })();
   </script>
 
