@@ -569,6 +569,23 @@
     /* Right – mockup */
     .hero-visual {
       animation: fadeUp 700ms var(--ease-out) 160ms both;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-mockup-img {
+      width: 100%;
+      max-width: 620px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 30px 60px rgba(22, 81, 255, 0.18))
+              drop-shadow(0 8px 20px rgba(22, 81, 255, 0.10));
+      animation: hero-mockup-float 7s ease-in-out infinite;
+      will-change: transform;
+    }
+    @keyframes hero-mockup-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
     }
     .browser {
       background: var(--white);
@@ -3044,80 +3061,9 @@
           </div>
         </div>
 
-        <!-- Right — browser mockup -->
+        <!-- Right — glassmorphism mockup image -->
         <div class="hero-visual">
-          <div class="browser" role="img" aria-label="Website preview mockup">
-            <div class="browser-bar">
-              <span class="bdot"></span>
-              <span class="bdot"></span>
-              <span class="bdot"></span>
-              <div class="burl" aria-hidden="true">craftedsites.co.uk</div>
-            </div>
-            <!-- Mini preview site -->
-            <div class="mini">
-              <div class="mini-nav">
-                <span class="mini-logo-text">VERDE.</span>
-                <div class="mini-nav-links">
-                  <span>HOME</span><span>SHOP</span><span>ABOUT</span><span>JOURNAL</span>
-                </div>
-              </div>
-              <div class="mini-body">
-                <div>
-                  <div class="mini-headline">Timeless<br>Design.<br>Sustainable<br>Living.</div>
-                  <p class="mini-p">Thoughtfully crafted products<br>for a better tomorrow.</p>
-                  <span class="mini-btn">SHOP COLLECTION</span>
-                </div>
-                <div class="mini-img">
-                  <!-- Decorative abstract shape simulating a vase/product photo -->
-                  <svg viewBox="0 0 160 160" fill="none" style="width:100%;height:100%;opacity:.55;">
-                    <ellipse cx="80" cy="100" rx="38" ry="48" fill="#A89070"/>
-                    <ellipse cx="80" cy="58" rx="20" ry="24" fill="#BCA882"/>
-                    <path d="M62 80 Q50 40 70 20 Q80 45 75 80Z" fill="#8B7355"/>
-                    <path d="M98 80 Q112 38 92 18 Q82 44 85 80Z" fill="#8B7355"/>
-                    <ellipse cx="80" cy="148" rx="34" ry="8" fill="#705C3A" opacity=".3"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Metrics bar below browser -->
-          <div class="metrics">
-            <div class="metric">
-              <div class="m-icon up" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M7 11V3M3 6l4-4 4 4" stroke="#1651FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="m-title">More Leads</div>
-                <div class="m-desc">High-converting design that drives results.</div>
-              </div>
-            </div>
-            <div class="metric">
-              <div class="m-icon bolt" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M8 1L1.5 8h5l-1 5L13 7H8L9 1z" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="m-title">More Trust</div>
-                <div class="m-desc">Professional websites that build credibility.</div>
-              </div>
-            </div>
-            <div class="metric">
-              <div class="m-icon grow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 10L5 6l3 3 5-6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="m-title">More Growth</div>
-                <div class="m-desc">Websites built to scale your business.</div>
-              </div>
-            </div>
-          </div>
-
+          <img src="hero-mockup.png" alt="CraftSites — websites that drive leads, trust and growth" class="hero-mockup-img">
         </div><!-- /hero-visual -->
 
       </div>
