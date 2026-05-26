@@ -2945,124 +2945,6 @@
       .ar-search-results { grid-template-columns: repeat(2, 1fr); }
     }
 
-    /* ─────────────────────────────────────────────
-       CRAFTSITES — glassmorphism orb (v4)
-       True glassmorphism: translucent shell with
-       backdrop-filter blur, glass border, internal
-       3D shading, and a slow refraction wash that
-       drifts inside the sphere for life.
-       Whatever sits behind the orb shows through
-       blurred — that IS the glass.
-       ───────────────────────────────────────────── */
-    .craftsites-orb {
-      --cs-size: clamp(240px, 28vw, 380px);
-      --cs-tilt-x: 0deg;
-      --cs-tilt-y: 0deg;
-      width: var(--cs-size);
-      height: var(--cs-size);
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      pointer-events: none;
-      user-select: none;
-      will-change: transform;
-      perspective: 900px;
-      animation: cs-orb-float 9s ease-in-out infinite;
-      z-index: 3;
-      /* Outer halo — adds the "lit" feeling around the glass */
-      filter: drop-shadow(0 30px 60px rgba(56, 189, 248, 0.35))
-              drop-shadow(0 0 80px rgba(37, 99, 235, 0.25));
-    }
-    .craftsites-orb__core {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      overflow: hidden;
-      transform-style: preserve-3d;
-      transform: rotateY(var(--cs-tilt-x)) rotateX(var(--cs-tilt-y));
-      /* The blue tint — only ~12% so the glass reads as transparent */
-      background:
-        linear-gradient(135deg,
-          rgba(127, 203, 255, 0.22) 0%,
-          rgba(56, 189, 248, 0.10) 35%,
-          rgba(37, 99, 235, 0.14) 65%,
-          rgba(14, 165, 233, 0.22) 100%);
-      /* THE GLASSMORPHISM: blurs whatever is behind the orb */
-      backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
-      -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
-      /* Subtle glass border */
-      border: 1.5px solid rgba(255, 255, 255, 0.22);
-      box-shadow:
-        /* Inner bottom-right shadow — gives 3D sphere shape */
-        inset -12px -16px 40px -10px rgba(15, 23, 80, 0.45),
-        /* Inner top-left highlight — bevelled glass edge */
-        inset 14px 20px 40px -10px rgba(255, 255, 255, 0.35),
-        /* Outer cyan edge glow */
-        inset 0 0 0 1px rgba(127, 203, 255, 0.18);
-    }
-    /* Slow drifting refraction wash inside the glass.
-       Two soft coloured pools that rotate at different speeds — gives
-       subtle "light caustic" movement without looking like solid blobs. */
-    .craftsites-orb__refraction {
-      position: absolute;
-      inset: -10%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 70%,
-          rgba(56, 189, 248, 0.45) 0%,
-          rgba(56, 189, 248, 0) 45%),
-        radial-gradient(circle at 75% 35%,
-          rgba(127, 203, 255, 0.35) 0%,
-          rgba(127, 203, 255, 0) 40%);
-      filter: blur(18px);
-      opacity: 0.85;
-      animation: cs-refract-a 18s ease-in-out infinite;
-    }
-    .craftsites-orb__refraction--alt {
-      background:
-        radial-gradient(circle at 60% 80%,
-          rgba(34, 211, 238, 0.30) 0%,
-          rgba(34, 211, 238, 0) 50%),
-        radial-gradient(circle at 20% 30%,
-          rgba(187, 230, 255, 0.30) 0%,
-          rgba(187, 230, 255, 0) 45%);
-      filter: blur(28px);
-      opacity: 0.65;
-      animation: cs-refract-b 26s ease-in-out infinite reverse;
-    }
-    /* Glossy top-left highlight ("wet" specular look) */
-    .craftsites-orb__shine {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 22%,
-        rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.28) 7%, rgba(255,255,255,0) 26%);
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    @keyframes cs-orb-float {
-      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-      50%      { transform: translate3d(0, -18px, 0) rotate(1.5deg); }
-    }
-    /* Slow refraction drift — colour pools rotate + scale subtly,
-       like sunlight rippling inside a glass marble */
-    @keyframes cs-refract-a {
-      0%, 100% { transform: rotate(0deg) scale(1); }
-      50%      { transform: rotate(22deg) scale(1.08); }
-    }
-    @keyframes cs-refract-b {
-      0%, 100% { transform: rotate(0deg) scale(1.05); }
-      50%      { transform: rotate(-18deg) scale(0.95); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .craftsites-orb,
-      .craftsites-orb__refraction { animation: none; }
-    }
-    @media (max-width: 768px) {
-      .craftsites-orb { top: -20px; right: -20px; --cs-size: clamp(160px, 38vw, 220px); }
-    }
   </style>
 </head>
 <body>
@@ -3236,14 +3118,6 @@
             </div>
           </div>
 
-          <!-- Floating glassmorphism orb (hero accent) -->
-          <div class="craftsites-orb" aria-hidden="true">
-            <div class="craftsites-orb__core">
-              <div class="craftsites-orb__refraction"></div>
-              <div class="craftsites-orb__refraction craftsites-orb__refraction--alt"></div>
-              <div class="craftsites-orb__shine"></div>
-            </div>
-          </div>
         </div><!-- /hero-visual -->
 
       </div>
@@ -4421,45 +4295,6 @@
       });
     })();
 
-    /* ── CraftSites floating orb — mouse-tilt parallax ─── */
-    (function craftsitesOrbInteraction() {
-      const orbs = document.querySelectorAll('.craftsites-orb');
-      if (!orbs.length) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-      const items = Array.from(orbs).map(o => ({
-        el:   o,
-        core: o.querySelector('.craftsites-orb__core'),
-        cx: 0, cy: 0
-      }));
-      let pointerX = window.innerWidth / 2;
-      let pointerY = window.innerHeight / 2;
-      let vw = window.innerWidth, vh = window.innerHeight;
-
-      window.addEventListener('resize', () => {
-        vw = window.innerWidth; vh = window.innerHeight;
-      }, { passive: true });
-      window.addEventListener('pointermove', e => {
-        pointerX = e.clientX; pointerY = e.clientY;
-      }, { passive: true });
-
-      const MAX_TILT = 14, EASE = 0.08;
-      function frame() {
-        items.forEach(it => {
-          const r  = it.el.getBoundingClientRect();
-          const cx = r.left + r.width  / 2;
-          const cy = r.top  + r.height / 2;
-          const tx =  ((pointerX - cx) / vw) * MAX_TILT;
-          const ty = -((pointerY - cy) / vh) * MAX_TILT;
-          it.cx += (tx - it.cx) * EASE;
-          it.cy += (ty - it.cy) * EASE;
-          it.core.style.setProperty('--cs-tilt-x', it.cx.toFixed(2) + 'deg');
-          it.core.style.setProperty('--cs-tilt-y', it.cy.toFixed(2) + 'deg');
-        });
-        requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-    })();
   </script>
 
   <!-- ============================================================
