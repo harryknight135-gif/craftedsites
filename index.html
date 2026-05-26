@@ -2946,15 +2946,16 @@
     }
 
     /* ─────────────────────────────────────────────
-       CRAFTSITES — floating liquid orb (v3)
-       Six bright glowing blobs orbit inside a dark
-       navy sphere. screen-blend lights them up to
-       look like flowing electric liquid. Each blob
-       moves on its own elliptical loop at a unique
-       speed, so the composition never visibly repeats.
+       CRAFTSITES — glassmorphism orb (v4)
+       True glassmorphism: translucent shell with
+       backdrop-filter blur, glass border, internal
+       3D shading, and a slow refraction wash that
+       drifts inside the sphere for life.
+       Whatever sits behind the orb shows through
+       blurred — that IS the glass.
        ───────────────────────────────────────────── */
     .craftsites-orb {
-      --cs-size: clamp(220px, 26vw, 360px);
+      --cs-size: clamp(240px, 28vw, 380px);
       --cs-tilt-x: 0deg;
       --cs-tilt-y: 0deg;
       width: var(--cs-size);
@@ -2968,6 +2969,9 @@
       perspective: 900px;
       animation: cs-orb-float 9s ease-in-out infinite;
       z-index: 3;
+      /* Outer halo — adds the "lit" feeling around the glass */
+      filter: drop-shadow(0 30px 60px rgba(56, 189, 248, 0.35))
+              drop-shadow(0 0 80px rgba(37, 99, 235, 0.25));
     }
     .craftsites-orb__core {
       position: absolute;
@@ -2976,59 +2980,55 @@
       overflow: hidden;
       transform-style: preserve-3d;
       transform: rotateY(var(--cs-tilt-x)) rotateX(var(--cs-tilt-y));
-      /* Dark navy base so the blue/cyan blobs glow against it */
-      background: radial-gradient(circle at 30% 28%,
-        #0A1B5C 0%, #050E33 55%, #01040F 100%);
+      /* The blue tint — only ~12% so the glass reads as transparent */
+      background:
+        linear-gradient(135deg,
+          rgba(127, 203, 255, 0.22) 0%,
+          rgba(56, 189, 248, 0.10) 35%,
+          rgba(37, 99, 235, 0.14) 65%,
+          rgba(14, 165, 233, 0.22) 100%);
+      /* THE GLASSMORPHISM: blurs whatever is behind the orb */
+      backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
+      -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
+      /* Subtle glass border */
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
       box-shadow:
-        0 30px 80px -10px rgba(56, 189, 248, 0.40),
-        0 0 90px rgba(56, 189, 248, 0.22),
-        0 0 160px rgba(37, 99, 235, 0.20),
-        inset 0 -30px 80px rgba(2, 6, 26, 0.85),
-        inset 0 25px 60px rgba(127, 203, 255, 0.10);
+        /* Inner bottom-right shadow — gives 3D sphere shape */
+        inset -12px -16px 40px -10px rgba(15, 23, 80, 0.45),
+        /* Inner top-left highlight — bevelled glass edge */
+        inset 14px 20px 40px -10px rgba(255, 255, 255, 0.35),
+        /* Outer cyan edge glow */
+        inset 0 0 0 1px rgba(127, 203, 255, 0.18);
     }
-    /* Each blob is a soft, bright glow that orbits its own path.
-       Screen-blend mode lights them up against the dark sphere. */
-    .craftsites-orb__blob {
+    /* Slow drifting refraction wash inside the glass.
+       Two soft coloured pools that rotate at different speeds — gives
+       subtle "light caustic" movement without looking like solid blobs. */
+    .craftsites-orb__refraction {
       position: absolute;
+      inset: -10%;
       border-radius: 50%;
-      mix-blend-mode: screen;
-      will-change: transform;
+      background:
+        radial-gradient(circle at 30% 70%,
+          rgba(56, 189, 248, 0.45) 0%,
+          rgba(56, 189, 248, 0) 45%),
+        radial-gradient(circle at 75% 35%,
+          rgba(127, 203, 255, 0.35) 0%,
+          rgba(127, 203, 255, 0) 40%);
+      filter: blur(18px);
+      opacity: 0.85;
+      animation: cs-refract-a 18s ease-in-out infinite;
     }
-    .craftsites-orb__blob--a {
-      width: 70%; height: 70%; top: 5%; left: 0%;
-      background: radial-gradient(circle, #3B82F6 0%, rgba(59,130,246,0) 55%);
-      filter: blur(14px); opacity: 1;
-      animation: cs-orbit-a 13s ease-in-out infinite;
-    }
-    .craftsites-orb__blob--b {
-      width: 60%; height: 60%; top: 30%; left: 40%;
-      background: radial-gradient(circle, #22D3EE 0%, rgba(34,211,238,0) 55%);
-      filter: blur(16px); opacity: 0.95;
-      animation: cs-orbit-b 16s ease-in-out infinite;
-    }
-    .craftsites-orb__blob--c {
-      width: 55%; height: 55%; top: 45%; left: 5%;
-      background: radial-gradient(circle, #38BDF8 0%, rgba(56,189,248,0) 58%);
-      filter: blur(18px); opacity: 0.9;
-      animation: cs-orbit-c 19s ease-in-out infinite;
-    }
-    .craftsites-orb__blob--d {
-      width: 45%; height: 45%; top: 25%; left: 25%;
-      background: radial-gradient(circle, #BBE6FF 0%, rgba(187,230,255,0) 55%);
-      filter: blur(10px); opacity: 0.85;
-      animation: cs-orbit-d 11s ease-in-out infinite;
-    }
-    .craftsites-orb__blob--e {
-      width: 50%; height: 50%; top: -5%; left: 35%;
-      background: radial-gradient(circle, #0EA5E9 0%, rgba(14,165,233,0) 60%);
-      filter: blur(20px); opacity: 0.85;
-      animation: cs-orbit-e 23s ease-in-out infinite;
-    }
-    .craftsites-orb__blob--f {
-      width: 35%; height: 35%; top: 50%; left: 50%;
-      background: radial-gradient(circle, #E0F2FE 0%, rgba(224,242,254,0) 55%);
-      filter: blur(8px); opacity: 0.7;
-      animation: cs-orbit-f 9s ease-in-out infinite;
+    .craftsites-orb__refraction--alt {
+      background:
+        radial-gradient(circle at 60% 80%,
+          rgba(34, 211, 238, 0.30) 0%,
+          rgba(34, 211, 238, 0) 50%),
+        radial-gradient(circle at 20% 30%,
+          rgba(187, 230, 255, 0.30) 0%,
+          rgba(187, 230, 255, 0) 45%);
+      filter: blur(28px);
+      opacity: 0.65;
+      animation: cs-refract-b 26s ease-in-out infinite reverse;
     }
     /* Glossy top-left highlight ("wet" specular look) */
     .craftsites-orb__shine {
@@ -3045,54 +3045,20 @@
       0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
       50%      { transform: translate3d(0, -18px, 0) rotate(1.5deg); }
     }
-    /* Each blob orbits on its own elliptical loop. Different speeds +
-       different waypoints = continuous, non-repeating fluid motion. */
-    @keyframes cs-orbit-a {
-      0%   { transform: translate(0%, 0%) scale(1); }
-      25%  { transform: translate(18%, 10%) scale(1.12); }
-      50%  { transform: translate(8%, 26%) scale(0.94); }
-      75%  { transform: translate(-14%, 14%) scale(1.06); }
-      100% { transform: translate(0%, 0%) scale(1); }
+    /* Slow refraction drift — colour pools rotate + scale subtly,
+       like sunlight rippling inside a glass marble */
+    @keyframes cs-refract-a {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50%      { transform: rotate(22deg) scale(1.08); }
     }
-    @keyframes cs-orbit-b {
-      0%   { transform: translate(0%, 0%) scale(1); }
-      25%  { transform: translate(-22%, -8%) scale(1.08); }
-      50%  { transform: translate(-10%, -28%) scale(0.92); }
-      75%  { transform: translate(16%, -10%) scale(1.14); }
-      100% { transform: translate(0%, 0%) scale(1); }
-    }
-    @keyframes cs-orbit-c {
-      0%   { transform: translate(0%, 0%) scale(1); }
-      25%  { transform: translate(26%, -14%) scale(0.95); }
-      50%  { transform: translate(8%, -32%) scale(1.12); }
-      75%  { transform: translate(-18%, -10%) scale(0.9); }
-      100% { transform: translate(0%, 0%) scale(1); }
-    }
-    @keyframes cs-orbit-d {
-      0%   { transform: translate(0%, 0%) scale(1); }
-      25%  { transform: translate(-16%, 18%) scale(1.18); }
-      50%  { transform: translate(14%, 24%) scale(0.88); }
-      75%  { transform: translate(22%, -12%) scale(1.10); }
-      100% { transform: translate(0%, 0%) scale(1); }
-    }
-    @keyframes cs-orbit-e {
-      0%   { transform: translate(0%, 0%) scale(1); }
-      25%  { transform: translate(-14%, 22%) scale(0.92); }
-      50%  { transform: translate(-22%, 8%) scale(1.15); }
-      75%  { transform: translate(-6%, -20%) scale(1.0); }
-      100% { transform: translate(0%, 0%) scale(1); }
-    }
-    @keyframes cs-orbit-f {
-      0%   { transform: translate(0%, 0%) scale(1); }
-      25%  { transform: translate(-20%, -14%) scale(1.22); }
-      50%  { transform: translate(8%, -18%) scale(0.88); }
-      75%  { transform: translate(18%, 8%) scale(1.10); }
-      100% { transform: translate(0%, 0%) scale(1); }
+    @keyframes cs-refract-b {
+      0%, 100% { transform: rotate(0deg) scale(1.05); }
+      50%      { transform: rotate(-18deg) scale(0.95); }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .craftsites-orb,
-      .craftsites-orb__blob { animation: none; }
+      .craftsites-orb__refraction { animation: none; }
     }
     @media (max-width: 768px) {
       .craftsites-orb { top: -20px; right: -20px; --cs-size: clamp(160px, 38vw, 220px); }
@@ -3270,15 +3236,11 @@
             </div>
           </div>
 
-          <!-- Floating liquid orb (hero accent) -->
+          <!-- Floating glassmorphism orb (hero accent) -->
           <div class="craftsites-orb" aria-hidden="true">
             <div class="craftsites-orb__core">
-              <div class="craftsites-orb__blob craftsites-orb__blob--a"></div>
-              <div class="craftsites-orb__blob craftsites-orb__blob--b"></div>
-              <div class="craftsites-orb__blob craftsites-orb__blob--c"></div>
-              <div class="craftsites-orb__blob craftsites-orb__blob--d"></div>
-              <div class="craftsites-orb__blob craftsites-orb__blob--e"></div>
-              <div class="craftsites-orb__blob craftsites-orb__blob--f"></div>
+              <div class="craftsites-orb__refraction"></div>
+              <div class="craftsites-orb__refraction craftsites-orb__refraction--alt"></div>
               <div class="craftsites-orb__shine"></div>
             </div>
           </div>
