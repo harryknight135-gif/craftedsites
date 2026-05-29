@@ -477,8 +477,8 @@
     }
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(48px,6vw,88px);
+      grid-template-columns: 0.35fr 1.65fr;
+      gap: clamp(32px,3.5vw,56px);
       align-items: center;
       padding: clamp(64px,9vw,112px) 0;
     }
@@ -569,6 +569,76 @@
     /* Right – mockup */
     .hero-visual {
       animation: fadeUp 700ms var(--ease-out) 160ms both;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Mockup stage = static base + 3 absolutely-positioned tile overlays.
+       No max-width — the mockup fills the (now much wider) image column. */
+    .hero-mockup-stage {
+      position: relative;
+      width: 100%;
+      display: block;
+    }
+    /* Static base — NEVER animates. Stronger drop-shadow because at this
+       size the lift effect needs proportionally more weight. */
+    .hero-mockup-base {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 40px 80px rgba(22, 81, 255, 0.18))
+              drop-shadow(0 12px 28px rgba(22, 81, 255, 0.10));
+    }
+    /* Tile = auto-pop only (no hover behaviour — per user request) */
+    .hero-tile-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .hero-tile-inner {
+      width: 100%;
+      height: 100%;
+      animation: hero-tile-pop 4.5s ease-in-out infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+    .hero-tile-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* Stagger: leads at 0s → trust at 1.5s → growth at 3s → loop */
+    .hero-tile-wrap--leads  .hero-tile-inner { animation-delay: 0s; }
+    .hero-tile-wrap--trust  .hero-tile-inner { animation-delay: 1.5s; }
+    .hero-tile-wrap--growth .hero-tile-inner { animation-delay: 3s; }
+
+    /* Pop sequence — clearly UP then DOWN before the next tile starts.
+       0–10%: rising. 10–15%: briefly held at peak. 15–25%: falling.
+       25–100%: rest (the 1.5s gap before this tile's next turn).      */
+    @keyframes hero-tile-pop {
+      0%, 25%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      10%, 15%      { transform: translate3d(0, -16px, 0) scale(1.06); }
+    }
+
+    /* Mobile: pop ~40% smaller; otherwise identical sequence */
+    @media (max-width: 768px) {
+      @keyframes hero-tile-pop {
+        0%, 25%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        10%, 15%      { transform: translate3d(0, -10px, 0) scale(1.03); }
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-tile-inner { animation: none; }
+    }
+
+    /* Mobile: drop the blue shadow halo — it bleeds past the edge of
+       the viewport and looks like the image is cut off in a blue band */
+    @media (max-width: 768px) {
+      .hero-mockup-base { filter: none; }
     }
     .browser {
       background: var(--white);
@@ -1170,9 +1240,9 @@
     }
 
     /* ── Responsive ────────────────────────────────────── */
-    @media (max-width: 1024px) {
+    @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
-      .hero-visual { max-width: 560px; width: 100%; margin: 0 auto; }
+      .hero-visual { max-width: 1000px; width: 100%; margin: 0 auto; }
       .services-grid-layout { grid-template-columns: 1fr; }
       .services-sticky { position: static; }
       .portfolio { grid-template-columns: 1fr 1fr; }
@@ -2122,244 +2192,6 @@
     }
 
     /* ================================================================
-       CRAFTED SITES — PERSONAL PORTFOLIO CARD
-       Wide featured tile mirroring the VANTA / AURELLE structure
-       (grid-column: 1 / -1, 21:9, --r radius, 18px top margin,
-       hover lift, info bottom-left, CTA bottom-right).
-       Distinct treatment: light glass surface to suit the mockup,
-       with brand blue as the accent.
-    ================================================================ */
-    .cs-card {
-      grid-column: 1 / -1;
-      aspect-ratio: 21/9;
-      border-radius: var(--r);
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-      background:
-        radial-gradient(ellipse 70% 90% at 80% 50%, rgba(167, 188, 255, 0.20) 0%, transparent 60%),
-        linear-gradient(135deg, #FBFCFF 0%, #EEF2FF 55%, #DEE6FF 100%);
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: 0.78fr 1.22fr;
-      align-items: center;
-      transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
-      box-shadow: 0 2px 8px rgba(22, 81, 255, 0.05);
-    }
-    .cs-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 22px 48px rgba(22, 81, 255, 0.12), 0 4px 14px rgba(22, 81, 255, 0.06);
-    }
-    .cs-card:active { transform: scale(0.995); }
-
-    .cs-card-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 50% 70% at 22% 50%, rgba(22, 81, 255, 0.08) 0%, transparent 65%);
-      pointer-events: none;
-      opacity: 0.6;
-      transition: opacity 360ms ease;
-    }
-    .cs-card:hover .cs-card-glow { opacity: 1; }
-
-    /* Left column — info */
-    .cs-card-content {
-      position: relative;
-      z-index: 3;
-      padding: clamp(28px, 3vw, 52px) clamp(28px, 3vw, 48px) clamp(28px, 3vw, 52px) clamp(32px, 3.5vw, 56px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0;
-    }
-    .cs-badge {
-      align-self: flex-start;
-      background: rgba(22, 81, 255, 0.08);
-      border: 1px solid rgba(22, 81, 255, 0.30);
-      color: var(--blue);
-      font-family: var(--font-body);
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 26px;
-    }
-    .cs-cat {
-      font-family: var(--font-body);
-      font-size: 11px; font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.18em; text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .cs-name {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 3.4vw, 44px);
-      font-weight: 800;
-      color: var(--black);
-      letter-spacing: -0.03em;
-      line-height: 0.95;
-      margin-bottom: 16px;
-    }
-    .cs-pitch {
-      font-family: var(--font-body);
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.55;
-      max-width: 280px;
-      margin-bottom: 26px;
-    }
-    .cs-enter {
-      align-self: flex-start;
-      display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
-      background: var(--black); color: var(--white);
-      font-family: var(--font-body);
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      padding: 13px 22px; border-radius: 100px; border: none; cursor: pointer;
-      transition: transform 160ms var(--ease-out), background 200ms ease, box-shadow 240ms ease;
-      flex-shrink: 0;
-    }
-    .cs-enter:hover {
-      background: var(--blue);
-      box-shadow: 0 0 24px rgba(22, 81, 255, 0.32);
-    }
-    .cs-enter:active { transform: scale(0.97); }
-
-    /* Right column — mockup stage */
-    .cs-mockup {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(12px, 1.5vw, 28px);
-    }
-    .cs-mockup-inner {
-      position: relative;
-      width: 100%;
-      max-width: min(100%, calc(var(--mockup-h, 100%) * 1));
-      aspect-ratio: 1;
-      max-height: 100%;
-    }
-    /* The static base — NEVER animates */
-    .cs-mockup-base {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      pointer-events: none;
-    }
-    /* Each tile wrap: hover transform layer + entrance state */
-    .cs-tile-wrap {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      will-change: transform, opacity;
-      /* Entrance starting state: scaled inward + invisible */
-      opacity: 0;
-      transform: scale(0.55) translateY(18px);
-    }
-    /* Entrance: card enters viewport → tiles emerge from the browser
-       with a soft spring, staggered 180ms apart. */
-    .cs-card.cs-entered .cs-tile-wrap {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      transition:
-        opacity 720ms cubic-bezier(0.23, 1, 0.32, 1),
-        transform 850ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .cs-card.cs-entered .cs-tile-wrap--leads  { transition-delay: 120ms; }
-    .cs-card.cs-entered .cs-tile-wrap--trust  { transition-delay: 300ms; }
-    .cs-card.cs-entered .cs-tile-wrap--growth { transition-delay: 480ms; }
-
-    .cs-tile-inner {
-      width: 100%; height: 100%;
-      transform-origin: center center;
-      will-change: transform;
-    }
-    .cs-tile-img {
-      width: 100%; height: 100%;
-      object-fit: contain;
-      display: block;
-      pointer-events: auto;
-    }
-    /* Continuous loop — activated by JS after entrance settles.
-       4.5s cycle: each tile pops up+down in its own 25% window,
-       then rests for 75% of the cycle (= 1.5s gap before the next). */
-    .cs-card.cs-loop .cs-tile-inner {
-      animation: cs-tile-pop 4.5s ease-in-out infinite;
-    }
-    .cs-card.cs-loop .cs-tile-wrap--leads  .cs-tile-inner { animation-delay: 0s; }
-    .cs-card.cs-loop .cs-tile-wrap--trust  .cs-tile-inner { animation-delay: 1.5s; }
-    .cs-card.cs-loop .cs-tile-wrap--growth .cs-tile-inner { animation-delay: 3s; }
-
-    @keyframes cs-tile-pop {
-      0%, 25%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-      10%, 15%      { transform: translate3d(0, -12px, 0) scale(1.04); }
-    }
-
-    /* Hover (desktop only): lift further + pause inner pop. The wrap
-       handles the lift transform via transition; the inner pop is
-       paused so the tile holds steady at its hovered position until
-       the cursor leaves. */
-    @media (hover: hover) {
-      .cs-tile-wrap {
-        transition:
-          opacity 720ms cubic-bezier(0.23, 1, 0.32, 1),
-          transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1),
-          filter 350ms ease-out;
-      }
-      .cs-card.cs-loop .cs-tile-wrap:hover {
-        transform: translate3d(0, -10px, 0) scale(1.03);
-        z-index: 5;
-        filter: drop-shadow(0 14px 22px rgba(22, 81, 255, 0.22));
-      }
-      .cs-card.cs-loop .cs-tile-wrap:hover .cs-tile-inner {
-        animation-play-state: paused;
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .cs-card {
-        aspect-ratio: 16/9;
-        grid-template-columns: 1fr;
-      }
-      .cs-card-content { padding: 26px 28px 0; }
-      .cs-card-content .cs-pitch { display: none; }
-      .cs-name { margin-bottom: 14px; }
-      .cs-mockup { padding: 4px 16px 16px; }
-    }
-    @media (max-width: 768px) {
-      /* Reduce pop intensity ~35% on mobile */
-      @keyframes cs-tile-pop {
-        0%, 25%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-        10%, 15%      { transform: translate3d(0, -8px, 0) scale(1.025); }
-      }
-    }
-    @media (max-width: 540px) {
-      .cs-card { aspect-ratio: 4/3; }
-      .cs-enter { display: none; }
-      .cs-card-content { padding: 22px 22px 0; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .cs-tile-wrap {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-      .cs-tile-inner { animation: none; }
-      .cs-card, .cs-enter { transition: none; }
-    }
-
-    /* ================================================================
        AURELLE — DEMO OVERLAY
     ================================================================ */
     #aurelle-demo {
@@ -3282,73 +3114,26 @@
           </div>
         </div>
 
-        <!-- Right — browser mockup -->
+        <!-- Right — glassmorphism mockup stage (static base + 3 popping tiles) -->
         <div class="hero-visual">
-          <div class="browser" role="img" aria-label="Website preview mockup">
-            <div class="browser-bar">
-              <span class="bdot"></span>
-              <span class="bdot"></span>
-              <span class="bdot"></span>
-              <div class="burl" aria-hidden="true">craftedsites.co.uk</div>
-            </div>
-            <div class="mini">
-              <div class="mini-nav">
-                <span class="mini-logo-text">VERDE.</span>
-                <div class="mini-nav-links">
-                  <span>HOME</span><span>SHOP</span><span>ABOUT</span><span>JOURNAL</span>
-                </div>
-              </div>
-              <div class="mini-body">
-                <div>
-                  <div class="mini-headline">Timeless<br>Design.<br>Sustainable<br>Living.</div>
-                  <p class="mini-p">Thoughtfully crafted products<br>for a better tomorrow.</p>
-                  <span class="mini-btn">SHOP COLLECTION</span>
-                </div>
-                <div class="mini-img">
-                  <svg viewBox="0 0 160 160" fill="none" style="width:100%;height:100%;opacity:.55;">
-                    <ellipse cx="80" cy="100" rx="38" ry="48" fill="#A89070"/>
-                    <ellipse cx="80" cy="58" rx="20" ry="24" fill="#BCA882"/>
-                    <path d="M62 80 Q50 40 70 20 Q80 45 75 80Z" fill="#8B7355"/>
-                    <path d="M98 80 Q112 38 92 18 Q82 44 85 80Z" fill="#8B7355"/>
-                    <ellipse cx="80" cy="148" rx="34" ry="8" fill="#705C3A" opacity=".3"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="hero-mockup-stage" role="img" aria-label="CraftSites — websites that drive leads, trust and growth">
+            <!-- Static base — never animates -->
+            <img src="hero-mockup-base.png" alt="" class="hero-mockup-base">
 
-          <div class="metrics">
-            <div class="metric">
-              <div class="m-icon up" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M7 11V3M3 6l4-4 4 4" stroke="#1651FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="m-title">More Leads</div>
-                <div class="m-desc">High-converting design that drives results.</div>
+            <!-- 3 tiles overlay the empty boxes in the base; each pops on a stagger -->
+            <div class="hero-tile-wrap hero-tile-wrap--leads">
+              <div class="hero-tile-inner">
+                <img src="tile-leads.png" alt="More Leads" class="hero-tile-img">
               </div>
             </div>
-            <div class="metric">
-              <div class="m-icon bolt" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M8 1L1.5 8h5l-1 5L13 7H8L9 1z" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="m-title">More Trust</div>
-                <div class="m-desc">Professional websites that build credibility.</div>
+            <div class="hero-tile-wrap hero-tile-wrap--trust">
+              <div class="hero-tile-inner">
+                <img src="tile-trust.png" alt="More Trust" class="hero-tile-img">
               </div>
             </div>
-            <div class="metric">
-              <div class="m-icon grow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path d="M1 10L5 6l3 3 5-6" stroke="#16A34A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <div>
-                <div class="m-title">More Growth</div>
-                <div class="m-desc">Websites built to scale your business.</div>
+            <div class="hero-tile-wrap hero-tile-wrap--growth">
+              <div class="hero-tile-inner">
+                <img src="tile-growth.png" alt="More Growth" class="hero-tile-img">
               </div>
             </div>
           </div>
@@ -3631,51 +3416,6 @@
             <button class="ac-enter" data-open-aurelle aria-label="Open Aurelle demo" tabindex="-1">
               View Live Demo <span aria-hidden="true">→</span>
             </button>
-          </div>
-        </article>
-
-        <!-- CRAFTED SITES — Personal Portfolio (animated mockup + tiles) -->
-        <article
-          class="p-card cs-card rev"
-          role="button"
-          tabindex="0"
-          aria-label="View Crafted Sites personal portfolio"
-          data-cs-card
-        >
-          <div class="cs-card-glow"></div>
-
-          <!-- Info column -->
-          <div class="cs-card-content">
-            <span class="cs-badge">Personal Portfolio</span>
-            <div class="cs-cat">Web Design Agency</div>
-            <h3 class="cs-name">CRAFTED<br>SITES</h3>
-            <p class="cs-pitch">Conversion-focused websites built to deliver more leads, more trust, and more growth.</p>
-            <a href="https://craftedsites.pages.dev" class="cs-enter" aria-label="Visit Crafted Sites">
-              Visit Project <span aria-hidden="true">→</span>
-            </a>
-          </div>
-
-          <!-- Mockup column: static base + 3 animated tiles -->
-          <div class="cs-mockup">
-            <div class="cs-mockup-inner">
-              <img class="cs-mockup-base" src="hero-mockup-base.png" alt="Crafted Sites website mockup" aria-hidden="true">
-
-              <div class="cs-tile-wrap cs-tile-wrap--leads">
-                <div class="cs-tile-inner">
-                  <img class="cs-tile-img" src="tile-leads.png" alt="More Leads">
-                </div>
-              </div>
-              <div class="cs-tile-wrap cs-tile-wrap--trust">
-                <div class="cs-tile-inner">
-                  <img class="cs-tile-img" src="tile-trust.png" alt="More Trust">
-                </div>
-              </div>
-              <div class="cs-tile-wrap cs-tile-wrap--growth">
-                <div class="cs-tile-inner">
-                  <img class="cs-tile-img" src="tile-growth.png" alt="More Growth">
-                </div>
-              </div>
-            </div>
           </div>
         </article>
 
@@ -4808,55 +4548,6 @@
           - POST project details to Formspree (capture the lead)
           - redirect to the matching Stripe Payment Link
      ────────────────────────────────────────────────────────── */
-  /* ──────────────────────────────────────────────────────────
-     CRAFTED SITES portfolio card — entrance + loop trigger
-     ──────────────────────────────────────────────────────────
-     When the card enters the viewport (30% visible):
-       1. add `.cs-entered` → CSS transitions tiles in, staggered
-          (leads 120ms → trust 300ms → growth 480ms, each ~720ms)
-       2. after the last tile lands (≈ 480 + 720 = 1200ms), add
-          `.cs-loop` → starts the continuous pop animation
-     Card also acts as a clickable button (role="button"); we wire
-     keyboard Enter/Space too for accessibility.
-     ──────────────────────────────────────────────────────────── */
-  (function initCraftedSitesCard() {
-    const card = document.querySelector('.cs-card');
-    if (!card) return;
-
-    /* Entrance + loop activation */
-    let triggered = false;
-    const trigger = () => {
-      if (triggered) return;
-      triggered = true;
-      card.classList.add('cs-entered');
-      /* Loop starts shortly after the last tile finishes entering */
-      window.setTimeout(() => card.classList.add('cs-loop'), 1350);
-    };
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      /* Skip the staged entrance — show everything at rest immediately */
-      card.classList.add('cs-entered', 'cs-loop');
-    } else if ('IntersectionObserver' in window) {
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { trigger(); obs.disconnect(); }
-        });
-      }, { threshold: 0.3, rootMargin: '0px 0px -5% 0px' });
-      obs.observe(card);
-    } else {
-      trigger(); /* fallback for ancient browsers */
-    }
-
-    /* Keyboard accessibility — Enter / Space activates the CTA link */
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        const link = card.querySelector('.cs-enter');
-        if (link) link.click();
-      }
-    });
-  })();
-
   (function initBasket() {
     const PLANS = {
       starter: {
