@@ -477,8 +477,8 @@
     }
     .hero-grid {
       display: grid;
-      grid-template-columns: 0.45fr 1.55fr;
-      gap: clamp(40px,4.5vw,72px);
+      grid-template-columns: 0.35fr 1.65fr;
+      gap: clamp(32px,3.5vw,56px);
       align-items: center;
       padding: clamp(64px,9vw,112px) 0;
     }
@@ -633,6 +633,12 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .hero-tile-inner { animation: none; }
+    }
+
+    /* Mobile: drop the blue shadow halo — it bleeds past the edge of
+       the viewport and looks like the image is cut off in a blue band */
+    @media (max-width: 768px) {
+      .hero-mockup-base { filter: none; }
     }
     .browser {
       background: var(--white);
