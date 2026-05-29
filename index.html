@@ -573,19 +573,87 @@
       align-items: center;
       justify-content: center;
     }
-    .hero-mockup-img {
+    /* Mockup stage = static base + 3 absolutely-positioned tile overlays */
+    .hero-mockup-stage {
+      position: relative;
       width: 100%;
       max-width: 620px;
+      display: block;
+    }
+    /* The static base image — NEVER animates. Drop shadow gives the
+       feeling it's lifted off the page slightly. */
+    .hero-mockup-base {
+      width: 100%;
       height: auto;
       display: block;
-      filter: drop-shadow(0 30px 60px rgba(22, 81, 255, 0.18))
-              drop-shadow(0 8px 20px rgba(22, 81, 255, 0.10));
-      animation: hero-mockup-float 7s ease-in-out infinite;
+      filter: drop-shadow(0 30px 60px rgba(22, 81, 255, 0.16))
+              drop-shadow(0 8px 20px rgba(22, 81, 255, 0.08));
+    }
+    /* Tile wrap = hover transform target. Tile inner = auto-pop target.
+       Split so hover lift composes smoothly with the running pop cycle
+       without snapping or fighting the animation. */
+    .hero-tile-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;  /* transparent areas pass clicks through */
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  filter 0.35s ease-out;
       will-change: transform;
     }
-    @keyframes hero-mockup-float {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-10px); }
+    .hero-tile-inner {
+      width: 100%;
+      height: 100%;
+      animation: hero-tile-pop 4.5s ease-in-out infinite;
+      transform-origin: center center;
+      will-change: transform;
+    }
+    .hero-tile-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      pointer-events: auto;  /* visible image captures hover */
+    }
+    /* Stagger: each tile is delayed by 1.5s relative to the previous —
+       so leads → trust → growth → repeat, perfectly sequenced */
+    .hero-tile-wrap--leads  .hero-tile-inner { animation-delay: 0s; }
+    .hero-tile-wrap--trust  .hero-tile-inner { animation-delay: 1.5s; }
+    .hero-tile-wrap--growth .hero-tile-inner { animation-delay: 3s; }
+
+    /* The bubble pop: only the first ~30% of the cycle is the pop;
+       the remaining 70% is rest (which lines up with the 1.5s gap
+       before the next tile pops). */
+    @keyframes hero-tile-pop {
+      0%, 30%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      8%, 20%       { transform: translate3d(0, -10px, 0) scale(1.04); }
+    }
+
+    /* Hover (desktop only): extra lift composes on top of the auto pop,
+       and we pause the inner animation so the tile holds its lifted
+       position until the cursor leaves. */
+    @media (hover: hover) {
+      .hero-tile-wrap:hover {
+        transform: translate3d(0, -8px, 0) scale(1.025);
+        z-index: 10;
+        filter: drop-shadow(0 14px 24px rgba(22, 81, 255, 0.18));
+      }
+      .hero-tile-wrap:hover .hero-tile-inner {
+        animation-play-state: paused;
+      }
+    }
+
+    /* Mobile: reduce pop intensity by ~40% */
+    @media (max-width: 768px) {
+      @keyframes hero-tile-pop {
+        0%, 30%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        8%, 20%       { transform: translate3d(0, -6px, 0) scale(1.025); }
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-tile-inner { animation: none; }
+      .hero-tile-wrap  { transition: none; }
     }
     .browser {
       background: var(--white);
@@ -3061,9 +3129,29 @@
           </div>
         </div>
 
-        <!-- Right — glassmorphism mockup image -->
+        <!-- Right — glassmorphism mockup stage (static base + 3 popping tiles) -->
         <div class="hero-visual">
-          <img src="hero-mockup.png" alt="CraftSites — websites that drive leads, trust and growth" class="hero-mockup-img">
+          <div class="hero-mockup-stage" role="img" aria-label="CraftSites — websites that drive leads, trust and growth">
+            <!-- Static base — never animates -->
+            <img src="hero-mockup-base.png" alt="" class="hero-mockup-base">
+
+            <!-- 3 tiles overlay the empty boxes in the base; each pops on a stagger -->
+            <div class="hero-tile-wrap hero-tile-wrap--leads">
+              <div class="hero-tile-inner">
+                <img src="tile-leads.png" alt="More Leads" class="hero-tile-img">
+              </div>
+            </div>
+            <div class="hero-tile-wrap hero-tile-wrap--trust">
+              <div class="hero-tile-inner">
+                <img src="tile-trust.png" alt="More Trust" class="hero-tile-img">
+              </div>
+            </div>
+            <div class="hero-tile-wrap hero-tile-wrap--growth">
+              <div class="hero-tile-inner">
+                <img src="tile-growth.png" alt="More Growth" class="hero-tile-img">
+              </div>
+            </div>
+          </div>
         </div><!-- /hero-visual -->
 
       </div>
